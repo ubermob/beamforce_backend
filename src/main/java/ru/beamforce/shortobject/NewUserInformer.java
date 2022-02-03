@@ -1,4 +1,4 @@
-package ru.beamforce.informer;
+package ru.beamforce.shortobject;
 
 /**
  * @author Andrey Korneychuk on 03-Feb-22

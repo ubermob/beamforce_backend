@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.beamforce.dao.UserDao;
-import ru.beamforce.entity.RegistrationUser;
-import ru.beamforce.informer.NewUserInformer;
+import ru.beamforce.shortobject.RegistrationUser;
+import ru.beamforce.shortobject.NewUserInformer;
 
 /**
  * @author Andrey Korneychuk on 03-Feb-22

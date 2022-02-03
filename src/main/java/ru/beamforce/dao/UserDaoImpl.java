@@ -3,8 +3,8 @@ package ru.beamforce.dao;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import ru.beamforce.entity.RegistrationUser;
-import ru.beamforce.informer.NewUserInformer;
+import ru.beamforce.shortobject.RegistrationUser;
+import ru.beamforce.shortobject.NewUserInformer;
 
 import javax.persistence.EntityManager;
 

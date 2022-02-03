@@ -1,4 +1,4 @@
-package ru.beamforce.restentity;
+package ru.beamforce.shortobject;
 
 /**
  * @author Andrey Korneychuk on 01-Feb-22

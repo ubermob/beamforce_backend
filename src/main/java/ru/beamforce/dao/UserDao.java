@@ -1,7 +1,7 @@
 package ru.beamforce.dao;
 
-import ru.beamforce.entity.RegistrationUser;
-import ru.beamforce.informer.NewUserInformer;
+import ru.beamforce.shortobject.RegistrationUser;
+import ru.beamforce.shortobject.NewUserInformer;
 
 /**
  * @author Andrey Korneychuk on 03-Feb-22

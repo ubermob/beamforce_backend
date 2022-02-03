@@ -2,7 +2,7 @@ package ru.beamforce.controller.rest;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.beamforce.restentity.HelloMessage;
+import ru.beamforce.shortobject.HelloMessage;
 
 /**
  * @author Andrey Korneychuk on 01-Feb-22

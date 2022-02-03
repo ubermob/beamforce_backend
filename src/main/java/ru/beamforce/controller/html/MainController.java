@@ -5,8 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.beamforce.entity.RegistrationUser;
-import ru.beamforce.informer.NewUserInformer;
+import ru.beamforce.shortobject.RegistrationUser;
+import ru.beamforce.shortobject.NewUserInformer;
 import ru.beamforce.service.RegistrationUserService;
 
 import javax.validation.Valid;

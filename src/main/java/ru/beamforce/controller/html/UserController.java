@@ -5,6 +5,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.beamforce.service.ServerMessageService;
+import ru.beamforce.shortobject.ShortUserInformation;
+
+import java.security.Principal;
 
 /**
  * @author Andrey Korneychuk on 31-Jan-22
@@ -18,7 +21,9 @@ public class UserController {
 	private ServerMessageService serverMessageService;
 
 	@RequestMapping
-	public String showUserPage(Model model) {
+	public String showUserPage(Model model, Principal principal) {
+		ShortUserInformation sui = new ShortUserInformation(principal.getName(), "code-org");
+		model.addAttribute("shortUserInformation", sui);
 		if (serverMessageService.getMessage() != null) {
 			model.addAttribute("server_message", serverMessageService.getMessage());
 		}

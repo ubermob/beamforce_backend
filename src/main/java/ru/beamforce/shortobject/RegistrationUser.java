@@ -1,4 +1,4 @@
-package ru.beamforce.entity;
+package ru.beamforce.shortobject;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Pattern;

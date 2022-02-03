@@ -9,9 +9,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class ServerMessageServiceImpl implements ServerMessageService {
 
+	// TODO replace redis
+	private String tmpMessage = "Важное сообщение";
+
 	@Override
 	public String getMessage() {
-		//return "ServerMessageService";
-		return null;
+		return tmpMessage;
 	}
 }

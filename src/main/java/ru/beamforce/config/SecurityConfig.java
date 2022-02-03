@@ -40,6 +40,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.formLogin().defaultSuccessUrl("/user").permitAll()
 				.and()
 				// Logout
-				.logout().permitAll().logoutSuccessUrl("/");
+				.logout().permitAll().logoutSuccessUrl("/").deleteCookies("JSESSIONID")
+				.and()
+				// Remember me
+				.rememberMe().key("uniqueAndSecret").tokenValiditySeconds(604_800); // 7 day = 604 800 seconds
 	}
 }
