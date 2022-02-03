@@ -1,0 +1,23 @@
+body {
+    font-size: 18px;
+    text-align: center;
+}
+
+.user_action_container {
+    display: flex;
+}
+
+.main_content, .user_content_container, .model_action_container {
+    margin-top: 40px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.user_action, .model_action, .user_content {
+    background-color: #F0F0F0;
+    width: 25%;
+}
+
+.footer {
+    margin-top: 40px;
+}

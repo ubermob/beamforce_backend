@@ -4,11 +4,11 @@ package ru.beamforce.restentity;
  * @author Andrey Korneychuk on 01-Feb-22
  * @version 1.0
  */
-public class SimpleMessage {
+public class helloMessage {
 
 	private String message;
 
-	public SimpleMessage(String message) {
+	public helloMessage(String message) {
 		this.message = message;
 	}
 

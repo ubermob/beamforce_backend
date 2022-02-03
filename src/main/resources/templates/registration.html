@@ -3,26 +3,24 @@
 <head th:insert="~{fragments/head_tag :: head_tag}">
 </head>
 <body>
-<form action="/reg/validation" th:action="@{/reg/validation}" th:object="${user}"
-      method="post">
-    Имя:
-    <input type="text" th:field="*{name}"/>
-    <div class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error</div>
+<form action="#" th:action="@{/reg/validation}" th:object="${registrationUser}" method="post">
+    <label for="name">Имя:</label>
+    <input type="text" id="name" th:field="*{name}"/>
+    <span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error</span>
     <br>
     <br>
-    email:
-    <input type="text" th:field="*{email}"/>
-    * необязательно
-    <div class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Error</div>
+    <label for="email">email:</label>
+    <input type="text" id="email" th:field="*{email}"/>
+<!--    * необязательно-->
+    <span class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Error</span>
     <br>
     <br>
-    Пароль:
-    <input type="text" th:field="*{password}"/>
-    <div class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Error</div>
+    <label for="password">Пароль:</label>
+    <input type="text" id="password" th:field="*{password}"/>
+    <span class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Error</span>
     <br>
     <br>
     <button id="reg_button" type="submit">Зарегестрироваться</button>
-    <script src="/help/reg_validation.js"></script>
 </form>
 </body>
 </html>

@@ -2,9 +2,7 @@ package ru.beamforce.controller.html;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.beamforce.entity.RegistrationUser;
 
@@ -24,31 +22,15 @@ public class MainController {
 	}
 
 	@RequestMapping("/reg")
-	public String showRegistrationPage(Model model) {
-		System.out.println(decorate("/reg"));
-		model.addAttribute("user", new RegistrationUser());
+	public String showRegistrationPage(RegistrationUser registrationUser) {
 		return "registration";
 	}
 
 	@RequestMapping("/reg/validation")
-	public String showRegValidationPage(@Valid RegistrationUser registrationUser, BindingResult errors, Model model) {
-		System.out.println(decorate("/reg/validation"));
-		System.out.println("RAW: " + registrationUser);
+	public String showRegValidationPage(@Valid RegistrationUser registrationUser, Errors errors, Model model) {
 		if (errors.hasErrors()) {
-			System.out.println(errors.getFieldError("name"));
-			System.out.println(errors.getFieldError("email"));
-			System.out.println(errors.getFieldError("password"));
 			return "registration";
 		}
-		model.addAttribute("user", registrationUser);
-		return "redirect:/reg/success";
-	}
-
-	@RequestMapping("/reg/success")
-	public String successRegistrationPage(Model model) {
-		System.out.println(decorate("/reg/success"));
-		RegistrationUser registrationUser = (RegistrationUser) model.getAttribute("user");
-		System.out.println("RAW: " + registrationUser);
 		model.addAttribute("user_name", registrationUser.getName());
 		return "registration_success";
 	}
