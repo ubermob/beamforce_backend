@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{fragments/head_tag :: head_tag}">
+</head>
+<body>
+<div th:insert="~{fragments/header :: logged_header}"></div>
+
+<div class="model_action_container">
+    <div class="model_action"><a th:href="@{__${#httpServletRequest.requestURI}__/model/share}">Поделиться</a></div>
+    <div class="model_action"><a th:href="@{__${#httpServletRequest.requestURI}__/model/new-model}">Новая модель</a></div>
+    <div class="model_action"><a th:href="@{__${#httpServletRequest.requestURI}__/model/delete-list}">Удалить</a></div>
+</div>
+
+<div class="user_content_container">
+    <div class="user_content"><a href="">Model 1</a></div>
+    <div class="user_content"><a href="">Model 2</a></div>
+    <div class="user_content"><a href="">Model 3</a></div>
+    <div class="user_content"><a href="">Model 4</a></div>
+    <div class="user_content"><a href="">Model 5</a></div>
+</div>
+
+<div th:insert="~{fragments/footer :: footer}"></div>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="unlogged_header" class="header">
+    <h1 id="title"><a href="/">Beam Force</a></h1>
+
+    <div class="user_action_container">
+        <div class="user_action"><a href="/user">Войти</a></div>
+        <div class="user_action"><a href="/reg">Зарегестрироваться</a></div>
+        <div class="user_action"><a href="/help">Помощь</a></div>
+        <div class="user_action"><a href="/about">О проекте</a></div>
+    </div>
+</div>
+
+<div th:fragment="logged_header" class="header">
+    <h1 id="title"><a href="/">Beam Force</a></h1>
+
+    <div class="user_action_container">
+        <div class="user_action"><a href="/logout">Выйти</a></div>
+        <div class="user_action"><a href="/user-settings">Настройки</a></div>
+        <div class="user_action"><a href="/help">Помощь</a></div>
+        <div class="user_action"><a href="/about">О проекте</a></div>
+    </div>
+</div>
+</body>
+</html>
