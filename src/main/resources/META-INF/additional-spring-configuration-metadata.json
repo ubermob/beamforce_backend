@@ -1,0 +1,13 @@
+{
+  "properties": [
+    {
+      "name": "message.registration.name.notblank",
+      "type": "java.lang.String",
+      "description": "Description for message.registration.name."
+    },
+    {
+      "name": "message.registration.name.size",
+      "type": "java.lang.String",
+      "description": "Description for message.registration.name.size."
+    }
+  ] }
