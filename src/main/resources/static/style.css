@@ -1,3 +1,9 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
 body {
     font-size: 18px;
     text-align: center;
@@ -27,7 +33,30 @@ body {
 
 .user_action, .model_action, .user_content {
     background-color: #e7e7e7;
-    width: 25%;
+    width: 24%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.user_content {
+    margin-top: 8px;
+    border: 1px solid #7a7a7a;
+    padding: 8px;
+    border-radius: 8px;
+}
+
+.model_name {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.model_creator, .model_comment, .model_raw {
+    text-align: left;
+}
+
+.model_time {
+    text-align: right;
 }
 
 .footer {
