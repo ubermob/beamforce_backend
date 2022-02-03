@@ -5,6 +5,8 @@
 <body>
 <div th:insert="~{fragments/header :: logged_header}"></div>
 
+<div th:insert="~{fragments/server_message :: server_message}"></div>
+
 <div class="model_action_container">
     <div class="model_action"><a th:href="@{__${#httpServletRequest.requestURI}__/model/share}">Поделиться</a></div>
     <div class="model_action"><a th:href="@{__${#httpServletRequest.requestURI}__/model/new-model}">Новая модель</a></div>

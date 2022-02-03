@@ -27,7 +27,8 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public NewUserInformer getNewUserInformer(RegistrationUser registrationUser) {
 		Session session = unwrap();
-		// TODO
+		session.createSQLQuery("insert into beamforce_db.test (str) values (:string)")
+				.setParameter("string", "abcdef").executeUpdate();
 		NewUserInformer result = new NewUserInformer();
 		result.setAvailableName(false);
 		result.setAvailableEmail(false);
