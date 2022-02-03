@@ -1,7 +1,7 @@
 package ru.beamforce.entity;
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 /**
@@ -10,13 +10,13 @@ import javax.validation.constraints.Size;
  */
 public class RegistrationUser {
 
-	@NotBlank(message = "blanked")
-	@Size(min = 3, max = 25, message = "size")
+	@Pattern(regexp = "[a-zA-Z\\d_-]+", message = "Некорректный паттерн")
+	@Size(min = 3, max = 25, message = "Длина имени должна быть от 3 до 25")
 	private String name;
-	@Email(message = "email")
+	@Email(message = "Некорректный email")
 	private String email;
-	@NotBlank(message = "blanked")
-	@Size(min = 6, max = 50, message = "size")
+	@Pattern(regexp = "[a-zA-Z\\d_-]+", message = "Некорректный паттерн")
+	@Size(min = 6, max = 50, message = "Длина пароля должна быть от 6 до 50")
 	private String password;
 
 	public RegistrationUser() {

@@ -3,15 +3,24 @@
 <head th:insert="~{fragments/head_tag :: head_tag}">
 </head>
 <body>
+<div th:insert="/fragments/header :: unlogged_header"></div>
+<div>
+    <h3>Информация:</h3>
+    Длина <b>имени</b> должна быть от 3 до 25. Состоять из латинских букв. Допускаются цифры и символы: "-" и "_".
+    <br>
+    <br>
+    Длина <b>пароля</b> должна быть от 6 до 50. Состоять из латинских букв. Допускаются цифры и символы: "-" и "_".
+    <br>
+    <br>
+</div>
 <form action="#" th:action="@{/reg/validation}" th:object="${registrationUser}" method="post">
     <label for="name">Имя:</label>
     <input type="text" id="name" th:field="*{name}"/>
     <span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error</span>
     <br>
     <br>
-    <label for="email">email:</label>
+    <label for="email">email (необязательно):</label>
     <input type="text" id="email" th:field="*{email}"/>
-<!--    * необязательно-->
     <span class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Error</span>
     <br>
     <br>

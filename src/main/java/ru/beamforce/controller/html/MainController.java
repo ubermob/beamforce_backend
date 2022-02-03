@@ -1,10 +1,13 @@
 package ru.beamforce.controller.html;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.beamforce.entity.RegistrationUser;
+import ru.beamforce.informer.NewUserInformer;
+import ru.beamforce.service.RegistrationUserService;
 
 import javax.validation.Valid;
 
@@ -15,6 +18,9 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping
 public class MainController {
+
+	@Autowired
+	private RegistrationUserService registrationUserService;
 
 	@RequestMapping("/")
 	public String showMainPage() {
@@ -29,10 +35,26 @@ public class MainController {
 	@RequestMapping("/reg/validation")
 	public String showRegValidationPage(@Valid RegistrationUser registrationUser, Errors errors, Model model) {
 		if (errors.hasErrors()) {
+			// Validation errors
 			return "registration";
+		} else {
+			NewUserInformer informer = registrationUserService.getNewUserInformer(registrationUser);
+			if (informer.hasErrors()) {
+				// DB errors
+				if (!informer.isAvailableName()) {
+					errors.rejectValue("name", "error.registrationUser"
+							, "Такое имя пользователя уже занято");
+				}
+				if (!informer.isAvailableEmail()) {
+					errors.rejectValue("email", "error.registrationUser"
+							, "Такой email уже занят");
+				}
+				return "registration";
+			}
+			// Success
+			model.addAttribute("user_name", registrationUser.getName());
+			return "registration_success";
 		}
-		model.addAttribute("user_name", registrationUser.getName());
-		return "registration_success";
 	}
 
 	@RequestMapping("/help")

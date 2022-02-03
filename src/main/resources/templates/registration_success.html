@@ -3,6 +3,7 @@
 <head th:insert="~{fragments/head_tag :: head_tag}">
 </head>
 <body>
-<h1><span th:text="${user_name}">user_name</span>, Вы успешно зарегестрировались. <a href="/user">Начать</a> работу.</h1>
+<div th:insert="/fragments/header :: unlogged_header"></div>
+<h2><span th:text="${user_name}">user_name</span>, Вы успешно зарегестрировались. <a href="/user">Начать</a> работу.</h2>
 </body>
 </html>
