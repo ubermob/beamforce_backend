@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{fragments/head_tag :: head_tag}">
+</head>
+<body>
+
+<form method="POST" enctype="multipart/form-data" th:action="@{__${#httpServletRequest.requestURI}__/post}">
+    <span>File to upload: </span>
+    <input type="file" name="file"/>
+    <br>
+    <input type="submit" value="Upload"/>
+</form>
+
+</body>
+</html>
