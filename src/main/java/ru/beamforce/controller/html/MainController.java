@@ -7,7 +7,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.beamforce.service.RegistrationUserService;
 import ru.beamforce.shortobject.NewUserInformer;
-import ru.beamforce.shortobject.RegistrationUser;
+import ru.beamforce.dto.RegistrationUserDTO;
 
 import javax.validation.Valid;
 
@@ -28,12 +28,12 @@ public class MainController {
 	}
 
 	@RequestMapping("/reg")
-	public String showRegistrationPage(RegistrationUser registrationUser) {
+	public String showRegistrationPage(RegistrationUserDTO registrationUser) {
 		return "registration";
 	}
 
 	@RequestMapping("/reg/validation")
-	public String showRegValidationPage(@Valid RegistrationUser registrationUser, Errors errors, Model model) {
+	public String showRegValidationPage(@Valid RegistrationUserDTO registrationUser, Errors errors, Model model) {
 		if (errors.hasErrors()) {
 			// Validation errors
 			return "registration";

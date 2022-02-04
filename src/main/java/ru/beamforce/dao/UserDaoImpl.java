@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import ru.beamforce.entity.User;
 import ru.beamforce.repository.UserRepository;
 import ru.beamforce.shortobject.NewUserInformer;
-import ru.beamforce.shortobject.RegistrationUser;
+import ru.beamforce.dto.RegistrationUserDTO;
 
 import javax.persistence.EntityManager;
 import java.math.BigInteger;
@@ -33,7 +33,7 @@ public class UserDaoImpl implements UserDao {
 
 
 	@Override
-	public void createNewUser(RegistrationUser registrationUser) {
+	public void createNewUser(RegistrationUserDTO registrationUser) {
 		User user = new User();
 		user.setName(registrationUser.getName());
 		user.setEmail(registrationUser.getEmail());
@@ -44,7 +44,7 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public NewUserInformer getNewUserInformer(RegistrationUser registrationUser) {
+	public NewUserInformer getNewUserInformer(RegistrationUserDTO registrationUser) {
 		Session session = unwrap();
 		registrationUser.trimEmail();
 

@@ -1,7 +1,7 @@
 package ru.beamforce.dao;
 
 import ru.beamforce.shortobject.NewUserInformer;
-import ru.beamforce.shortobject.RegistrationUser;
+import ru.beamforce.dto.RegistrationUserDTO;
 
 /**
  * @author Andrey Korneychuk on 03-Feb-22
@@ -9,7 +9,7 @@ import ru.beamforce.shortobject.RegistrationUser;
  */
 public interface UserDao {
 
-	void createNewUser(RegistrationUser registrationUser);
+	void createNewUser(RegistrationUserDTO registrationUser);
 
-	NewUserInformer getNewUserInformer(RegistrationUser registrationUser);
+	NewUserInformer getNewUserInformer(RegistrationUserDTO registrationUser);
 }

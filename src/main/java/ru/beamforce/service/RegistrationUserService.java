@@ -1,6 +1,6 @@
 package ru.beamforce.service;
 
-import ru.beamforce.shortobject.RegistrationUser;
+import ru.beamforce.dto.RegistrationUserDTO;
 import ru.beamforce.shortobject.NewUserInformer;
 
 /**
@@ -9,7 +9,7 @@ import ru.beamforce.shortobject.NewUserInformer;
  */
 public interface RegistrationUserService {
 
-	void createNewUser(RegistrationUser registrationUser);
+	void createNewUser(RegistrationUserDTO registrationUser);
 
-	NewUserInformer getNewUserInformer(RegistrationUser registrationUser);
+	NewUserInformer getNewUserInformer(RegistrationUserDTO registrationUser);
 }

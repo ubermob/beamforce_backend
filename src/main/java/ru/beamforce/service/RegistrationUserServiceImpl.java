@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.beamforce.dao.UserDao;
-import ru.beamforce.shortobject.RegistrationUser;
+import ru.beamforce.dto.RegistrationUserDTO;
 import ru.beamforce.shortobject.NewUserInformer;
 
 /**
@@ -19,13 +19,13 @@ public class RegistrationUserServiceImpl implements RegistrationUserService {
 
 	@Override
 	@Transactional
-	public void createNewUser(RegistrationUser registrationUser) {
+	public void createNewUser(RegistrationUserDTO registrationUser) {
 		userDao.createNewUser(registrationUser);
 	}
 
 	@Override
 	@Transactional
-	public NewUserInformer getNewUserInformer(RegistrationUser registrationUser) {
+	public NewUserInformer getNewUserInformer(RegistrationUserDTO registrationUser) {
 		return userDao.getNewUserInformer(registrationUser);
 	}
 }
