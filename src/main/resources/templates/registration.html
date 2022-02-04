@@ -13,7 +13,7 @@
     <br>
     <br>
 </div>
-<form action="#" th:action="@{/reg/validation}" th:object="${registrationUser}" method="post">
+<form action="#" th:action="@{/reg/validation}" th:object="${registrationUserDTO}" method="post">
     <label for="name">Имя:</label>
     <input type="text" id="name" th:field="*{name}"/>
     <span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error</span>

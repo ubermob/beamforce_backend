@@ -5,9 +5,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestMapping;
+import ru.beamforce.dto.RegistrationUserDTO;
 import ru.beamforce.service.RegistrationUserService;
 import ru.beamforce.shortobject.NewUserInformer;
-import ru.beamforce.dto.RegistrationUserDTO;
 
 import javax.validation.Valid;
 
@@ -28,32 +28,27 @@ public class MainController {
 	}
 
 	@RequestMapping("/reg")
-	public String showRegistrationPage(RegistrationUserDTO registrationUser) {
+	public String showRegistrationPage(RegistrationUserDTO registrationUserDTO) {
 		return "registration";
 	}
 
 	@RequestMapping("/reg/validation")
-	public String showRegValidationPage(@Valid RegistrationUserDTO registrationUser, Errors errors, Model model) {
-		if (errors.hasErrors()) {
-			// Validation errors
+	public String showRegValidationPage(@Valid RegistrationUserDTO registrationUserDTO, Errors errors, Model model) {
+		NewUserInformer informer = registrationUserService.getNewUserInformer(registrationUserDTO);
+		if (errors.hasErrors() || informer.hasErrors()) {
+			if (!informer.isAvailableName()) {
+				errors.rejectValue("name", "error.registrationUserDTO"
+						, "Такое имя пользователя уже занято");
+			}
+			if (!informer.isAvailableEmail()) {
+				errors.rejectValue("email", "error.registrationUserDTO"
+						, "Такой email уже занят");
+			}
 			return "registration";
 		} else {
-			NewUserInformer informer = registrationUserService.getNewUserInformer(registrationUser);
-			if (informer.hasErrors()) {
-				// DB errors
-				if (!informer.isAvailableName()) {
-					errors.rejectValue("name", "error.registrationUser"
-							, "Такое имя пользователя уже занято");
-				}
-				if (!informer.isAvailableEmail()) {
-					errors.rejectValue("email", "error.registrationUser"
-							, "Такой email уже занят");
-				}
-				return "registration";
-			}
 			// Success
-			registrationUserService.createNewUser(registrationUser);
-			model.addAttribute("user_name", registrationUser.getName());
+			registrationUserService.createNewUser(registrationUserDTO);
+			model.addAttribute("user_name", registrationUserDTO.getName());
 			return "registration_success";
 		}
 	}

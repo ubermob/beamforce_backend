@@ -5,10 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
+import ru.beamforce.dto.RegistrationUserDTO;
 import ru.beamforce.entity.User;
 import ru.beamforce.repository.UserRepository;
 import ru.beamforce.shortobject.NewUserInformer;
-import ru.beamforce.dto.RegistrationUserDTO;
 
 import javax.persistence.EntityManager;
 import java.math.BigInteger;
@@ -31,7 +31,6 @@ public class UserDaoImpl implements UserDao {
 	@Value("${db.table.users}")
 	private String tableUsers;
 
-
 	@Override
 	public void createNewUser(RegistrationUserDTO registrationUser) {
 		User user = new User();
@@ -40,7 +39,7 @@ public class UserDaoImpl implements UserDao {
 		user.setPassword(passwordEncoder.encode(registrationUser.getPassword()));
 		user.setActive(true);
 		user.setRoleUser();
-		System.out.println(user);
+		userRepository.save(user);
 	}
 
 	@Override
