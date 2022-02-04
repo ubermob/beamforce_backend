@@ -1,36 +1,27 @@
 package ru.beamforce.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import javax.sql.DataSource;
 
 /**
  * @author Andrey Korneychuk on 02-Feb-22
  * @version 1.0
  */
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
-	@Autowired
-	private DataSource dataSource;
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-
-
+	@Autowired
+	private UserDetailsService userService;
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.jdbcAuthentication().dataSource(dataSource).passwordEncoder(passwordEncoder);
+		auth.userDetailsService(userService).passwordEncoder(passwordEncoder);
 	}
 
 	@Override
@@ -41,9 +32,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/", "/reg/**", "/help/**", "/about", "/test/**").permitAll()
 				.antMatchers("/style.css").permitAll()
 				// Admin
-				.antMatchers("/admin/**").hasRole("ADMIN")
+				.antMatchers("/admin/**").hasAuthority("ADMIN")
 				// User
-				.antMatchers("/user/**").hasAnyRole("ADMIN", "USER")
+				// hasRole() do not work. Replaced to hasAnyAuthority()
+				.antMatchers("/user/**").hasAnyAuthority("ADMIN", "USER")
 				.anyRequest().authenticated()
 				.and()
 				// Login

@@ -1,4 +1,4 @@
-package ru.beamforce.bean;
+package ru.beamforce.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,7 +10,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  * @version 1.0
  */
 @Configuration
-public class P {
+public class PasswordEncoderConfig {
+
 	@Bean
 	public PasswordEncoder getPasswordEncoder() {
 		return new BCryptPasswordEncoder(12);
