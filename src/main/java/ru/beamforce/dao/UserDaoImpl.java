@@ -3,7 +3,7 @@ package ru.beamforce.dao;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 import ru.beamforce.shortobject.NewUserInformer;
 import ru.beamforce.shortobject.RegistrationUser;
@@ -21,7 +21,7 @@ public class UserDaoImpl implements UserDao {
 	@Autowired
 	private EntityManager entityManager;
 	@Autowired
-	private BCryptPasswordEncoder passwordEncoder;
+	private PasswordEncoder passwordEncoder;
 	@Value("${db.name}")
 	private String dbName;
 	@Value("${db.table.default_spring_users}")
