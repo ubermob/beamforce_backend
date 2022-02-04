@@ -1,13 +1,29 @@
 {
   "properties": [
     {
-      "name": "message.registration.name.notblank",
+      "name": "db.name",
       "type": "java.lang.String",
-      "description": "Description for message.registration.name."
+      "description": "..."
     },
     {
-      "name": "message.registration.name.size",
+      "name": "db.table.default_spring_users",
       "type": "java.lang.String",
-      "description": "Description for message.registration.name.size."
+      "description": "..."
+    },
+    {
+      "name": "db.table.default_spring_authorities",
+      "type": "java.lang.String",
+      "description": "..."
+    },
+    {
+      "name": "db.table.users",
+      "type": "java.lang.String",
+      "description": "..."
+    },
+    {
+      "name": "user.standart_role",
+      "type": "java.lang.String",
+      "description": "..."
     }
-  ] }
+  ]
+}

@@ -5,9 +5,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.beamforce.shortobject.RegistrationUser;
-import ru.beamforce.shortobject.NewUserInformer;
 import ru.beamforce.service.RegistrationUserService;
+import ru.beamforce.shortobject.NewUserInformer;
+import ru.beamforce.shortobject.RegistrationUser;
 
 import javax.validation.Valid;
 
@@ -52,6 +52,7 @@ public class MainController {
 				return "registration";
 			}
 			// Success
+			registrationUserService.createNewUser(registrationUser);
 			model.addAttribute("user_name", registrationUser.getName());
 			return "registration_success";
 		}

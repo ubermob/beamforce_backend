@@ -52,6 +52,12 @@ public class RegistrationUser {
 		this.password = password;
 	}
 
+	public void trimEmail() {
+		if (email != null && email.length() == 0) {
+			email = null;
+		}
+	}
+
 	@Override
 	public String toString() {
 		return "RegistrationUser{" +
