@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 import ru.beamforce.dto.RegistrationUserDTO;
+import ru.beamforce.dto.UpdatePasswordDTO;
 import ru.beamforce.entity.User;
 import ru.beamforce.repository.UserRepository;
 import ru.beamforce.shortobject.NewUserInformer;
@@ -63,6 +64,16 @@ public class UserDaoImpl implements UserDao {
 		result.setAvailableName(isAvailableName);
 		result.setAvailableEmail(isAvailableEmail);
 		return result;
+	}
+
+	@Override
+	public boolean comparePasswords(User user, UpdatePasswordDTO updatePasswordDTO) {
+		return passwordEncoder.matches(updatePasswordDTO.getOldPassword(), user.getPassword());
+	}
+
+	@Override
+	public void updatePassword(User user, UpdatePasswordDTO updatePasswordDTO) {
+		user.setPassword(passwordEncoder.encode(updatePasswordDTO.getNewPassword()));
 	}
 
 	private String place(String tableName) {

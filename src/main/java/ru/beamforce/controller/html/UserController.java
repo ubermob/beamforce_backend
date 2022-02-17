@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import ru.beamforce.dto.EmailDTO;
+import ru.beamforce.dto.UpdatePasswordDTO;
 import ru.beamforce.entity.User;
 import ru.beamforce.service.ServerMessageService;
 import ru.beamforce.service.UserService;
@@ -62,6 +63,24 @@ public class UserController {
 			return "user-settings";
 		} else {
 			userService.updateEmail(user, emailDTO);
+			return "redirect:/user/settings";
+		}
+	}
+
+	@RequestMapping("/settings/update-password")
+	public String updatePassword(UpdatePasswordDTO updatePasswordDTO) {
+		return "user-settings-update-password";
+	}
+
+	@RequestMapping("/settings/update-password/validation")
+	public String updatePasswordValidation(@Valid UpdatePasswordDTO updatePasswordDTO, Errors errors, Principal principal
+			, Model model) {
+		User user = userService.getUserByPrincipal(principal);
+		userService.comparePassword(user, updatePasswordDTO, errors);
+		if (errors.hasErrors()) {
+			return "user-settings-update-password";
+		} else {
+			userService.updatePassword(user, updatePasswordDTO);
 			return "redirect:/user/settings";
 		}
 	}
