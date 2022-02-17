@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.beamforce.dao.UserDao;
+import ru.beamforce.dto.EmailDTO;
 import ru.beamforce.dto.RegistrationUserDTO;
 import ru.beamforce.entity.User;
 import ru.beamforce.repository.UserRepository;
@@ -23,6 +24,29 @@ public class UserServiceImpl implements UserService, UserDetailsService, Registr
 	private UserRepository userRepository;
 	@Autowired
 	private UserDao userDao;
+
+	@Override
+	public User getUserByUsername(String username) {
+		User user = userRepository.findByName(username);
+		return user;
+	}
+
+	@Override
+	public void deleteEmail(User user) {
+		user.setEmail(null);
+		userRepository.save(user);
+	}
+
+	@Override
+	public void deleteUser(User user) {
+		userRepository.delete(user);
+	}
+
+	@Override
+	public void updateEmail(User user, EmailDTO emailDTO) {
+		user.setEmail(emailDTO.getEmail());
+		userRepository.save(user);
+	}
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

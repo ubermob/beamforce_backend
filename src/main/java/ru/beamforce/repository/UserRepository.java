@@ -8,5 +8,6 @@ import ru.beamforce.entity.User;
  * @version 1.0
  */
 public interface UserRepository extends JpaRepository<User, Long> {
+
 	User findByName(String name);
 }
