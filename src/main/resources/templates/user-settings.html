@@ -10,7 +10,7 @@
 </div>
 
 <form action="#" th:action="@{/user/settings/validation}" th:object="${emailDTO}" method="post">
-    <div>Имя: <span th:text="${user.name}">user.name</span></div>
+    <div>Имя пользователя: <b><span th:text="${user.name}">user.name</span></b></div>
     <br>
     <br>
     <label for="email">email (необязательно):</label>
@@ -23,7 +23,7 @@
     </div>
     <br>
     <br>
-    <button id="edit_button" type="submit">Изменить</button>
+    <button id="edit_button" type="submit">Изменить email</button>
 </form>
 
 <br>
