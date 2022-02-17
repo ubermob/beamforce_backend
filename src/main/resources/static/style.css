@@ -11,6 +11,17 @@ body {
     background-color: #f5f5f5;
 }
 
+.main_content {
+    width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#title a {
+    color: black;
+    text-decoration: none;
+}
+
 .server_message {
     margin-top: 40px;
     background-color: brown;
@@ -50,6 +61,10 @@ body {
     font-size: 20px;
     font-weight: bold;
     margin-bottom: 8px;
+}
+
+.model_name a {
+    text-decoration: none;
 }
 
 .model_creator, .model_comment, .model_raw {
