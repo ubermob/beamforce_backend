@@ -72,6 +72,12 @@ public class UserServiceImpl implements UserService, UserDetailsService, Registr
 	}
 
 	@Override
+	public void leaveOrganization(User user) {
+		user.setOrganization(null);
+		userRepository.save(user);
+	}
+
+	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = userRepository.findByName(username);
 		if (user == null) {

@@ -62,8 +62,4 @@ public class MainController {
 	public String showAboutPage() {
 		return "about";
 	}
-
-	private String decorate(String string) {
-		return "--- " + string + " ---";
-	}
 }

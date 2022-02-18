@@ -27,6 +27,9 @@ public class User implements UserDetails {
 	@CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
 	@Enumerated(EnumType.STRING)
 	private Set<Role> roles;
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "org_id")
+	private Organization organization;
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -120,6 +123,14 @@ public class User implements UserDetails {
 			roles.add(Role.USER);
 			roles.add(Role.ADMIN);
 		}
+	}
+
+	public Organization getOrganization() {
+		return organization;
+	}
+
+	public void setOrganization(Organization organization) {
+		this.organization = organization;
 	}
 
 	@Override

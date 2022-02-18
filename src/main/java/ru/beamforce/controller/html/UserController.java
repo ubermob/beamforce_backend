@@ -10,10 +10,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import ru.beamforce.dto.EmailDTO;
 import ru.beamforce.dto.UpdatePasswordDTO;
+import ru.beamforce.entity.Organization;
 import ru.beamforce.entity.User;
+import ru.beamforce.service.OrganizationService;
 import ru.beamforce.service.ServerMessageService;
 import ru.beamforce.service.UserService;
-import ru.beamforce.shortobject.ShortUserInformation;
 
 import javax.validation.Valid;
 import java.io.IOException;
@@ -34,11 +35,19 @@ public class UserController {
 	private ServerMessageService serverMessageService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private OrganizationService organizationService;
 
 	@RequestMapping
 	public String showUserPage(Model model, Principal principal) {
-		ShortUserInformation sui = new ShortUserInformation(principal.getName(), "code-org");
-		model.addAttribute("shortUserInformation", sui);
+		User user = userService.getUserByPrincipal(principal);
+		System.out.println(user);
+		try {
+			System.out.println(user.getOrganization());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		model.addAttribute("user", user);
 		if (serverMessageService.getMessage() != null) {
 			model.addAttribute("server_message", serverMessageService.getMessage());
 		}
@@ -51,7 +60,7 @@ public class UserController {
 		model.addAttribute("user", user);
 		emailDTO.setEmail(user.getEmail());
 		model.addAttribute("emailDTO", emailDTO);
-		return "user-settings";
+		return "user_settings";
 	}
 
 	@RequestMapping("/settings/validation")
@@ -60,7 +69,7 @@ public class UserController {
 		model.addAttribute("user", user);
 		model.addAttribute("emailDTO", emailDTO);
 		if (errors.hasErrors()) {
-			return "user-settings";
+			return "user_settings";
 		} else {
 			userService.updateEmail(user, emailDTO);
 			return "redirect:/user/settings";
@@ -69,16 +78,15 @@ public class UserController {
 
 	@RequestMapping("/settings/update-password")
 	public String updatePassword(UpdatePasswordDTO updatePasswordDTO) {
-		return "user-settings-update-password";
+		return "user_settings_update_password";
 	}
 
 	@RequestMapping("/settings/update-password/validation")
-	public String updatePasswordValidation(@Valid UpdatePasswordDTO updatePasswordDTO, Errors errors, Principal principal
-			, Model model) {
+	public String updatePasswordValidation(@Valid UpdatePasswordDTO updatePasswordDTO, Errors errors, Principal principal) {
 		User user = userService.getUserByPrincipal(principal);
 		userService.comparePassword(user, updatePasswordDTO, errors);
 		if (errors.hasErrors()) {
-			return "user-settings-update-password";
+			return "user_settings_update_password";
 		} else {
 			userService.updatePassword(user, updatePasswordDTO);
 			return "redirect:/user/settings";
@@ -99,9 +107,31 @@ public class UserController {
 		return "redirect:/logout";
 	}
 
+	@RequestMapping("/settings/create-org")
+	public String createOrganization(Organization organization) {
+		return "user_settings_create_org";
+	}
+
+	@RequestMapping("/settings/create-org/validation")
+	public String createOrganizationValidation(@Valid Organization organization, Errors errors, Principal principal) {
+		// TODO check unique name
+		if (errors.hasErrors()) {
+			return "user_settings_create_org";
+		} else {
+			organizationService.createOrganization(userService.getUserByPrincipal(principal), organization);
+			return "redirect:/user";
+		}
+	}
+
+	@RequestMapping("/settings/leave-org")
+	public String leaveOrganization(Principal principal) {
+		userService.leaveOrganization(userService.getUserByPrincipal(principal));
+		return "redirect:/user";
+	}
+
 	@RequestMapping("/model/new-model")
 	public String uploadFileForm() {
-		return "upload-new-model";
+		return "upload_new_model";
 	}
 
 	@PostMapping("/model/new-model/post")

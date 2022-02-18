@@ -6,7 +6,7 @@
 <div th:insert="~{fragments/header :: logged_header}"></div>
 
 <div>
-    <h3>Настройки:</h3>
+    <h3>Настройки пользователя:</h3>
 </div>
 
 <form action="#" th:action="@{/user/settings/validation}" th:object="${emailDTO}" method="post">
@@ -36,6 +36,29 @@
 
 <div>
     <a th:href="@{__${#httpServletRequest.requestURI}__/delete-user}">Удалить аккаунт</a>
+    <br>
+    <span class="warning"> Внимание, данное действие необратимо!</span>
+</div>
+
+<div>
+    <h3>Настройки организации:</h3>
+</div>
+
+<div th:if="${user.organization != null}">
+    Токен для приглашения в организацию: <b><span th:text="${user.organization.joinToken}"></span></b>
+</div>
+<br>
+<div th:if="${user.organization == null}">
+    <a th:href="@{__${#httpServletRequest.requestURI}__/create-org}">Создать организацию</a>
+</div>
+<br>
+<div th:if="${user.organization == null}">
+    <a th:href="@{__${#httpServletRequest.requestURI}__/join-org}">Присоединиться к организации</a>
+</div>
+<br>
+<div th:if="${user.organization != null}">
+    <a th:href="@{__${#httpServletRequest.requestURI}__/leave-org}">Покинуть организацию</a>
+    <br>
     <span class="warning"> Внимание, данное действие необратимо!</span>
 </div>
 

@@ -8,8 +8,8 @@
 <div th:if="${server_message} != null" th:insert="~{fragments/server_message :: server_message}"></div>
 
 <div class="user_short_info">
-    <div>Пользователь: <span th:text="${shortUserInformation.userName}">user</span></div>
-    <div>Организация: <span th:text="${shortUserInformation.userOrganization}">org</span></div>
+    <div>Пользователь: <span th:text="${user.name}">user</span></div>
+    <div th:if="${user.organization != null}">Организация: <span th:text="${user.organization.name}">org</span></div>
 </div>
 
 <div class="model_action_container">

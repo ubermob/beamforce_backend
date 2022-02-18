@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{fragments/head_tag :: head_tag}">
+</head>
+<body>
+<div th:insert="~{fragments/header :: logged_header}"></div>
+
+<div>
+    <h3>Создать организацию:</h3>
+</div>
+
+<form action="#" th:action="@{/user/settings/create-org/validation}" th:object="${organization}" method="post">
+
+    <label for="org_name">Название:</label>
+    <input type="text" id="org_name" th:field="*{name}"/>
+    <span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error</span>
+    <br>
+    <button id="create_button" type="submit">Создать</button>
+</form>
+
+</body>
+</html>

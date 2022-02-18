@@ -26,4 +26,6 @@ public interface UserService {
 	void comparePassword(User user, UpdatePasswordDTO updatePasswordDTO, Errors errors);
 
 	void updatePassword(User user, UpdatePasswordDTO updatePasswordDTO);
+
+	void leaveOrganization(User user);
 }
