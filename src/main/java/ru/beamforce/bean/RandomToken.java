@@ -1,11 +1,15 @@
 package ru.beamforce.bean;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
 import java.util.Random;
 
 /**
  * @author Andrey Korneychuk on 04-Feb-22
  * @version 1.0
  */
+@Configuration
 public class RandomToken {
 
 	private final Random random;
@@ -20,6 +24,11 @@ public class RandomToken {
 				, 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm'
 				, 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
 				, '-', '_', '+', '*', '=', '@', '%', '$', '?', '!', '^', ';', ':'};
+	}
+
+	@Bean
+	public RandomToken getRandomToken() {
+		return this;
 	}
 
 	public String getToken(int length) {

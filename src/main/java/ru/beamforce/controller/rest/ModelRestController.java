@@ -1,5 +1,6 @@
 package ru.beamforce.controller.rest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.beamforce.bean.RandomToken;
@@ -16,6 +17,9 @@ import java.util.List;
 @RestController
 public class ModelRestController {
 
+	@Autowired
+	private RandomToken randomToken;
+
 	@RequestMapping("/api/hello")
 	public HelloMessage hello() {
 		return new HelloMessage("hello from API");
@@ -23,7 +27,6 @@ public class ModelRestController {
 
 	@RequestMapping("/api/token")
 	public List<Token> token() {
-		RandomToken randomToken = new RandomToken();
 		List<Token> tokens = new ArrayList<>();
 		for (int i = 0; i < 1; i++) {
 			tokens.add(new Token(randomToken.getToken(32)));
@@ -33,7 +36,6 @@ public class ModelRestController {
 
 	@RequestMapping("/api/tiny-token")
 	public List<Token> tinyToken() {
-		RandomToken randomToken = new RandomToken();
 		List<Token> tokens = new ArrayList<>();
 		for (int i = 0; i < 1; i++) {
 			tokens.add(new Token(randomToken.getTinyToken(32)));
