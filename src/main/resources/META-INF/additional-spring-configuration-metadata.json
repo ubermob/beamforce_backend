@@ -24,6 +24,16 @@
       "name": "user.standart_role",
       "type": "java.lang.String",
       "description": "..."
+    },
+    {
+      "name": "minidi.host",
+      "type": "java.lang.String",
+      "description": "Description for minidi.host."
+    },
+    {
+      "name": "minidi.expired_time",
+      "type": "java.lang.String",
+      "description": "Description for minidi.expired_time."
     }
   ]
 }
