@@ -16,6 +16,9 @@
     <div class="model_action"><a th:href="@{__${#httpServletRequest.requestURI}__/model/share}">Поделиться</a></div>
     <div class="model_action"><a th:href="@{__${#httpServletRequest.requestURI}__/model/new-model}">Новая модель</a></div>
     <div class="model_action"><a th:href="@{__${#httpServletRequest.requestURI}__/model/delete-list}">Удалить</a></div>
+    <form th:action="@{__${#httpServletRequest.requestURI}__/model/new-model}">
+        <input type="submit" value="Новая модель" />
+    </form>
 </div>
 
 <div class="user_content_container">
