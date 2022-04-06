@@ -4,6 +4,7 @@ import org.springframework.validation.Errors;
 import ru.beamforce.dto.EmailDTO;
 import ru.beamforce.dto.UpdatePasswordDTO;
 import ru.beamforce.entity.User;
+import ru.beamforce.shortobject.Token;
 
 import java.security.Principal;
 
@@ -28,4 +29,6 @@ public interface UserService {
 	void updatePassword(User user, UpdatePasswordDTO updatePasswordDTO);
 
 	void leaveOrganization(User user);
+
+	void joinToOrganization(User user, Token token);
 }

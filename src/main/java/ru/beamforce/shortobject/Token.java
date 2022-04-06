@@ -6,7 +6,7 @@ package ru.beamforce.shortobject;
  */
 public class Token {
 
-	private String token;
+	protected String token;
 
 	public Token(String token) {
 		this.token = token;

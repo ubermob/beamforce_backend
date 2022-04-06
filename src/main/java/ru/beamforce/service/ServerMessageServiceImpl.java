@@ -14,7 +14,6 @@ import java.io.IOException;
 @Service
 public class ServerMessageServiceImpl implements ServerMessageService {
 
-	// TODO replace redis
 	@Autowired
 	private MinidiDriverWithCache driver;
 

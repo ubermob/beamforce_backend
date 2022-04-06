@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <span>org-token:</span>
+    <form action="#" th:action="@{/user/settings/join-org/validation}" th:object="${tokenDTO}" method="post">
+        <input type="text" id="token" th:field="*{token}">
+        <button id="reg_button" type="submit">Зарегестрироваться</button>
+    </form>
+</body>
+</html>

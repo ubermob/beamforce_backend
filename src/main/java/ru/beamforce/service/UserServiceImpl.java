@@ -11,9 +11,11 @@ import ru.beamforce.dao.UserDao;
 import ru.beamforce.dto.EmailDTO;
 import ru.beamforce.dto.RegistrationUserDTO;
 import ru.beamforce.dto.UpdatePasswordDTO;
+import ru.beamforce.entity.Organization;
 import ru.beamforce.entity.User;
 import ru.beamforce.repository.UserRepository;
 import ru.beamforce.shortobject.NewUserInformer;
+import ru.beamforce.shortobject.Token;
 
 import java.security.Principal;
 
@@ -28,6 +30,8 @@ public class UserServiceImpl implements UserService, UserDetailsService, Registr
 	private UserRepository userRepository;
 	@Autowired
 	private UserDao userDao;
+	@Autowired
+	private OrganizationService organizationService;
 
 	@Override
 	public User getUserByUsername(String username) {
@@ -75,6 +79,16 @@ public class UserServiceImpl implements UserService, UserDetailsService, Registr
 	public void leaveOrganization(User user) {
 		user.setOrganization(null);
 		userRepository.save(user);
+	}
+
+	@Override
+	@Transactional
+	public void joinToOrganization(User user, Token token) {
+		Organization organization = organizationService.getOrganizationWithToken(token);
+		if (user.getOrganization() == null && organization != null) {
+			user.setOrganization(organization);
+			userRepository.save(user);
+		}
 	}
 
 	@Override

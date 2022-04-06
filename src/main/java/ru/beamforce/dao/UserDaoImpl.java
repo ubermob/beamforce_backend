@@ -11,7 +11,6 @@ import ru.beamforce.entity.User;
 import ru.beamforce.repository.UserRepository;
 import ru.beamforce.shortobject.NewUserInformer;
 
-import javax.persistence.EntityManager;
 import java.math.BigInteger;
 
 /**
@@ -19,16 +18,12 @@ import java.math.BigInteger;
  * @version 1.0
  */
 @Repository
-public class UserDaoImpl implements UserDao {
+public class UserDaoImpl extends AbstractEntityManager implements UserDao {
 
-	@Autowired
-	private EntityManager entityManager;
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	@Autowired
 	private UserRepository userRepository;
-	@Value("${db.name}")
-	private String dbName;
 	@Value("${db.table.users}")
 	private String tableUsers;
 
@@ -74,13 +69,5 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public void updatePassword(User user, UpdatePasswordDTO updatePasswordDTO) {
 		user.setPassword(passwordEncoder.encode(updatePasswordDTO.getNewPassword()));
-	}
-
-	private String place(String tableName) {
-		return dbName + "." + tableName;
-	}
-
-	private Session unwrap() {
-		return entityManager.unwrap(Session.class);
 	}
 }

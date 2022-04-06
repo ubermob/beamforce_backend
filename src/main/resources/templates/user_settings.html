@@ -45,7 +45,13 @@
 </div>
 
 <div th:if="${user.organization != null}">
+    <div>Имя организации: <b><span th:text="${user.organization.name}">user.organization</span></b></div>
     Токен для приглашения в организацию: <b><span th:text="${user.organization.joinToken}"></span></b>
+</div>
+<div th:if="${user.organization != null && user.id.equals(user.organization.adminId)}">
+    <form th:action="@{__${#httpServletRequest.requestURI}__/new-org-token}">
+        <input type="submit" value="Обновить токен"/>
+    </form>
 </div>
 <br>
 <div th:if="${user.organization == null}">

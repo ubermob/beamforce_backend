@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import ru.beamforce.dto.EmailDTO;
+import ru.beamforce.dto.TokenDTO;
 import ru.beamforce.dto.UpdatePasswordDTO;
 import ru.beamforce.entity.Organization;
 import ru.beamforce.entity.User;
@@ -114,7 +115,11 @@ public class UserController {
 
 	@RequestMapping("/settings/create-org/validation")
 	public String createOrganizationValidation(@Valid Organization organization, Errors errors, Principal principal) {
-		// TODO check unique name
+		boolean nameIsUnique = organizationService.nameIsUnique(organization);
+		if (!nameIsUnique) {
+			errors.rejectValue("name", "error.organization"
+					, "Организация с таким именем недоступна");
+		}
 		if (errors.hasErrors()) {
 			return "user_settings_create_org";
 		} else {
@@ -123,10 +128,29 @@ public class UserController {
 		}
 	}
 
+	@RequestMapping("/settings/join-org")
+	public String joinOrganization(TokenDTO tokenDTO) {
+		return "user_settings_join_org";
+	}
+
+	@RequestMapping("/settings/join-org/validation")
+	public String joinOrganizationValidation(Principal principal, TokenDTO tokenDTO) {
+		User user = userService.getUserByPrincipal(principal);
+		userService.joinToOrganization(user, tokenDTO);
+		return "redirect:/user";
+	}
+
 	@RequestMapping("/settings/leave-org")
 	public String leaveOrganization(Principal principal) {
 		userService.leaveOrganization(userService.getUserByPrincipal(principal));
 		return "redirect:/user";
+	}
+
+	@RequestMapping("/settings/new-org-token")
+	public String newOrganizationToken(Principal principal) {
+		User user = userService.getUserByPrincipal(principal);
+		organizationService.newOrganizationToken(user);
+		return "redirect:/user/settings";
 	}
 
 	@RequestMapping("/model/new-model")
@@ -149,5 +173,10 @@ public class UserController {
 			e.printStackTrace();
 		}
 		return "redirect:/user";
+	}
+
+	@RequestMapping("/model/delete-list")
+	public String deleteList() {
+		return "user_model_delete_list";
 	}
 }
