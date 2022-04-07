@@ -1,7 +1,6 @@
 package ru.beamforce.controller.rest;
 
 import modelutil.container.GridContainer;
-import modelutil.test.Sample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,6 +22,7 @@ public class ModelRestController {
 	@Autowired
 	private GridService gridService;
 
+	// TODO remove
 /*	@RequestMapping("/api/token")
 	public List<Token> token(@RequestParam(required = false) Integer number) {
 		if (number == null) {
@@ -44,6 +44,7 @@ public class ModelRestController {
 		return tokens;
 	}*/
 
+	// TODO remove
 	@RequestMapping("/api/whoiam")
 	public String[] whoIAm(Principal principal) {
 		return new String[]{principal.getName(), "" + principal.hashCode()};
@@ -52,34 +53,5 @@ public class ModelRestController {
 	@RequestMapping("/api/grid")
 	public GridContainer getGridById(@RequestParam() Integer id) {
 		return gridService.get(id);
-	}
-
-	@RequestMapping("/free-api/example/grid")
-	public GridContainer getGridExample() {
-		return Sample.getSample();
-	}
-
-	@RequestMapping("/free-api/hello")
-	public Hello freeHello() {
-		return new Hello("Value 1", "Value 2");
-	}
-
-	private class Hello {
-
-		private String field1;
-		private String field2;
-
-		public Hello(String field1, String field2) {
-			this.field1 = field1;
-			this.field2 = field2;
-		}
-
-		public String getField1() {
-			return field1;
-		}
-
-		public String getField2() {
-			return field2;
-		}
 	}
 }
