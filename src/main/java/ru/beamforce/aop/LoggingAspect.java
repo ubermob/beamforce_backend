@@ -25,7 +25,7 @@ public class LoggingAspect {
 
 	@After("execution(public String ru.beamforce.controller.html.MainController.showMainPage())")
 	public void mainPageAdvice() {
-		LOGGER.info("GET Main page [/]");
+		LOGGER.info("GET [/]");
 	}
 
 	@After("execution(public String ru.beamforce.controller.html.UserController.showUserPage(..))")
@@ -33,7 +33,7 @@ public class LoggingAspect {
 		var args = joinPoint.getArgs();
 		for (var v : args) {
 			if (v instanceof Principal) {
-				LOGGER.info("GET User page [/user], user: '" + ((Principal) v).getName() + "'");
+				LOGGER.info("GET [/user], user: '" + ((Principal) v).getName() + "'");
 			}
 		}
 	}

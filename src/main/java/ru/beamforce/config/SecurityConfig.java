@@ -29,7 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		// https://habr.com/ru/post/482552/
 		http.csrf().disable().authorizeRequests()
 				// All
-				.antMatchers("/", "/reg/**", "/help/**", "/about", "/test/**").permitAll()
+				.antMatchers("/", "/reg/**", "/help/**", "/about", "/test/**", "/example").permitAll()
 				.antMatchers("/style.css").permitAll()
 				.antMatchers("/free-api/**").permitAll()
 				// Admin

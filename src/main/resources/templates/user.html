@@ -13,11 +13,14 @@
 </div>
 
 <div class="model_action_container">
+    <form th:if="${user.organization == null}" th:action="@{__${#httpServletRequest.requestURI}__/settings/join-org}">
+        <input type="submit" value="Вступить в организацию" />
+    </form>
     <form th:action="@{__${#httpServletRequest.requestURI}__/model/new-model}">
         <input type="submit" value="Новая модель" />
     </form>
-    <form th:if="${user.organization == null}" th:action="@{__${#httpServletRequest.requestURI}__/settings/join-org}">
-        <input type="submit" value="Вступить в организацию" />
+    <form th:action="@{__${#httpServletRequest.requestURI}__/model/new-grid}">
+        <input type="submit" value="Новая строительная сетка" />
     </form>
     <form th:action="@{__${#httpServletRequest.requestURI}__/model/share-list}">
         <input type="submit" value="Поделиться моделью" />
@@ -29,35 +32,35 @@
 
 <div class="user_content_container">
     <div class="user_content">
-        <div class="model_name"><a href="">Model 1</a></div>
+        <div class="model_name"><a href="">Fake Model 1</a></div>
         <div class="model_time">date&time</div>
         <div class="model_creator">creator</div>
         <div class="model_comment">comment</div>
         <div class="model_raw"><a href="">raw</a></div>
     </div>
     <div class="user_content">
-        <div class="model_name"><a href="">Model 2</a></div>
+        <div class="model_name"><a href="">Fake Model 2</a></div>
         <div class="model_time">date&time</div>
         <div class="model_creator">creator</div>
         <div class="model_comment">comment</div>
         <div class="model_raw"><a href="">raw</a></div>
     </div>
     <div class="user_content">
-        <div class="model_name"><a href="">Model 3</a></div>
+        <div class="model_name"><a href="">Fake Model 3</a></div>
         <div class="model_time">date&time</div>
         <div class="model_creator">creator</div>
         <div class="model_comment">comment</div>
         <div class="model_raw"><a href="">raw</a></div>
     </div>
     <div class="user_content">
-        <div class="model_name"><a href="">Model 4</a></div>
+        <div class="model_name"><a href="">Fake Model 4</a></div>
         <div class="model_time">date&time</div>
         <div class="model_creator">creator</div>
         <div class="model_comment">comment</div>
         <div class="model_raw"><a href="">raw</a></div>
     </div>
     <div class="user_content">
-        <div class="model_name"><a href="">Model 5</a></div>
+        <div class="model_name"><a href="">Fake Model 5</a></div>
         <div class="model_time">date&time</div>
         <div class="model_creator">creator</div>
         <div class="model_comment">comment</div>

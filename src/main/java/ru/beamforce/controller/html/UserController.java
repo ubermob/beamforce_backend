@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import ru.beamforce.dto.EmailDTO;
+import ru.beamforce.dto.GridInputDTO;
 import ru.beamforce.dto.TokenDTO;
 import ru.beamforce.dto.UpdatePasswordDTO;
 import ru.beamforce.entity.Organization;
@@ -16,6 +17,7 @@ import ru.beamforce.entity.User;
 import ru.beamforce.service.OrganizationService;
 import ru.beamforce.service.ServerMessageService;
 import ru.beamforce.service.UserService;
+import ru.beamforce.tmp.GridService;
 
 import javax.validation.Valid;
 import java.io.IOException;
@@ -38,6 +40,8 @@ public class UserController {
 	private UserService userService;
 	@Autowired
 	private OrganizationService organizationService;
+	@Autowired
+	private GridService gridService;
 
 	@RequestMapping
 	public String showUserPage(Model model, Principal principal) {
@@ -166,6 +170,17 @@ public class UserController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return "redirect:/user";
+	}
+
+	@RequestMapping("/model/new-grid")
+	public String newGrid(GridInputDTO gridInputDTO) {
+		return "upload_new_grid";
+	}
+
+	@PostMapping("/model/new-grid/post")
+	public String newGridPost(GridInputDTO gridInputDTO) {
+		gridService.add(gridInputDTO);
 		return "redirect:/user";
 	}
 

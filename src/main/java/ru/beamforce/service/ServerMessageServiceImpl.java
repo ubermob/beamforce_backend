@@ -19,11 +19,12 @@ public class ServerMessageServiceImpl implements ServerMessageService {
 
 	@Override
 	public String getMessage() {
-		try {
+		// TODO Uncomment this code
+/*		try {
 			return getMessagePrivate();
 		} catch (IOException | ParseException e) {
 			e.printStackTrace();
-		}
+		}*/
 		return null;
 	}
 

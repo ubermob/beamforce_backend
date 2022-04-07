@@ -62,4 +62,9 @@ public class MainController {
 	public String showAboutPage() {
 		return "about";
 	}
+
+	@RequestMapping("/example")
+	public String showSamplePage() {
+		return "example";
+	}
 }
