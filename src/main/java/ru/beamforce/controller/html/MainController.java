@@ -74,13 +74,5 @@ public class MainController {
 	}
 
 	private record MetaKeyAndValue(String key, String value) {
-
-		public String getKey() {
-			return key;
-		}
-
-		public String getValue() {
-			return value;
-		}
 	}
 }
