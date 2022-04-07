@@ -1,7 +1,7 @@
 package ru.beamforce.bean;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 import java.util.Random;
 
@@ -9,7 +9,7 @@ import java.util.Random;
  * @author Andrey Korneychuk on 04-Feb-22
  * @version 1.0
  */
-@Configuration
+@Component
 public class RandomToken {
 
 	private final Random random;

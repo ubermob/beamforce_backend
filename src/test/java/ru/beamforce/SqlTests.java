@@ -1,6 +1,5 @@
 package ru.beamforce;
 
-import org.hibernate.Session;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -8,8 +7,6 @@ import ru.beamforce.dao.OrganizationDao;
 import ru.beamforce.entity.Organization;
 import ru.beamforce.service.OrganizationService;
 import ru.beamforce.shortobject.Token;
-
-import javax.persistence.EntityManager;
 
 /**
  * @author Andrey Korneychuk on 07-Apr-22
