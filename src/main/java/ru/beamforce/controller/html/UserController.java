@@ -46,7 +46,7 @@ public class UserController {
 		if (serverMessageService.getMessage() != null) {
 			model.addAttribute("server_message", serverMessageService.getMessage());
 		}
-		return "logged";
+		return "user";
 	}
 
 	@RequestMapping("/settings")
