@@ -8,6 +8,7 @@ import ru.beamforce.bean.RandomToken;
 import ru.beamforce.shortobject.HelloMessage;
 import ru.beamforce.shortobject.Token;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,5 +46,11 @@ public class ModelRestController {
 			tokens.add(new Token(randomToken.getTinyToken(32)));
 		}
 		return tokens;
+	}
+
+	@RequestMapping("/api/whoiam")
+	public void whoIAm(Principal principal) {
+		System.out.println(principal.getName());
+		System.out.println(principal.hashCode());
 	}
 }
