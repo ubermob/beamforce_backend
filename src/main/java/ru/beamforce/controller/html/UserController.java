@@ -42,12 +42,6 @@ public class UserController {
 	@RequestMapping
 	public String showUserPage(Model model, Principal principal) {
 		User user = userService.getUserByPrincipal(principal);
-		System.out.println(user);
-		try {
-			System.out.println(user.getOrganization());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		model.addAttribute("user", user);
 		if (serverMessageService.getMessage() != null) {
 			model.addAttribute("server_message", serverMessageService.getMessage());

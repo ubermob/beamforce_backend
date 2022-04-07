@@ -49,8 +49,7 @@ public class ModelRestController {
 	}
 
 	@RequestMapping("/api/whoiam")
-	public void whoIAm(Principal principal) {
-		System.out.println(principal.getName());
-		System.out.println(principal.hashCode());
+	public String[] whoIAm(Principal principal) {
+		return new String[]{principal.getName(), "" + principal.hashCode()};
 	}
 }
