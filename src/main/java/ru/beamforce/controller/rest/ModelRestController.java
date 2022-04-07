@@ -54,7 +54,7 @@ public class ModelRestController {
 		return gridService.get(id);
 	}
 
-	@RequestMapping("/free-api/hello")
+	@RequestMapping("/free-api/example/grid")
 	public GridContainer getGridExample() {
 		return Sample.getSample();
 	}
