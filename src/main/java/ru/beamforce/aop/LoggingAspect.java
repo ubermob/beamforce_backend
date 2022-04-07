@@ -33,9 +33,8 @@ public class LoggingAspect {
 		var args = joinPoint.getArgs();
 		for (var v : args) {
 			if (v instanceof Principal) {
-				LOGGER.info("GET User page [/user], user: '" + ((Principal) args[1]).getName() + "'");
+				LOGGER.info("GET User page [/user], user: '" + ((Principal) v).getName() + "'");
 			}
 		}
-		//System.out.println("GET User page [/user], user: '" + ((Principal) args[1]).getName() + "'");
 	}
 }
