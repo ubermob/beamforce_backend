@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{fragments/head_tag :: head_tag}">
 </head>
 <body>
-example
+<div id="js-target">JS-TARGET</div>
+<script type="text/javascript" src="/example.js"></script>
 </body>
 </html>

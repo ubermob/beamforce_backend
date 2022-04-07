@@ -63,8 +63,24 @@ public class MainController {
 		return "about";
 	}
 
+	public MainController(RegistrationUserService registrationUserService) {
+		this.registrationUserService = registrationUserService;
+	}
+
 	@RequestMapping("/example")
-	public String showSamplePage() {
+	public String showSamplePage(Model model) {
+		model.addAttribute("meta_example", new MetaKeyAndValue("meta.test.key", "abcd"));
 		return "example";
+	}
+
+	private record MetaKeyAndValue(String key, String value) {
+
+		public String getKey() {
+			return key;
+		}
+
+		public String getValue() {
+			return value;
+		}
 	}
 }
