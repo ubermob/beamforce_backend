@@ -2,6 +2,7 @@ package ru.beamforce.controller.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.beamforce.bean.RandomToken;
 import ru.beamforce.shortobject.HelloMessage;
@@ -26,9 +27,12 @@ public class ModelRestController {
 	}
 
 	@RequestMapping("/api/token")
-	public List<Token> token() {
+	public List<Token> token(@RequestParam(required = false) Integer number) {
+		if (number == null) {
+			number = 1;
+		}
 		List<Token> tokens = new ArrayList<>();
-		for (int i = 0; i < 1; i++) {
+		for (int i = 0; i < number; i++) {
 			tokens.add(new Token(randomToken.getToken(32)));
 		}
 		return tokens;
