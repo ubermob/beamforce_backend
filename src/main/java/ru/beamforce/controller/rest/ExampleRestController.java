@@ -1,7 +1,7 @@
 package ru.beamforce.controller.rest;
 
 import modelutil.container.GridContainer;
-import modelutil.test.Sample;
+import modelutil.test.Example;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,7 +18,7 @@ public class ExampleRestController {
 	@RequestMapping("/grid")
 	public GridContainer getGridExample() {
 		if (example == null) {
-			example = Sample.getSample();
+			example = Example.getExample();
 		}
 		return example;
 	}
