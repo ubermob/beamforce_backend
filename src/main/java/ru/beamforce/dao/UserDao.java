@@ -13,6 +13,8 @@ public interface UserDao {
 
 	void createNewUser(RegistrationUserDTO registrationUser);
 
+	void createNewUser(User user);
+
 	NewUserInformer getNewUserInformer(RegistrationUserDTO registrationUser);
 
 	boolean comparePasswords(User user, UpdatePasswordDTO updatePasswordDTO);

@@ -34,6 +34,11 @@
       "name": "minidi.expired_time",
       "type": "java.lang.String",
       "description": "Description for minidi.expired_time."
+    },
+    {
+      "name": "db.table.organizations",
+      "type": "java.lang.String",
+      "description": "Description for db.table.organizations."
     }
   ]
 }

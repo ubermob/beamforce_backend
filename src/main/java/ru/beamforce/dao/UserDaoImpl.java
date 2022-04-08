@@ -35,6 +35,11 @@ public class UserDaoImpl extends AbstractEntityManager implements UserDao {
 		user.setPassword(passwordEncoder.encode(registrationUser.getPassword()));
 		user.setActive(true);
 		user.setRoleUser();
+		createNewUser(user);
+	}
+
+	@Override
+	public void createNewUser(User user) {
 		userRepository.save(user);
 	}
 

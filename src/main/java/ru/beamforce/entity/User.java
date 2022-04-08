@@ -117,7 +117,7 @@ public class User implements UserDetails {
 		}
 	}
 
-	public void setRoleSuperUser() {
+	public void setRoleUserAndAdmin() {
 		if (roles == null) {
 			roles = new HashSet<>();
 			roles.add(Role.USER);
