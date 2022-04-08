@@ -1,5 +1,6 @@
 package ru.beamforce.component;
 
+import modelutil.test.Example;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
@@ -7,7 +8,9 @@ import org.springframework.core.annotation.Order;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import ru.beamforce.dto.RegistrationUserDTO;
+import ru.beamforce.entity.GridEntity;
 import ru.beamforce.entity.User;
+import ru.beamforce.repository.GridRepository;
 import ru.beamforce.service.AdminUserService;
 import ru.beamforce.service.RegistrationUserService;
 import ru.beamforce.shortobject.NewUserInformer;
@@ -25,12 +28,19 @@ public class AfterStartComponent {
 	private PasswordEncoder passwordEncoder;
 	@Autowired
 	private AdminUserService adminUserService;
+	@Autowired
+	private GridRepository gridRepository;
+
+	@Order(0)
+	@EventListener(ApplicationReadyEvent.class)
+	public void orderZeroAnnounce() {
+		print(getClass().getSimpleName() + " start");
+	}
 
 	@Order(1)
 	@EventListener(ApplicationReadyEvent.class)
-	public void doSomethingAfterStartup() {
-		System.out.println("hello world, I have just started up");
-
+	public void checkAdmin() {
+		print("Checking Admin existing");
 		NewUserInformer adminInformer = registrationUserService.getNewUserInformer(
 				new RegistrationUserDTO("Admin", "", "")
 		);
@@ -38,14 +48,37 @@ public class AfterStartComponent {
 			User user = new User();
 			user.setName("Admin");
 			// TODO Change
-			user.setPassword(passwordEncoder.encode("123"));
+			String password = "123";
+			user.setPassword(passwordEncoder.encode(password));
 			user.setActive(true);
 			user.setRoleUserAndAdmin();
-			System.out.println();
 			adminUserService.createUser(user);
-			System.out.println("Admin user created");
+			print("Admin user created, nickname: %s, password: %s (DO NOT FORGET CHANGE IT)"
+					.formatted(user.getName(), password));
 		} else {
-			System.out.println("Admin user already exist");
+			print("Admin user already exist");
 		}
+	}
+
+	@Order(2)
+	@EventListener(ApplicationReadyEvent.class)
+	public void checkExampleGrid() {
+		print("Checking example grid");
+		if (gridRepository.existsById(1L)) {
+			print("Example grid already exist");
+		} else {
+			// TODO saved entity can have ID != 1
+			GridEntity gridEntity = new GridEntity();
+			gridEntity.setId(1L);
+			gridEntity.setGridContainer(Example.getExample());
+			gridEntity.setName("Example");
+			gridEntity.setCommentary("Example");
+			gridRepository.save(gridEntity);
+			print("Example grid created");
+		}
+	}
+
+	private void print(String string) {
+		System.out.println(string);
 	}
 }

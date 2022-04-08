@@ -23,7 +23,7 @@ https://stackoverflow.com/questions/62232055/how-to-save-json-object-in-postgres
 public class GridEntity {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	@Type(type = "json")
 	@Column(name = "grid_container")
