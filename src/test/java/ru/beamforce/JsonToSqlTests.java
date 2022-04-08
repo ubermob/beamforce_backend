@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import ru.beamforce.tmp.Book;
 import ru.beamforce.tmp.BookRepo;
-import ru.beamforce.tmp.GridEntity;
-import ru.beamforce.tmp.GridRepository;
+import ru.beamforce.entity.GridEntity;
+import ru.beamforce.repository.GridRepository;
 
 import java.time.LocalDateTime;
 

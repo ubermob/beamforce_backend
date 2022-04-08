@@ -1,9 +1,10 @@
 package ru.beamforce.controller.rest;
 
 import modelutil.container.GridContainer;
-import modelutil.test.Example;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ru.beamforce.repository.GridRepository;
 
 /**
  * @author Andrey Korneychuk on 07-Apr-22
@@ -13,13 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/free-api/example")
 public class ExampleRestController {
 
-	private GridContainer example;
+	@Autowired
+	private GridRepository gridRepository;
 
 	@RequestMapping("/grid")
 	public GridContainer getGridExample() {
-		if (example == null) {
-			example = Example.getExample();
-		}
-		return example;
+		return gridRepository.getById(1L).getGridContainer();
 	}
 }

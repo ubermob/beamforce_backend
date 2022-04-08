@@ -1,4 +1,4 @@
-package ru.beamforce.tmp;
+package ru.beamforce.entity;
 
 import com.vladmihalcea.hibernate.type.json.JsonType;
 import modelutil.container.GridContainer;
