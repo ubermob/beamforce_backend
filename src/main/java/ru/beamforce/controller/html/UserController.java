@@ -12,8 +12,8 @@ import ru.beamforce.dto.EmailDTO;
 import ru.beamforce.dto.GridInputDTO;
 import ru.beamforce.dto.TokenDTO;
 import ru.beamforce.dto.UpdatePasswordDTO;
-import ru.beamforce.entity.Organization;
-import ru.beamforce.entity.User;
+import ru.beamforce.entity.OrganizationEntity;
+import ru.beamforce.entity.UserEntity;
 import ru.beamforce.service.OrganizationService;
 import ru.beamforce.service.ServerMessageService;
 import ru.beamforce.service.UserService;
@@ -45,7 +45,7 @@ public class UserController {
 
 	@RequestMapping
 	public String showUserPage(Model model, Principal principal) {
-		User user = userService.getUserByPrincipal(principal);
+		UserEntity user = userService.getUserByPrincipal(principal);
 		model.addAttribute("user", user);
 		if (serverMessageService.getMessage() != null) {
 			model.addAttribute("server_message", serverMessageService.getMessage());
@@ -55,7 +55,7 @@ public class UserController {
 
 	@RequestMapping("/settings")
 	public String userSettings(EmailDTO emailDTO, Model model, Principal principal) {
-		User user = userService.getUserByUsername(principal.getName());
+		UserEntity user = userService.getUserByUsername(principal.getName());
 		model.addAttribute("user", user);
 		emailDTO.setEmail(user.getEmail());
 		model.addAttribute("emailDTO", emailDTO);
@@ -64,7 +64,7 @@ public class UserController {
 
 	@RequestMapping("/settings/validation")
 	public String userSettingsValidation(@Valid EmailDTO emailDTO, Errors errors, Model model, Principal principal) {
-		User user = userService.getUserByUsername(principal.getName());
+		UserEntity user = userService.getUserByUsername(principal.getName());
 		model.addAttribute("user", user);
 		model.addAttribute("emailDTO", emailDTO);
 		if (errors.hasErrors()) {
@@ -82,7 +82,7 @@ public class UserController {
 
 	@RequestMapping("/settings/update-password/validation")
 	public String updatePasswordValidation(@Valid UpdatePasswordDTO updatePasswordDTO, Errors errors, Principal principal) {
-		User user = userService.getUserByPrincipal(principal);
+		UserEntity user = userService.getUserByPrincipal(principal);
 		userService.comparePassword(user, updatePasswordDTO, errors);
 		if (errors.hasErrors()) {
 			return "user_settings_update_password";
@@ -94,25 +94,25 @@ public class UserController {
 
 	@RequestMapping("/settings/delete-email")
 	public String deleteEmail(Principal principal) {
-		User user = userService.getUserByUsername(principal.getName());
+		UserEntity user = userService.getUserByUsername(principal.getName());
 		userService.deleteEmail(user);
 		return "redirect:/user/settings";
 	}
 
 	@RequestMapping("/settings/delete-user")
 	public String deleteUser(Principal principal) {
-		User user = userService.getUserByUsername(principal.getName());
+		UserEntity user = userService.getUserByUsername(principal.getName());
 		userService.deleteUser(user);
 		return "redirect:/logout";
 	}
 
 	@RequestMapping("/settings/create-org")
-	public String createOrganization(Organization organization) {
+	public String createOrganization(OrganizationEntity organization) {
 		return "user_settings_create_org";
 	}
 
 	@RequestMapping("/settings/create-org/validation")
-	public String createOrganizationValidation(@Valid Organization organization, Errors errors, Principal principal) {
+	public String createOrganizationValidation(@Valid OrganizationEntity organization, Errors errors, Principal principal) {
 		boolean nameIsUnique = organizationService.nameIsUnique(organization);
 		if (!nameIsUnique) {
 			errors.rejectValue("name", "error.organization"
@@ -133,7 +133,7 @@ public class UserController {
 
 	@RequestMapping("/settings/join-org/validation")
 	public String joinOrganizationValidation(Principal principal, TokenDTO tokenDTO) {
-		User user = userService.getUserByPrincipal(principal);
+		UserEntity user = userService.getUserByPrincipal(principal);
 		userService.joinToOrganization(user, tokenDTO);
 		return "redirect:/user";
 	}
@@ -146,7 +146,7 @@ public class UserController {
 
 	@RequestMapping("/settings/new-org-token")
 	public String newOrganizationToken(Principal principal) {
-		User user = userService.getUserByPrincipal(principal);
+		UserEntity user = userService.getUserByPrincipal(principal);
 		organizationService.newOrganizationToken(user);
 		return "redirect:/user/settings";
 	}

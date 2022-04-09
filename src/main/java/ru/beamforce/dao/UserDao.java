@@ -1,7 +1,7 @@
 package ru.beamforce.dao;
 
 import ru.beamforce.dto.UpdatePasswordDTO;
-import ru.beamforce.entity.User;
+import ru.beamforce.entity.UserEntity;
 import ru.beamforce.shortobject.NewUserInformer;
 import ru.beamforce.dto.RegistrationUserDTO;
 
@@ -13,11 +13,11 @@ public interface UserDao {
 
 	void createNewUser(RegistrationUserDTO registrationUser);
 
-	void createNewUser(User user);
+	void createNewUser(UserEntity user);
 
 	NewUserInformer getNewUserInformer(RegistrationUserDTO registrationUser);
 
-	boolean comparePasswords(User user, UpdatePasswordDTO updatePasswordDTO);
+	boolean comparePasswords(UserEntity user, UpdatePasswordDTO updatePasswordDTO);
 
-	void updatePassword(User user, UpdatePasswordDTO updatePasswordDTO);
+	void updatePassword(UserEntity user, UpdatePasswordDTO updatePasswordDTO);
 }

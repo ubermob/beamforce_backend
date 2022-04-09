@@ -7,7 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 import ru.beamforce.dto.RegistrationUserDTO;
 import ru.beamforce.dto.UpdatePasswordDTO;
-import ru.beamforce.entity.User;
+import ru.beamforce.entity.UserEntity;
 import ru.beamforce.repository.UserRepository;
 import ru.beamforce.shortobject.NewUserInformer;
 
@@ -29,7 +29,7 @@ public class UserDaoImpl extends AbstractEntityManager implements UserDao {
 
 	@Override
 	public void createNewUser(RegistrationUserDTO registrationUser) {
-		User user = new User();
+		UserEntity user = new UserEntity();
 		user.setName(registrationUser.getName());
 		user.setEmail(registrationUser.getEmail());
 		user.setPassword(passwordEncoder.encode(registrationUser.getPassword()));
@@ -39,7 +39,7 @@ public class UserDaoImpl extends AbstractEntityManager implements UserDao {
 	}
 
 	@Override
-	public void createNewUser(User user) {
+	public void createNewUser(UserEntity user) {
 		userRepository.save(user);
 	}
 
@@ -67,12 +67,12 @@ public class UserDaoImpl extends AbstractEntityManager implements UserDao {
 	}
 
 	@Override
-	public boolean comparePasswords(User user, UpdatePasswordDTO updatePasswordDTO) {
+	public boolean comparePasswords(UserEntity user, UpdatePasswordDTO updatePasswordDTO) {
 		return passwordEncoder.matches(updatePasswordDTO.getOldPassword(), user.getPassword());
 	}
 
 	@Override
-	public void updatePassword(User user, UpdatePasswordDTO updatePasswordDTO) {
+	public void updatePassword(UserEntity user, UpdatePasswordDTO updatePasswordDTO) {
 		user.setPassword(passwordEncoder.encode(updatePasswordDTO.getNewPassword()));
 	}
 }

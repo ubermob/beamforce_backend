@@ -11,8 +11,8 @@ import ru.beamforce.dao.UserDao;
 import ru.beamforce.dto.EmailDTO;
 import ru.beamforce.dto.RegistrationUserDTO;
 import ru.beamforce.dto.UpdatePasswordDTO;
-import ru.beamforce.entity.Organization;
-import ru.beamforce.entity.User;
+import ru.beamforce.entity.OrganizationEntity;
+import ru.beamforce.entity.UserEntity;
 import ru.beamforce.repository.UserRepository;
 import ru.beamforce.shortobject.NewUserInformer;
 import ru.beamforce.shortobject.Token;
@@ -34,34 +34,34 @@ public class UserServiceImpl implements UserService, UserDetailsService, Registr
 	private OrganizationService organizationService;
 
 	@Override
-	public User getUserByUsername(String username) {
+	public UserEntity getUserByUsername(String username) {
 		return userRepository.findByName(username);
 	}
 
 	@Override
-	public User getUserByPrincipal(Principal principal) {
+	public UserEntity getUserByPrincipal(Principal principal) {
 		return getUserByUsername(principal.getName());
 	}
 
 	@Override
-	public void deleteEmail(User user) {
+	public void deleteEmail(UserEntity user) {
 		user.setEmail(null);
 		userRepository.save(user);
 	}
 
 	@Override
-	public void deleteUser(User user) {
+	public void deleteUser(UserEntity user) {
 		userRepository.delete(user);
 	}
 
 	@Override
-	public void updateEmail(User user, EmailDTO emailDTO) {
+	public void updateEmail(UserEntity user, EmailDTO emailDTO) {
 		user.setEmail(emailDTO.getEmail());
 		userRepository.save(user);
 	}
 
 	@Override
-	public void comparePassword(User user, UpdatePasswordDTO updatePasswordDTO, Errors errors) {
+	public void comparePassword(UserEntity user, UpdatePasswordDTO updatePasswordDTO, Errors errors) {
 		boolean isMatches = userDao.comparePasswords(user, updatePasswordDTO);
 		if (!isMatches) {
 			errors.rejectValue("oldPassword", "error.updatePasswordDTO"
@@ -70,21 +70,21 @@ public class UserServiceImpl implements UserService, UserDetailsService, Registr
 	}
 
 	@Override
-	public void updatePassword(User user, UpdatePasswordDTO updatePasswordDTO) {
+	public void updatePassword(UserEntity user, UpdatePasswordDTO updatePasswordDTO) {
 		userDao.updatePassword(user, updatePasswordDTO);
 		userRepository.save(user);
 	}
 
 	@Override
-	public void leaveOrganization(User user) {
+	public void leaveOrganization(UserEntity user) {
 		user.setOrganization(null);
 		userRepository.save(user);
 	}
 
 	@Override
 	@Transactional
-	public void joinToOrganization(User user, Token token) {
-		Organization organization = organizationService.getOrganizationWithToken(token);
+	public void joinToOrganization(UserEntity user, Token token) {
+		OrganizationEntity organization = organizationService.getOrganizationWithToken(token);
 		if (user.getOrganization() == null && organization != null) {
 			user.setOrganization(organization);
 			userRepository.save(user);
@@ -93,7 +93,7 @@ public class UserServiceImpl implements UserService, UserDetailsService, Registr
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		User user = userRepository.findByName(username);
+		UserEntity user = userRepository.findByName(username);
 		if (user == null) {
 			throw new UsernameNotFoundException("User not found");
 		}

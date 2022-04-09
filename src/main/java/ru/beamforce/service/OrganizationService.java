@@ -1,8 +1,7 @@
 package ru.beamforce.service;
 
-import org.springframework.stereotype.Service;
-import ru.beamforce.entity.Organization;
-import ru.beamforce.entity.User;
+import ru.beamforce.entity.OrganizationEntity;
+import ru.beamforce.entity.UserEntity;
 import ru.beamforce.shortobject.Token;
 
 /**
@@ -11,11 +10,11 @@ import ru.beamforce.shortobject.Token;
  */
 public interface OrganizationService {
 
-	void createOrganization(User user, Organization organization);
+	void createOrganization(UserEntity user, OrganizationEntity organization);
 
-	Organization getOrganizationWithToken(Token token);
+	OrganizationEntity getOrganizationWithToken(Token token);
 
-	void newOrganizationToken(User user);
+	void newOrganizationToken(UserEntity user);
 
-	boolean nameIsUnique(Organization organization);
+	boolean nameIsUnique(OrganizationEntity organization);
 }

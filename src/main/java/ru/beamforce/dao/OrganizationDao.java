@@ -1,7 +1,7 @@
 package ru.beamforce.dao;
 
-import ru.beamforce.entity.Organization;
-import ru.beamforce.entity.User;
+import ru.beamforce.entity.OrganizationEntity;
+import ru.beamforce.entity.UserEntity;
 import ru.beamforce.shortobject.Token;
 
 /**
@@ -10,9 +10,9 @@ import ru.beamforce.shortobject.Token;
  */
 public interface OrganizationDao {
 
-	void createOrganization(User user, Organization organization);
+	void createOrganization(UserEntity user, OrganizationEntity organization);
 
-	Organization getOrganizationWithToken(Token token);
+	OrganizationEntity getOrganizationWithToken(Token token);
 
-	boolean nameIsUnique(Organization organization);
+	boolean nameIsUnique(OrganizationEntity organization);
 }

@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -14,11 +15,8 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "usr")
-public class User implements UserDetails {
+public class UserEntity extends BaseEntity implements UserDetails {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
 	private String name;
 	private String email;
 	private String password;
@@ -29,7 +27,9 @@ public class User implements UserDetails {
 	private Set<Role> roles;
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "org_id")
-	private Organization organization;
+	private OrganizationEntity organization;
+	@Transient
+	private List<GridEntity> gridEntityList;
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -64,14 +64,6 @@ public class User implements UserDetails {
 	@Override
 	public boolean isEnabled() {
 		return isActive;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public String getName() {
@@ -125,12 +117,20 @@ public class User implements UserDetails {
 		}
 	}
 
-	public Organization getOrganization() {
+	public OrganizationEntity getOrganization() {
 		return organization;
 	}
 
-	public void setOrganization(Organization organization) {
+	public void setOrganization(OrganizationEntity organization) {
 		this.organization = organization;
+	}
+
+	public List<GridEntity> getGridEntityList() {
+		return gridEntityList;
+	}
+
+	public void setGridEntityList(List<GridEntity> gridEntityList) {
+		this.gridEntityList = gridEntityList;
 	}
 
 	@Override

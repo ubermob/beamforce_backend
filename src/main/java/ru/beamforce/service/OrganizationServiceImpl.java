@@ -5,8 +5,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.beamforce.bean.RandomToken;
 import ru.beamforce.dao.OrganizationDao;
-import ru.beamforce.entity.Organization;
-import ru.beamforce.entity.User;
+import ru.beamforce.entity.OrganizationEntity;
+import ru.beamforce.entity.UserEntity;
 import ru.beamforce.repository.OrganizationRepository;
 import ru.beamforce.shortobject.Token;
 
@@ -25,27 +25,27 @@ public class OrganizationServiceImpl implements OrganizationService {
 	private RandomToken randomToken;
 
 	@Override
-	public void createOrganization(User user, Organization organization) {
+	public void createOrganization(UserEntity user, OrganizationEntity organization) {
 		organizationDao.createOrganization(user, organization);
 	}
 
 	@Override
 	@Transactional
-	public Organization getOrganizationWithToken(Token token) {
+	public OrganizationEntity getOrganizationWithToken(Token token) {
 		return organizationDao.getOrganizationWithToken(token);
 	}
 
 	@Override
-	public void newOrganizationToken(User user) {
-		if (user.getId().equals(user.getOrganization().getAdminId()) && user.getOrganization() != null) {
-			Organization organization = user.getOrganization();
+	public void newOrganizationToken(UserEntity user) {
+		if (user.getId() == user.getOrganization().getAdminId() && user.getOrganization() != null) {
+			OrganizationEntity organization = user.getOrganization();
 			organization.setJoinToken(randomToken.getToken());
 			organizationRepository.save(organization);
 		}
 	}
 
 	@Override
-	public boolean nameIsUnique(Organization organization) {
+	public boolean nameIsUnique(OrganizationEntity organization) {
 		return organizationDao.nameIsUnique(organization);
 	}
 }

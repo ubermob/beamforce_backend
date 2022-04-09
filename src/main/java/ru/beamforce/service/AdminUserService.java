@@ -1,6 +1,6 @@
 package ru.beamforce.service;
 
-import ru.beamforce.entity.User;
+import ru.beamforce.entity.UserEntity;
 
 /**
  * @author Andrey Korneychuk on 08-Apr-22
@@ -8,5 +8,5 @@ import ru.beamforce.entity.User;
  */
 public interface AdminUserService {
 
-	void createUser(User user);
+	void createUser(UserEntity user);
 }

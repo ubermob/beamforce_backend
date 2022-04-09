@@ -3,7 +3,7 @@ package ru.beamforce.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.beamforce.dao.UserDao;
-import ru.beamforce.entity.User;
+import ru.beamforce.entity.UserEntity;
 
 /**
  * @author Andrey Korneychuk on 08-Apr-22
@@ -16,7 +16,7 @@ public class AdminUserServiceImpl implements AdminUserService {
 	private UserDao userDao;
 
 	@Override
-	public void createUser(User user) {
+	public void createUser(UserEntity user) {
 		userDao.createNewUser(user);
 	}
 }

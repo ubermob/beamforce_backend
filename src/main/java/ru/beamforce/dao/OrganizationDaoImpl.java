@@ -5,8 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 import ru.beamforce.bean.RandomToken;
-import ru.beamforce.entity.Organization;
-import ru.beamforce.entity.User;
+import ru.beamforce.entity.OrganizationEntity;
+import ru.beamforce.entity.UserEntity;
 import ru.beamforce.repository.UserRepository;
 import ru.beamforce.shortobject.Token;
 
@@ -28,7 +28,7 @@ public class OrganizationDaoImpl extends AbstractEntityManager implements Organi
 	private String tableOrganizations;
 
 	@Override
-	public void createOrganization(User user, Organization organization) {
+	public void createOrganization(UserEntity user, OrganizationEntity organization) {
 		organization.setJoinToken(randomToken.getToken());
 		organization.setAdminId(user.getId());
 		user.setOrganization(organization);
@@ -36,14 +36,14 @@ public class OrganizationDaoImpl extends AbstractEntityManager implements Organi
 	}
 
 	@Override
-	public Organization getOrganizationWithToken(Token token) {
+	public OrganizationEntity getOrganizationWithToken(Token token) {
 		Session session = unwrap();
 
 		var query = session.createNativeQuery(
 				"select * from " + place(tableOrganizations) + " where join_token=:token"
-				, Organization.class
+				, OrganizationEntity.class
 		);
-		var resultList = (List<Organization>) query.setParameter("token", token.getToken()).getResultList();
+		var resultList = (List<OrganizationEntity>) query.setParameter("token", token.getToken()).getResultList();
 
 		// list size must be == 1
 		if (resultList.size() == 1) {
@@ -54,7 +54,7 @@ public class OrganizationDaoImpl extends AbstractEntityManager implements Organi
 	}
 
 	@Override
-	public boolean nameIsUnique(Organization organization) {
+	public boolean nameIsUnique(OrganizationEntity organization) {
 		Session session = unwrap();
 
 		var query = session.createSQLQuery(

@@ -1,6 +1,7 @@
 package ru.beamforce.entity;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -10,24 +11,13 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "organizations")
-public class Organization {
+public class OrganizationEntity extends BaseEntity {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
 	@Pattern(regexp = "[a-zA-Z\\d_-]+", message = "Некорректный паттерн")
 	@Size(min = 3, max = 25, message = "Длина имени должна быть от 3 до 25")
 	private String name;
-	private Long adminId;
+	private long adminId;
 	private String joinToken;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	public String getName() {
 		return name;
@@ -37,11 +27,11 @@ public class Organization {
 		this.name = name;
 	}
 
-	public Long getAdminId() {
+	public long getAdminId() {
 		return adminId;
 	}
 
-	public void setAdminId(Long adminId) {
+	public void setAdminId(long adminId) {
 		this.adminId = adminId;
 	}
 

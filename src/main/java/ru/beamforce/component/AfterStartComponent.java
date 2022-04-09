@@ -9,7 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import ru.beamforce.dto.RegistrationUserDTO;
 import ru.beamforce.entity.GridEntity;
-import ru.beamforce.entity.User;
+import ru.beamforce.entity.UserEntity;
 import ru.beamforce.repository.GridRepository;
 import ru.beamforce.service.AdminUserService;
 import ru.beamforce.service.RegistrationUserService;
@@ -45,7 +45,7 @@ public class AfterStartComponent {
 				new RegistrationUserDTO("Admin", "", "")
 		);
 		if (adminInformer.isAvailableName()) {
-			User user = new User();
+			UserEntity user = new UserEntity();
 			user.setName("Admin");
 			// TODO Change
 			String password = "123";

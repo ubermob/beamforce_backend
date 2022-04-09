@@ -5,7 +5,9 @@ import modelutil.container.GridContainer;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.time.LocalDateTime;
 
 /*
@@ -18,13 +20,10 @@ https://stackoverflow.com/questions/62232055/how-to-save-json-object-in-postgres
  * @version 1.0
  */
 @Entity
-@Table(name = "test_json")
+@Table(name = "grids")
 @TypeDef(name = "json", typeClass = JsonType.class)
-public class GridEntity {
+public class GridEntity extends BaseEntity {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
 	@Type(type = "json")
 	@Column(name = "grid_container")
 	private GridContainer gridContainer;
@@ -41,14 +40,6 @@ public class GridEntity {
 		this.name = name;
 		this.commentary = commentary;
 		localDateTime = LocalDateTime.now();
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public GridContainer getGridContainer() {

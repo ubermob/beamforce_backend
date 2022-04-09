@@ -3,7 +3,7 @@ package ru.beamforce.service;
 import org.springframework.validation.Errors;
 import ru.beamforce.dto.EmailDTO;
 import ru.beamforce.dto.UpdatePasswordDTO;
-import ru.beamforce.entity.User;
+import ru.beamforce.entity.UserEntity;
 import ru.beamforce.shortobject.Token;
 
 import java.security.Principal;
@@ -14,21 +14,21 @@ import java.security.Principal;
  */
 public interface UserService {
 
-	User getUserByUsername(String username);
+	UserEntity getUserByUsername(String username);
 
-	User getUserByPrincipal(Principal principal);
+	UserEntity getUserByPrincipal(Principal principal);
 
-	void deleteEmail(User user);
+	void deleteEmail(UserEntity user);
 
-	void deleteUser(User user);
+	void deleteUser(UserEntity user);
 
-	void updateEmail(User user, EmailDTO emailDTO);
+	void updateEmail(UserEntity user, EmailDTO emailDTO);
 
-	void comparePassword(User user, UpdatePasswordDTO updatePasswordDTO, Errors errors);
+	void comparePassword(UserEntity user, UpdatePasswordDTO updatePasswordDTO, Errors errors);
 
-	void updatePassword(User user, UpdatePasswordDTO updatePasswordDTO);
+	void updatePassword(UserEntity user, UpdatePasswordDTO updatePasswordDTO);
 
-	void leaveOrganization(User user);
+	void leaveOrganization(UserEntity user);
 
-	void joinToOrganization(User user, Token token);
+	void joinToOrganization(UserEntity user, Token token);
 }
