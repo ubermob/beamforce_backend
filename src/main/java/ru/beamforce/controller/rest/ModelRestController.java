@@ -52,6 +52,6 @@ public class ModelRestController {
 
 	@RequestMapping("/api/grid")
 	public GridContainer getGridById(@RequestParam() Integer id) {
-		return gridService.get(id);
+		return gridService.getGridContainer(id);
 	}
 }

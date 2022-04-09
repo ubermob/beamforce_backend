@@ -2,10 +2,11 @@ package ru.beamforce.tmp;
 
 import modelutil.container.GridContainer;
 import modelutil.gridparser.GridParser;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.beamforce.dto.GridInputDTO;
-
-import java.util.HashMap;
+import ru.beamforce.entity.GridEntity;
+import ru.beamforce.repository.GridRepository;
 
 /**
  * @author Andrey Korneychuk on 07-Apr-22
@@ -14,10 +15,8 @@ import java.util.HashMap;
 @Service
 public class GridServiceImpl implements GridService {
 
-	private static HashMap<Integer, GridContainer> storage = new HashMap<>();
-	private static HashMap<Integer, String> gridContainerAsStringStorage = new HashMap<>();
-	private static HashMap<Integer, String> gridParserLogStorage = new HashMap<>();
-	private static int idCounter = 1;
+	@Autowired
+	private GridRepository gridRepository;
 
 	@Override
 	public void add(GridInputDTO gridInputDTO) {
@@ -26,19 +25,20 @@ public class GridServiceImpl implements GridService {
 		// Remove this
 		gridParser.parse(gridInputDTO.getAlong().replace("\r", "")
 				+ "\n" + gridInputDTO.getAcross().replace("\r", ""));
-		storage.put(idCounter, gridParser.getGridContainer());
-		gridContainerAsStringStorage.put(idCounter, gridParser.getGridContainer().toString());
-		gridParserLogStorage.put(idCounter, gridParser.getLogMessages());
-		idCounter++;
-		System.out.println("------------");
-		System.out.println(gridContainerAsStringStorage.get(idCounter - 1));
-		System.out.println("------------");
-		System.out.println(gridParserLogStorage.get(idCounter - 1));
-		System.out.println("------------");
+		gridRepository.save(new GridEntity(
+				gridParser.getGridContainer()
+				, gridInputDTO.getName()
+				, gridInputDTO.getCommentary()
+		));
 	}
 
 	@Override
-	public GridContainer get(int id) {
-		return storage.get(id);
+	public GridEntity get(long id) {
+		return gridRepository.getById(id);
+	}
+
+	@Override
+	public GridContainer getGridContainer(long id) {
+		return get(id).getGridContainer();
 	}
 }

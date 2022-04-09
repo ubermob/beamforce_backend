@@ -21,7 +21,11 @@ public class LoggingGridPostAspect {
 	@Before("execution(public String ru.beamforce.controller.html.UserController.newGridPost(..))")
 	public void mainPageAdvice(JoinPoint joinPoint) {
 		GridInputDTO gridInputDTO = (GridInputDTO) joinPoint.getArgs()[0];
-		String info = ", along: '%s', across: '%s'".formatted(gridInputDTO.getAlong(), gridInputDTO.getAcross());
-		LOGGER.info("POST @Before [/user/model/new-grid/post]" + info);
+		String gridInfo = ", along: '%s', across: '%s'".formatted(gridInputDTO.getAlong(), gridInputDTO.getAcross());
+		String message = "POST @Before [/user/model/new-grid/post]" + gridInfo
+				.replace("\r", "")
+				.replace("\n", "\\n")
+				.replace("\t", "\\t");
+		LOGGER.info(message);
 	}
 }

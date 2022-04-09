@@ -8,6 +8,8 @@ public class GridInputDTO {
 
 	private String along;
 	private String across;
+	private String name;
+	private String commentary;
 
 	public GridInputDTO() {
 	}
@@ -15,6 +17,13 @@ public class GridInputDTO {
 	public GridInputDTO(String along, String across) {
 		this.along = along;
 		this.across = across;
+	}
+
+	public GridInputDTO(String along, String across, String name, String commentary) {
+		this.along = along;
+		this.across = across;
+		this.name = name;
+		this.commentary = commentary;
 	}
 
 	public String getAlong() {
@@ -31,5 +40,21 @@ public class GridInputDTO {
 
 	public void setAcross(String across) {
 		this.across = across;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getCommentary() {
+		return commentary;
+	}
+
+	public void setCommentary(String commentary) {
+		this.commentary = commentary;
 	}
 }

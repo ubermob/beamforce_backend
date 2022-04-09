@@ -36,6 +36,13 @@ public class GridEntity {
 		localDateTime = LocalDateTime.now();
 	}
 
+	public GridEntity(GridContainer gridContainer, String name, String commentary) {
+		this.gridContainer = gridContainer;
+		this.name = name;
+		this.commentary = commentary;
+		localDateTime = LocalDateTime.now();
+	}
+
 	public Long getId() {
 		return id;
 	}
