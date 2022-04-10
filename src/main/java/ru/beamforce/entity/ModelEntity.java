@@ -19,11 +19,10 @@ public class ModelEntity extends AbstractModelAttributeEntity {
 	private String model;
 
 	public ModelEntity() {
-		super(LocalDateTime.now());
 	}
 
-	public ModelEntity(String model, String name, String commentary) {
-		super(name, commentary);
+	public ModelEntity(String model, long authorId, String name, String commentary) {
+		super(authorId, name, commentary);
 		this.model = model;
 		super.setLocalDateTime(LocalDateTime.now());
 	}

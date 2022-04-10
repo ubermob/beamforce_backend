@@ -29,11 +29,10 @@ public class GridEntity extends AbstractModelAttributeEntity {
 	private GridContainer gridContainer;
 
 	public GridEntity() {
-		super(LocalDateTime.now());
 	}
 
-	public GridEntity(GridContainer gridContainer, String name, String commentary) {
-		super(name, commentary);
+	public GridEntity(GridContainer gridContainer, long authorId, String name, String commentary) {
+		super(authorId, name, commentary);
 		this.gridContainer = gridContainer;
 		super.setLocalDateTime(LocalDateTime.now());
 	}

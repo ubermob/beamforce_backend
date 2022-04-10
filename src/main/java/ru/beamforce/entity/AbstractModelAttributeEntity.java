@@ -21,14 +21,19 @@ public abstract class AbstractModelAttributeEntity extends BaseEntity {
 		localDateTime = LocalDateTime.now();
 	}
 
-	public AbstractModelAttributeEntity(LocalDateTime localDateTime) {
-		this.localDateTime = localDateTime;
-	}
-
-	public AbstractModelAttributeEntity(String name, String commentary) {
+	public AbstractModelAttributeEntity(long authorId, String name, String commentary) {
+		this.authorId = authorId;
 		this.name = name;
 		this.commentary = commentary;
 		localDateTime = LocalDateTime.now();
+	}
+
+	public long getAuthorId() {
+		return authorId;
+	}
+
+	public void setAuthorId(long authorId) {
+		this.authorId = authorId;
 	}
 
 	public String getName() {

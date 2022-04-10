@@ -15,6 +15,12 @@
     <textarea id="name" th:field="*{name}"></textarea>
     <label for="commentary">Комментарий:</label>
     <textarea id="commentary" th:field="*{commentary}"></textarea>
+    <label for="startOffsetX">grid offset X:</label>
+    <input type="number" step="any" id="startOffsetX" th:field="*{startOffsetX}"/>
+    <label for="startOffsetY">grid offset X:</label>
+    <input type="number" step="any" id="startOffsetY" th:field="*{startOffsetY}"/>
+    <label for="offset">grid offset X:</label>
+    <input type="number" step="any" id="offset" th:field="*{offset}"/>
     <button type="submit">Загрузить</button>
 </form>
 </body>

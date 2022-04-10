@@ -81,6 +81,18 @@ public class AfterStartComponent {
 			gridRepository.save(gridEntity);
 			print("Example grid created");
 		}
+		if (gridRepository.existsById(2L)) {
+			print("Example grid with offsets already exist");
+		} else {
+			// TODO saved entity can have ID != 1
+			GridEntity gridEntity = new GridEntity();
+			gridEntity.setId(1L);
+			gridEntity.setGridContainer(Example.getExampleWithOffsets());
+			gridEntity.setName("Example");
+			gridEntity.setCommentary("Grid with offsets");
+			gridRepository.save(gridEntity);
+			print("Example grid with offsets created");
+		}
 	}
 
 	@Order(20)

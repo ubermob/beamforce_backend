@@ -179,8 +179,8 @@ public class UserController {
 	}
 
 	@PostMapping("/model/new-grid/post")
-	public String newGridPost(GridInputDTO gridInputDTO) {
-		gridService.add(gridInputDTO);
+	public String newGridPost(GridInputDTO gridInputDTO, Principal principal) {
+		gridService.add(gridInputDTO, principal);
 		return "redirect:/user";
 	}
 

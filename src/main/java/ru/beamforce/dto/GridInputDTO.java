@@ -10,6 +10,9 @@ public class GridInputDTO {
 	private String across;
 	private String name;
 	private String commentary;
+	private double startOffsetX;
+	private double startOffsetY;
+	private double offset;
 
 	public GridInputDTO() {
 	}
@@ -56,5 +59,29 @@ public class GridInputDTO {
 
 	public void setCommentary(String commentary) {
 		this.commentary = commentary;
+	}
+
+	public double getStartOffsetX() {
+		return startOffsetX;
+	}
+
+	public void setStartOffsetX(double startOffsetX) {
+		this.startOffsetX = startOffsetX;
+	}
+
+	public double getStartOffsetY() {
+		return startOffsetY;
+	}
+
+	public void setStartOffsetY(double startOffsetY) {
+		this.startOffsetY = startOffsetY;
+	}
+
+	public double getOffset() {
+		return offset;
+	}
+
+	public void setOffset(double offset) {
+		this.offset = offset;
 	}
 }
