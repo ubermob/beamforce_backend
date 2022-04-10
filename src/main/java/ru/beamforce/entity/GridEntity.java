@@ -22,24 +22,20 @@ https://stackoverflow.com/questions/62232055/how-to-save-json-object-in-postgres
 @Entity
 @Table(name = "grids")
 @TypeDef(name = "json", typeClass = JsonType.class)
-public class GridEntity extends BaseEntity {
+public class GridEntity extends AbstractModelAttributeEntity {
 
 	@Type(type = "json")
 	@Column(name = "grid_container")
 	private GridContainer gridContainer;
-	private String name;
-	private String commentary;
-	private LocalDateTime localDateTime;
 
 	public GridEntity() {
-		localDateTime = LocalDateTime.now();
+		super(LocalDateTime.now());
 	}
 
 	public GridEntity(GridContainer gridContainer, String name, String commentary) {
+		super(name, commentary);
 		this.gridContainer = gridContainer;
-		this.name = name;
-		this.commentary = commentary;
-		localDateTime = LocalDateTime.now();
+		super.setLocalDateTime(LocalDateTime.now());
 	}
 
 	public GridContainer getGridContainer() {
@@ -48,29 +44,5 @@ public class GridEntity extends BaseEntity {
 
 	public void setGridContainer(GridContainer gridContainer) {
 		this.gridContainer = gridContainer;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getCommentary() {
-		return commentary;
-	}
-
-	public void setCommentary(String commentary) {
-		this.commentary = commentary;
-	}
-
-	public LocalDateTime getLocalDateTime() {
-		return localDateTime;
-	}
-
-	public void setLocalDateTime(LocalDateTime localDateTime) {
-		this.localDateTime = localDateTime;
 	}
 }

@@ -7,6 +7,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import ru.beamforce.bean.PoCServerDriver;
 import ru.beamforce.dto.RegistrationUserDTO;
 import ru.beamforce.entity.GridEntity;
 import ru.beamforce.entity.UserEntity;
@@ -14,6 +15,8 @@ import ru.beamforce.repository.GridRepository;
 import ru.beamforce.service.AdminUserService;
 import ru.beamforce.service.RegistrationUserService;
 import ru.beamforce.shortobject.NewUserInformer;
+
+import java.io.IOException;
 
 /**
  * @author Andrey Korneychuk on 08-Apr-22
@@ -30,6 +33,8 @@ public class AfterStartComponent {
 	private AdminUserService adminUserService;
 	@Autowired
 	private GridRepository gridRepository;
+	@Autowired
+	private PoCServerDriver poCServerDriver;
 
 	@Order(0)
 	@EventListener(ApplicationReadyEvent.class)
@@ -75,6 +80,17 @@ public class AfterStartComponent {
 			gridEntity.setCommentary("Example");
 			gridRepository.save(gridEntity);
 			print("Example grid created");
+		}
+	}
+
+	@Order(20)
+	@EventListener(ApplicationReadyEvent.class)
+	public void checkPoCServer() {
+		try {
+			print("PoC Server status: " + poCServerDriver.get());
+		} catch (IOException e) {
+			e.printStackTrace();
+			print("PoC Server status: down");
 		}
 	}
 

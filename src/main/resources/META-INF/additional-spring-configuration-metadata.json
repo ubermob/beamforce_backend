@@ -39,6 +39,11 @@
       "name": "db.table.organizations",
       "type": "java.lang.String",
       "description": "Description for db.table.organizations."
+    },
+    {
+      "name": "poc.host",
+      "type": "java.lang.String",
+      "description": "Description for poc.host."
     }
   ]
 }

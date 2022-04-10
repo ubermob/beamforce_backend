@@ -30,7 +30,7 @@ public class RandomToken {
 
 	@Bean
 	public RandomToken getRandomToken() {
-		return this;
+		return new RandomToken();
 	}
 
 	public String getToken() {
