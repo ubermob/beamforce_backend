@@ -1,13 +1,13 @@
 package ru.beamforce;
 
-import modelutil.test.Example;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import ru.beamforce.tmp.Book;
-import ru.beamforce.tmp.BookRepo;
 import ru.beamforce.entity.GridEntity;
 import ru.beamforce.repository.GridRepository;
+import ru.beamforce.tmp.Book;
+import ru.beamforce.tmp.BookRepo;
+import test.Example;
 
 import java.time.LocalDateTime;
 

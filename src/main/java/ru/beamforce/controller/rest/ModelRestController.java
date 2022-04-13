@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.beamforce.bean.RandomToken;
-import ru.beamforce.tmp.GridService;
+import ru.beamforce.service.GridService;
 
 import java.security.Principal;
 

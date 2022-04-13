@@ -1,4 +1,4 @@
-package ru.beamforce.tmp;
+package ru.beamforce.service;
 
 import modelutil.container.GridContainer;
 import ru.beamforce.dto.GridInputDTO;

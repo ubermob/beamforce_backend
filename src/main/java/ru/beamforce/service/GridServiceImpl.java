@@ -1,4 +1,4 @@
-package ru.beamforce.tmp;
+package ru.beamforce.service;
 
 import modelutil.container.GridContainer;
 import modelutil.gridparser.GridParser;
@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import ru.beamforce.dto.GridInputDTO;
 import ru.beamforce.entity.GridEntity;
 import ru.beamforce.repository.GridRepository;
-import ru.beamforce.service.UserService;
 
 import java.security.Principal;
 

@@ -1,6 +1,5 @@
 package ru.beamforce.component;
 
-import modelutil.test.Example;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
@@ -15,6 +14,7 @@ import ru.beamforce.repository.GridRepository;
 import ru.beamforce.service.AdminUserService;
 import ru.beamforce.service.RegistrationUserService;
 import ru.beamforce.shortobject.NewUserInformer;
+import test.Example;
 
 import java.io.IOException;
 
@@ -101,7 +101,6 @@ public class AfterStartComponent {
 		try {
 			print("PoC Server status: " + poCServerDriver.get());
 		} catch (IOException e) {
-			e.printStackTrace();
 			print("PoC Server status: down");
 		}
 	}

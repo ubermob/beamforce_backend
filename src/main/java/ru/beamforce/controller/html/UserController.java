@@ -17,7 +17,7 @@ import ru.beamforce.entity.UserEntity;
 import ru.beamforce.service.OrganizationService;
 import ru.beamforce.service.ServerMessageService;
 import ru.beamforce.service.UserService;
-import ru.beamforce.tmp.GridService;
+import ru.beamforce.service.GridService;
 
 import javax.validation.Valid;
 import java.io.IOException;
