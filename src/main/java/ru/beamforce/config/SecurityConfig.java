@@ -14,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  */
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	@Autowired
@@ -39,8 +40,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/user/**").hasAnyAuthority("ADMIN", "USER")
 				.anyRequest().authenticated()
 				.and()
-				// Login
-				.formLogin().defaultSuccessUrl("/user").permitAll()
+				// Login (custom)
+				.formLogin().loginPage("/login").defaultSuccessUrl("/user").permitAll()
 				.and()
 				// Logout
 				.logout().permitAll().logoutSuccessUrl("/").deleteCookies("JSESSIONID")
