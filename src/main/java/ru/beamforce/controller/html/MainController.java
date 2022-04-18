@@ -22,19 +22,25 @@ public class MainController {
 	@Autowired
 	private RegistrationUserService registrationUserService;
 
+	public MainController(RegistrationUserService registrationUserService) {
+		this.registrationUserService = registrationUserService;
+	}
+
 	@RequestMapping("/")
 	public String showMainPage() {
 		return "main";
 	}
 
 	@RequestMapping("/reg")
-	public String showRegistrationPage(RegistrationUserDTO registrationUserDTO) {
+	public String showRegistrationPage(RegistrationUserDTO registrationUserDTO, Model model) {
+		navBarDynamicUtil(model, "Регистрация");
 		return "registration";
 	}
 
 	@RequestMapping("/reg/validation")
 	public String showRegValidationPage(@Valid RegistrationUserDTO registrationUserDTO, Errors errors, Model model) {
 		NewUserInformer informer = registrationUserService.getNewUserInformer(registrationUserDTO);
+		navBarDynamicUtil(model, "Регистрация");
 		if (errors.hasErrors() || informer.hasErrors()) {
 			if (!informer.isAvailableName()) {
 				errors.rejectValue("name", "error.registrationUserDTO"
@@ -54,17 +60,15 @@ public class MainController {
 	}
 
 	@RequestMapping("/help")
-	public String showHelpPage() {
+	public String showHelpPage(Model model) {
+		model.addAttribute("isNavBarHelp", true);
 		return "help";
 	}
 
 	@RequestMapping("/about")
-	public String showAboutPage() {
+	public String showAboutPage(Model model) {
+		model.addAttribute("isNavBarAbout", true);
 		return "about";
-	}
-
-	public MainController(RegistrationUserService registrationUserService) {
-		this.registrationUserService = registrationUserService;
 	}
 
 	@RequestMapping("/example")
@@ -74,5 +78,10 @@ public class MainController {
 	}
 
 	private record MetaKeyAndValue(String key, String value) {
+	}
+
+	private void navBarDynamicUtil(Model model, String dynamicText) {
+		model.addAttribute("isNavBarDynamic", true);
+		model.addAttribute("navBarDynamicText", dynamicText);
 	}
 }

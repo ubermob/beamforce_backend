@@ -3,12 +3,17 @@
 <head th:insert="~{fragments/head_tag :: head_tag}">
 </head>
 <body>
-<div th:insert="~{fragments/header :: unlogged_header}"></div>
+<div id="bg"></div>
+<div th:insert="~{fragments/header :: nav-bar}"></div>
 
-<div class="main_content">HELP</div>
+<div id="body-wrapper">
+    <h1 class="title margin-bottom-h1">Помощь</h1>
 
-<a href="/help/a.html">a.html</a>
+    <div class="margin-bottom-content">
+        <div class="content"> Page: <a class="content-link" href="/help/a.html">a.html</a></div>
+    </div>
 
-<div th:insert="~{fragments/footer :: footer}"></div>
+    <div th:insert="~{fragments/footer :: footer}"></div>
+</div>
 </body>
 </html>

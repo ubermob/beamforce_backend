@@ -59,6 +59,7 @@ public class UserController {
 		model.addAttribute("user", user);
 		emailDTO.setEmail(user.getEmail());
 		model.addAttribute("emailDTO", emailDTO);
+		model.addAttribute("isNavBarSettings", true);
 		return "user_settings";
 	}
 
@@ -184,8 +185,8 @@ public class UserController {
 		return "redirect:/user";
 	}
 
-	@RequestMapping("/model/delete-list")
-	public String deleteList() {
-		return "user_model_delete_list";
+	@RequestMapping("/model/operations")
+	public String modelOperations() {
+		return "user_model_operations";
 	}
 }

@@ -3,33 +3,44 @@
 <head th:insert="~{fragments/head_tag :: head_tag}">
 </head>
 <body>
-<div th:insert="/fragments/header :: unlogged_header"></div>
-<div>
-    <h3>Информация:</h3>
-    Длина <b>имени</b> должна быть от 3 до 25. Состоять из латинских букв. Допускаются цифры и символы: "-" и "_".
-    <br>
-    <br>
-    Длина <b>пароля</b> должна быть от 6 до 50. Состоять из латинских букв. Допускаются цифры и символы: "-" и "_".
-    <br>
-    <br>
+<div id="bg"></div>
+<div th:insert="~{fragments/header :: nav-bar}"></div>
+
+<div id="body-wrapper">
+    <div class="content">
+        <h3 class="subtitle margin-bottom-content">Информация:</h3>
+        Длина <b class="color-sky-500">имени</b> должна быть от 3 до 25 символов. Состоять из латинских букв. Допускаются цифры и символы: "-"
+        и "_".
+        <br>
+        <br>
+        Длина <b class="color-sky-500">пароля</b> должна быть от 6 до 50 символов. Состоять из латинских букв. Допускаются цифры и символы:
+        "-" и "_".
+        <br>
+        <br>
+    </div>
+    <form action="#" th:action="@{/reg/validation}" th:object="${registrationUserDTO}" method="post" class="content">
+        <div>
+            <label for="name">Имя:</label>
+            <input type="text" id="name" th:field="*{name}"/>
+            <span class="yellow-alert" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error</span>
+        </div>
+
+        <div>
+            <label for="email">email (необязательно):</label>
+            <input type="text" id="email" th:field="*{email}"/>
+            <span class="yellow-alert" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Error</span>
+        </div>
+
+        <div>
+            <label for="password">Пароль:</label>
+            <input type="text" id="password" th:field="*{password}"/>
+            <span class="yellow-alert" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Error</span>
+        </div>
+
+        <div>
+            <button id="reg_button" type="submit">Зарегестрироваться</button>
+        </div>
+    </form>
 </div>
-<form action="#" th:action="@{/reg/validation}" th:object="${registrationUserDTO}" method="post">
-    <label for="name">Имя:</label>
-    <input type="text" id="name" th:field="*{name}"/>
-    <span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error</span>
-    <br>
-    <br>
-    <label for="email">email (необязательно):</label>
-    <input type="text" id="email" th:field="*{email}"/>
-    <span class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Error</span>
-    <br>
-    <br>
-    <label for="password">Пароль:</label>
-    <input type="text" id="password" th:field="*{password}"/>
-    <span class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Error</span>
-    <br>
-    <br>
-    <button id="reg_button" type="submit">Зарегестрироваться</button>
-</form>
 </body>
 </html>

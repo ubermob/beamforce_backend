@@ -3,71 +3,77 @@
 <head th:insert="~{fragments/head_tag :: head_tag}">
 </head>
 <body>
-<div th:insert="~{fragments/header :: logged_header}"></div>
+<div id="bg"></div>
+<div th:insert="~{fragments/header :: nav-bar}"></div>
 
-<div>
-    <h3>Настройки пользователя:</h3>
-</div>
+<div id="body-wrapper">
+    <h3 class="subtitle margin-bottom-content">Настройки пользователя:</h3>
 
-<form action="#" th:action="@{/user/settings/validation}" th:object="${emailDTO}" method="post">
-    <div>Имя пользователя: <b><span th:text="${user.name}">user.name</span></b></div>
-    <br>
-    <br>
-    <label for="email">email (необязательно):</label>
-    <input type="text" id="email" th:field="*{email}"/>
-    <span class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Error</span>
-    <br>
-    <br>
-    <div>
-        <a th:href="@{__${#httpServletRequest.requestURI}__/delete-email}">Удалить email</a>
-    </div>
-    <br>
-    <br>
-    <button id="edit_button" type="submit">Изменить email</button>
-</form>
+    <form action="#" th:action="@{/user/settings/validation}" th:object="${emailDTO}" method="post">
+        <div class="content">
+            Имя пользователя: <b th:text="${user.name}" class="color-sky-500">user.name</b>
+        </div>
 
-<br>
-<br>
+        <div class="content">
+            <label for="email">email (необязательно):</label>
+            <input type="text" id="email" th:field="*{email}"/>
+            <span class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Error</span>
+        </div>
 
-<a th:href="@{__${#httpServletRequest.requestURI}__/update-password}">Обновить пароль</a>
-
-<br>
-<br>
-
-<div>
-    <a th:href="@{__${#httpServletRequest.requestURI}__/delete-user}">Удалить аккаунт</a>
-    <br>
-    <span class="warning"> Внимание, данное действие необратимо!</span>
-</div>
-
-<div>
-    <h3>Настройки организации:</h3>
-</div>
-
-<div th:if="${user.organization != null}">
-    <div>Имя организации: <b><span th:text="${user.organization.name}">user.organization</span></b></div>
-    Токен для приглашения в организацию: <b><span th:text="${user.organization.joinToken}"></span></b>
-</div>
-<div th:if="${user.organization != null && user.id.equals(user.organization.adminId)}">
-    <form th:action="@{__${#httpServletRequest.requestURI}__/new-org-token}">
-        <input type="submit" value="Обновить токен"/>
+        <button type="submit">Изменить email</button>
     </form>
-</div>
-<br>
-<div th:if="${user.organization == null}">
-    <a th:href="@{__${#httpServletRequest.requestURI}__/create-org}">Создать организацию</a>
-</div>
-<br>
-<div th:if="${user.organization == null}">
-    <a th:href="@{__${#httpServletRequest.requestURI}__/join-org}">Присоединиться к организации</a>
-</div>
-<br>
-<div th:if="${user.organization != null}">
-    <a th:href="@{__${#httpServletRequest.requestURI}__/leave-org}">Покинуть организацию</a>
-    <br>
-    <span class="warning"> Внимание, данное действие необратимо!</span>
-</div>
 
-<div th:insert="~{fragments/footer :: footer}"></div>
+    <form th:action="@{__${#httpServletRequest.requestURI}__/delete-email}">
+        <button type="submit" class="red-btn">Удалить email</button>
+    </form>
+
+    <form th:action="@{__${#httpServletRequest.requestURI}__/update-password}" class="margin-bottom-content">
+        <button type="submit">Обновить пароль</button>
+    </form>
+
+    <div>
+        <h3 class="subtitle margin-bottom-content">Настройки организации:</h3>
+    </div>
+
+    <div class="margin-bottom-content">
+        <div th:if="${user.organization != null}" class="content">
+            <div>Имя организации: <b th:text="${user.organization.name}" class="color-sky-500">
+                user.organization
+            </b>
+            </div>
+            Токен для приглашения в организацию:
+            <input class="input-token" th:value="${user.organization.joinToken}" readonly>
+        </div>
+
+        <form th:if="${user.organization != null && user.id.equals(user.organization.adminId)}"
+              th:action="@{__${#httpServletRequest.requestURI}__/new-org-token}">
+            <button type="submit">Обновить токен</button>
+        </form>
+
+        <form th:if="${user.organization == null}" th:action="@{__${#httpServletRequest.requestURI}__/create-org}">
+            <button type="submit">Создать организацию</button>
+        </form>
+
+        <form th:if="${user.organization == null}" th:action="@{__${#httpServletRequest.requestURI}__/join-org}">
+            <button type="submit">Присоединиться к организации</button>
+        </form>
+
+        <form th:if="${user.organization != null}" th:action="@{__${#httpServletRequest.requestURI}__/leave-org}">
+            <button class="red-btn">Покинуть организацию</button>
+            <div>
+                <span class="yellow-alert"> Внимание, данное действие необратимо!</span>
+            </div>
+        </form>
+    </div>
+
+    <form th:action="@{__${#httpServletRequest.requestURI}__/delete-user}" class="margin-bottom-content">
+        <button class="red-btn">Удалить аккаунт</button>
+        <div>
+            <span class="red-alert"> Внимание, данное действие необратимо!</span>
+        </div>
+    </form>
+
+    <div th:insert="~{fragments/footer :: footer}"></div>
+</div>
 </body>
 </html>

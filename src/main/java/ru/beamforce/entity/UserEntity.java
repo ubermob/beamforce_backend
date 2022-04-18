@@ -117,6 +117,10 @@ public class UserEntity extends BaseEntity implements UserDetails {
 		}
 	}
 
+	public boolean isAdmin() {
+		return roles.contains(Role.ADMIN);
+	}
+
 	public OrganizationEntity getOrganization() {
 		return organization;
 	}

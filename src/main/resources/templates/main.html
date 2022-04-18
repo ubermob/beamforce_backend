@@ -3,11 +3,38 @@
 <head th:insert="~{fragments/head_tag :: head_tag}">
 </head>
 <body>
-<div th:insert="~{fragments/header :: unlogged_header}"></div>
+<div id="bg"></div>
 
-<div class="main_content">Main content</div>
-<div class="main_content"><a href="/example">example</a></div>
+<div id="body-wrapper">
+    <h1 class="title margin-bottom-h1">Beamforce</h1>
 
-<div th:insert="~{fragments/footer :: footer}"></div>
+    <div class="content margin-bottom-content">
+        Веб просмотр результатов SCAD
+    </div>
+
+    <div class="button-flex-array margin-bottom-content">
+        <form action="/example">
+            <button type="submit">Пример</button>
+        </form>
+
+        <form action="/user">
+            <button type="submit">Начать работу</button>
+        </form>
+
+        <form action="/reg">
+            <button type="submit">Зарегестрироваться</button>
+        </form>
+
+        <form action="/help">
+            <button type="submit">Помощь</button>
+        </form>
+
+        <form action="/about">
+            <button type="submit">О проекте</button>
+        </form>
+    </div>
+
+    <div th:insert="~{fragments/footer :: footer}"></div>
+</div>
 </body>
 </html>

@@ -51,7 +51,9 @@ public class UserServiceImpl implements UserService, UserDetailsService, Registr
 
 	@Override
 	public void deleteUser(UserEntity user) {
-		userRepository.delete(user);
+		if (!user.isAdmin()) {
+			userRepository.delete(user);
+		}
 	}
 
 	@Override

@@ -1,14 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{fragments/head_tag :: head_tag}">
 </head>
 <body>
-    <span>org-token:</span>
-    <form action="#" th:action="@{/user/settings/join-org/validation}" th:object="${tokenDTO}" method="post">
-        <input type="text" id="token" th:field="*{token}">
-        <button id="reg_button" type="submit">Зарегестрироваться</button>
+<div id="bg"></div>
+<div th:insert="~{fragments/header :: nav-bar}"></div>
+
+<div id="body-wrapper">
+    <form action="#" th:action="@{/user/settings/join-org/validation}" th:object="${tokenDTO}" method="post"
+          class="content">
+        <label for="token">Токен:</label>
+        <input type="text" id="token" class="input-token" th:field="*{token}">
+        <br>
+        <button type="submit">Присоединиться</button>
     </form>
+</div>
 </body>
 </html>
