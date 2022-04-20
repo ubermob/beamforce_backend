@@ -17,7 +17,7 @@ import javax.validation.Valid;
  */
 @Controller
 @RequestMapping
-public class MainController {
+public class MainController extends AbstractController {
 
 	@Autowired
 	private RegistrationUserService registrationUserService;
@@ -78,10 +78,5 @@ public class MainController {
 	}
 
 	private record MetaKeyAndValue(String key, String value) {
-	}
-
-	private void navBarDynamicUtil(Model model, String dynamicText) {
-		model.addAttribute("isNavBarDynamic", true);
-		model.addAttribute("navBarDynamicText", dynamicText);
 	}
 }

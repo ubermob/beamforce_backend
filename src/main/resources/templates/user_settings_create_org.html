@@ -3,20 +3,22 @@
 <head th:insert="~{fragments/head_tag :: head_tag}">
 </head>
 <body>
-<div th:insert="~{fragments/header :: logged_header}"></div>
+<div id="bg"></div>
+<div th:insert="~{fragments/header :: nav-bar}"></div>
 
-<div>
-    <h3>Создать организацию:</h3>
+<div id="body-wrapper">
+    <h3 class="subtitle margin-bottom-content">Создать организацию</h3>
+
+    <form action="#" th:action="@{/user/settings/create-org/validation}" th:object="${organizationEntity}" method="post"
+          class="content margin-bottom-content">
+        <label for="org_name">Название:</label>
+        <input type="text" id="org_name" th:field="*{name}"/>
+        <span class="yellow-alert" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error</span>
+        <br>
+        <button type="submit">Создать организацию</button>
+    </form>
+
+    <div th:insert="~{fragments/footer :: footer}"></div>
 </div>
-
-<form action="#" th:action="@{/user/settings/create-org/validation}" th:object="${organization}" method="post">
-
-    <label for="org_name">Название:</label>
-    <input type="text" id="org_name" th:field="*{name}"/>
-    <span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error</span>
-    <br>
-    <button id="create_button" type="submit">Создать</button>
-</form>
-
 </body>
 </html>

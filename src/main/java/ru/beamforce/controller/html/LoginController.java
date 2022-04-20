@@ -1,6 +1,7 @@
 package ru.beamforce.controller.html;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 /**
@@ -8,10 +9,11 @@ import org.springframework.web.bind.annotation.GetMapping;
  * @version 1.0
  */
 @Controller
-public class LoginController {
+public class LoginController extends AbstractController {
 
 	@GetMapping("/login")
-	public String login() {
+	public String login(Model model) {
+		navBarDynamicUtil(model, "Log in");
 		return "login";
 	}
 }

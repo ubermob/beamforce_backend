@@ -7,13 +7,17 @@
 <div th:insert="~{fragments/header :: nav-bar}"></div>
 
 <div id="body-wrapper">
+    <h3 class="subtitle margin-bottom-content">Присоединиться к организации</h3>
+
     <form action="#" th:action="@{/user/settings/join-org/validation}" th:object="${tokenDTO}" method="post"
-          class="content">
+          class="content margin-bottom-content">
         <label for="token">Токен:</label>
         <input type="text" id="token" class="input-token" th:field="*{token}">
         <br>
         <button type="submit">Присоединиться</button>
     </form>
+
+    <div th:insert="~{fragments/footer :: footer}"></div>
 </div>
 </body>
 </html>

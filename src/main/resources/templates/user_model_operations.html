@@ -1,10 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{fragments/head_tag :: head_tag}">
 </head>
 <body>
-model operations
+<div id="bg"></div>
+<div th:insert="~{fragments/header :: nav-bar}"></div>
+
+<div id="body-wrapper">
+    <h3 class="subtitle margin-bottom-content">Модели</h3>
+    <h3 class="subtitle margin-bottom-content">Строительные сетки</h3>
+    <table class="content margin-bottom-content" cellspacing="0">
+        <thead>
+        <tr>
+            <td>id</td>
+            <td>Имя</td>
+            <td>Комментарий</td>
+            <td>Дата создания</td>
+            <td>RAW</td>
+            <td>Изменить</td>
+            <td>Клонировать</td>
+            <td>Удалить</td>
+        </tr>
+        </thead>
+        <th:block th:if="${gridList}" th:each="grid : ${gridList}">
+            <tr>
+                <td th:text="${grid.id}"></td>
+                <td th:text="${grid.name}"></td>
+                <td th:text="${grid.commentary}"></td>
+                <td th:text="${grid.localDateTime}"></td>
+                <td>RAW (work in progress)</td>
+                <td>Изменить (work in progress)</td>
+                <td>Клонировать (work in progress)</td>
+                <td>
+                    <form th:action="@{__${#httpServletRequest.requestURI}__/delete-grid(id=${grid.id})}" method="post">
+                        <button type="submit">Удалить</button>
+                    </form>
+                </td>
+            </tr>
+        </th:block>
+    </table>
+
+    <div th:insert="~{fragments/footer :: footer}"></div>
+</div>
 </body>
 </html>

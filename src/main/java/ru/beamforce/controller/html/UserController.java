@@ -12,12 +12,13 @@ import ru.beamforce.dto.EmailDTO;
 import ru.beamforce.dto.GridInputDTO;
 import ru.beamforce.dto.TokenDTO;
 import ru.beamforce.dto.UpdatePasswordDTO;
+import ru.beamforce.entity.GridEntity;
 import ru.beamforce.entity.OrganizationEntity;
 import ru.beamforce.entity.UserEntity;
+import ru.beamforce.service.GridService;
 import ru.beamforce.service.OrganizationService;
 import ru.beamforce.service.ServerMessageService;
 import ru.beamforce.service.UserService;
-import ru.beamforce.service.GridService;
 
 import javax.validation.Valid;
 import java.io.IOException;
@@ -32,7 +33,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/user")
-public class UserController {
+public class UserController extends AbstractController {
 
 	@Autowired
 	private ServerMessageService serverMessageService;
@@ -153,7 +154,9 @@ public class UserController {
 	}
 
 	@RequestMapping("/model/new-model")
-	public String uploadFileForm() {
+	public String uploadFileForm(Principal principal, Model model) {
+		List<GridEntity> gridList = gridService.getGridList(principal);
+		model.addAttribute("gridList", gridList);
 		return "upload_new_model";
 	}
 
@@ -186,7 +189,16 @@ public class UserController {
 	}
 
 	@RequestMapping("/model/operations")
-	public String modelOperations() {
+	public String modelOperations(Principal principal, Model model) {
+		List<GridEntity> gridList = gridService.getGridList(principal);
+		model.addAttribute("gridList", gridList);
+		navBarDynamicUtil(model, "Операции");
 		return "user_model_operations";
+	}
+
+	@PostMapping("/model/operations/delete-grid")
+	public String deleteGrid(@RequestParam(name = "id") Long id, Principal principal) {
+		gridService.delete(principal, id);
+		return "redirect:/user/model/operations";
 	}
 }

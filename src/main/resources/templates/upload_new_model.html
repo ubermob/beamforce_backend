@@ -3,14 +3,17 @@
 <head th:insert="~{fragments/head_tag :: head_tag}">
 </head>
 <body>
-
 <form method="POST" enctype="multipart/form-data" th:action="@{__${#httpServletRequest.requestURI}__/post}">
     <span>File to upload: </span>
     <br>
     <input type="file" name="file"/>
     <br>
+    <label for="grid-list">Сетка:</label>
+    <select id="grid-list" th:if="${gridList}">
+        <option th:each="grid : ${gridList}" th:value="${grid.id}" th:text="${grid.name}"></option>
+    </select>
+    <br>
     <input type="submit" value="Upload"/>
 </form>
-
 </body>
 </html>
