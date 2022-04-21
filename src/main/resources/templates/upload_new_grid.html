@@ -7,7 +7,7 @@
 <div th:insert="~{fragments/header :: nav-bar}"></div>
 
 <div id="body-wrapper">
-    <div class="content margin-bottom-content">Сетка из SCAD:</div>
+    <h3 class="subtitle margin-bottom-content">Новая сетка</h3>
 
     <form action="#" th:action="@{__${#httpServletRequest.requestURI}__/post}" th:object="${gridInputDTO}"
           method="post" class="content">

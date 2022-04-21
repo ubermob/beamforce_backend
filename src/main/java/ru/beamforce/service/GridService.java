@@ -15,11 +15,15 @@ public interface GridService {
 
 	void add(GridInputDTO gridInputDTO, Principal principal);
 
-	GridEntity get(long id);
+	GridEntity get(long gridId);
 
-	GridContainer getGridContainer(long id);
+	GridContainer getGridContainer(long gridId);
+
+	GridEntity getGridEntity(Principal principal, long gridId);
 
 	List<GridEntity> getGridList(Principal principal);
+
+	void clone(Principal principal, long gridId);
 
 	void delete(Principal principal, long gridId);
 }

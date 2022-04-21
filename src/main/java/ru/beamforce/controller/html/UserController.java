@@ -69,6 +69,7 @@ public class UserController extends AbstractController {
 		UserEntity user = userService.getUserByUsername(principal.getName());
 		model.addAttribute("user", user);
 		model.addAttribute("emailDTO", emailDTO);
+		model.addAttribute("isNavBarSettings", true);
 		if (errors.hasErrors()) {
 			return "user_settings";
 		} else {
@@ -78,14 +79,17 @@ public class UserController extends AbstractController {
 	}
 
 	@RequestMapping("/settings/update-password")
-	public String updatePassword(UpdatePasswordDTO updatePasswordDTO) {
+	public String updatePassword(UpdatePasswordDTO updatePasswordDTO, Model model) {
+		navBarDynamicUtil(model, "Изменить пароль");
 		return "user_settings_update_password";
 	}
 
 	@RequestMapping("/settings/update-password/validation")
-	public String updatePasswordValidation(@Valid UpdatePasswordDTO updatePasswordDTO, Errors errors, Principal principal) {
+	public String updatePasswordValidation(@Valid UpdatePasswordDTO updatePasswordDTO, Errors errors
+			, Principal principal, Model model) {
 		UserEntity user = userService.getUserByPrincipal(principal);
 		userService.comparePassword(user, updatePasswordDTO, errors);
+		navBarDynamicUtil(model, "Изменить пароль");
 		if (errors.hasErrors()) {
 			return "user_settings_update_password";
 		} else {
@@ -109,12 +113,15 @@ public class UserController extends AbstractController {
 	}
 
 	@RequestMapping("/settings/create-org")
-	public String createOrganization(OrganizationEntity organization) {
+	public String createOrganization(OrganizationEntity organization, Model model) {
+		navBarDynamicUtil(model, "Создать организацию");
 		return "user_settings_create_org";
 	}
 
 	@RequestMapping("/settings/create-org/validation")
-	public String createOrganizationValidation(@Valid OrganizationEntity organization, Errors errors, Principal principal) {
+	public String createOrganizationValidation(@Valid OrganizationEntity organization, Errors errors
+			, Principal principal, Model model) {
+		navBarDynamicUtil(model, "Создать организацию");
 		boolean nameIsUnique = organizationService.nameIsUnique(organization);
 		if (!nameIsUnique) {
 			errors.rejectValue("name", "error.organization"
@@ -129,7 +136,8 @@ public class UserController extends AbstractController {
 	}
 
 	@RequestMapping("/settings/join-org")
-	public String joinOrganization(TokenDTO tokenDTO) {
+	public String joinOrganization(TokenDTO tokenDTO, Model model) {
+		navBarDynamicUtil(model, "Присоединиться к организации");
 		return "user_settings_join_org";
 	}
 
@@ -157,6 +165,7 @@ public class UserController extends AbstractController {
 	public String uploadFileForm(Principal principal, Model model) {
 		List<GridEntity> gridList = gridService.getGridList(principal);
 		model.addAttribute("gridList", gridList);
+		navBarDynamicUtil(model, "Новая модель");
 		return "upload_new_model";
 	}
 
@@ -178,7 +187,8 @@ public class UserController extends AbstractController {
 	}
 
 	@RequestMapping("/model/new-grid")
-	public String newGrid(GridInputDTO gridInputDTO) {
+	public String newGrid(GridInputDTO gridInputDTO, Model model) {
+		navBarDynamicUtil(model, "Новая сетка");
 		return "upload_new_grid";
 	}
 
@@ -194,6 +204,12 @@ public class UserController extends AbstractController {
 		model.addAttribute("gridList", gridList);
 		navBarDynamicUtil(model, "Операции");
 		return "user_model_operations";
+	}
+
+	@PostMapping("/model/operations/clone-grid")
+	public String cloneGrid(@RequestParam(name = "id") Long id, Principal principal) {
+		gridService.clone(principal, id);
+		return "redirect:/user/model/operations";
 	}
 
 	@PostMapping("/model/operations/delete-grid")

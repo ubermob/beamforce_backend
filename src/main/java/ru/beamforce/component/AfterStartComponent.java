@@ -1,5 +1,7 @@
 package ru.beamforce.component;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
@@ -25,6 +27,7 @@ import java.io.IOException;
 @Component
 public class AfterStartComponent {
 
+	private static final Logger LOGGER = LogManager.getLogger(AfterStartComponent.class);
 	@Autowired
 	private RegistrationUserService registrationUserService;
 	@Autowired
@@ -106,6 +109,6 @@ public class AfterStartComponent {
 	}
 
 	private void print(String string) {
-		System.out.println(string);
+		LOGGER.info(string);
 	}
 }

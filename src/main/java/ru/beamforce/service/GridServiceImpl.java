@@ -2,6 +2,8 @@ package ru.beamforce.service;
 
 import modelutil.container.GridContainer;
 import modelutil.gridparser.GridParser;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +22,7 @@ import java.util.List;
 @Service
 public class GridServiceImpl implements GridService {
 
+	private static final Logger LOGGER = LogManager.getLogger(GridServiceImpl.class);
 	@Autowired
 	private GridRepository gridRepository;
 	@Autowired
@@ -34,6 +37,11 @@ public class GridServiceImpl implements GridService {
 				, gridInputDTO.getStartOffsetY()
 				, gridInputDTO.getOffset()
 		);
+		gridParser.setInfoListener(s -> LOGGER.info(s));
+		gridParser.setExceptionListener((s, e) -> {
+			LOGGER.error(s);
+			LOGGER.error(e);
+		});
 		// From textarea input contains "\r"
 		// Remove this
 		gridParser.parse(gridInputDTO.getAlong().replace("\r", "")
@@ -47,13 +55,21 @@ public class GridServiceImpl implements GridService {
 	}
 
 	@Override
-	public GridEntity get(long id) {
-		return gridRepository.getById(id);
+	public GridEntity get(long gridId) {
+		return gridRepository.getById(gridId);
 	}
 
 	@Override
-	public GridContainer getGridContainer(long id) {
-		return get(id).getGridContainer();
+	public GridContainer getGridContainer(long gridId) {
+		return get(gridId).getGridContainer();
+	}
+
+	@Override
+	public GridEntity getGridEntity(Principal principal, long gridId) {
+		if (isPrincipalTheAuthorOfGrid(principal, gridId)) {
+			return gridRepository.getById(gridId);
+		}
+		return null;
 	}
 
 	@Override
@@ -63,9 +79,27 @@ public class GridServiceImpl implements GridService {
 	}
 
 	@Override
+	public void clone(Principal principal, long gridId) {
+		if (isPrincipalTheAuthorOfGrid(principal, gridId)) {
+			GridEntity original = gridRepository.getById(gridId);
+			GridEntity clone = new GridEntity();
+			clone.setAuthorId(original.getAuthorId());
+			clone.setName(original.getName());
+			clone.setCommentary(original.getCommentary());
+			clone.setLocalDateTime(original.getLocalDateTime());
+			clone.setGridContainer(original.getGridContainer());
+			gridRepository.save(clone);
+		}
+	}
+
+	@Override
 	public void delete(Principal principal, long gridId) {
-		if (userService.getUserByPrincipal(principal).getId() == get(gridId).getAuthorId()) {
+		if (isPrincipalTheAuthorOfGrid(principal, gridId)) {
 			gridRepository.deleteById(gridId);
 		}
+	}
+
+	private boolean isPrincipalTheAuthorOfGrid(Principal principal, long gridId) {
+		return userService.getUserByPrincipal(principal).getId() == get(gridId).getAuthorId();
 	}
 }

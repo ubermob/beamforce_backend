@@ -33,7 +33,6 @@ public class ExampleRestController {
 	@CrossOrigin
 	@RequestMapping("/grid-with-offsets")
 	public GridContainer getGridWithOffsetsExample() {
-		System.out.println("GET Example with offsets");
 		return gridRepository.getById(2L).getGridContainer();
 	}
 

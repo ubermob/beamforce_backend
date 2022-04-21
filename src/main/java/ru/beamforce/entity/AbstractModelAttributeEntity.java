@@ -3,6 +3,7 @@ package ru.beamforce.entity;
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * @author Andrey Korneychuk on 10-Apr-22
@@ -11,11 +12,17 @@ import java.time.LocalDateTime;
 @MappedSuperclass
 public abstract class AbstractModelAttributeEntity extends BaseEntity {
 
+	private static final DateTimeFormatter dateTimeFormatter;
+
 	private long authorId;
 	private String name;
 	private String commentary;
 	@Column(name = "created_time")
 	private LocalDateTime localDateTime;
+
+	static {
+		dateTimeFormatter = DateTimeFormatter.ofPattern("hh:mm:ss dd-MM-yyyy");
+	}
 
 	public AbstractModelAttributeEntity() {
 		localDateTime = LocalDateTime.now();
@@ -58,5 +65,9 @@ public abstract class AbstractModelAttributeEntity extends BaseEntity {
 
 	public void setLocalDateTime(LocalDateTime localDateTime) {
 		this.localDateTime = localDateTime;
+	}
+
+	public String getFormattedLocalDateTime() {
+		return localDateTime.format(dateTimeFormatter);
 	}
 }
