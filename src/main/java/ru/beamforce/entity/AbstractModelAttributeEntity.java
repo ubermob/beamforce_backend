@@ -21,7 +21,7 @@ public abstract class AbstractModelAttributeEntity extends BaseEntity {
 	private LocalDateTime localDateTime;
 
 	static {
-		dateTimeFormatter = DateTimeFormatter.ofPattern("hh:mm:ss dd-MM-yyyy");
+		dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss dd-MM-yyyy");
 	}
 
 	public AbstractModelAttributeEntity() {

@@ -1,11 +1,11 @@
 package ru.beamforce.controller.rest;
 
-import modelutil.container.GridContainer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ru.beamforce.modelutil.container.GridContainer;
 import ru.beamforce.service.GridService;
 
 import java.security.Principal;

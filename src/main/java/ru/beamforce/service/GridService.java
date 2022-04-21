@@ -1,8 +1,8 @@
 package ru.beamforce.service;
 
-import modelutil.container.GridContainer;
 import ru.beamforce.dto.GridInputDTO;
 import ru.beamforce.entity.GridEntity;
+import ru.beamforce.modelutil.container.GridContainer;
 
 import java.security.Principal;
 import java.util.List;

@@ -1,7 +1,5 @@
 package ru.beamforce.service;
 
-import modelutil.container.GridContainer;
-import modelutil.gridparser.GridParser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.beamforce.dao.GridDaoImpl;
 import ru.beamforce.dto.GridInputDTO;
 import ru.beamforce.entity.GridEntity;
+import ru.beamforce.modelutil.container.GridContainer;
+import ru.beamforce.modelutil.gridparser.GridParser;
 import ru.beamforce.repository.GridRepository;
 
 import java.security.Principal;

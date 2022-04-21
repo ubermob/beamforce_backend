@@ -1,9 +1,9 @@
 package ru.beamforce.entity;
 
 import com.vladmihalcea.hibernate.type.json.JsonType;
-import modelutil.container.GridContainer;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
+import ru.beamforce.modelutil.container.GridContainer;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
