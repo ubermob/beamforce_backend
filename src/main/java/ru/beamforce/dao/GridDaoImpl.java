@@ -13,13 +13,15 @@ import java.util.List;
  * @version 1.0
  */
 @Repository
-public class GridDaoImpl extends AbstractEntityManager {
+public class GridDaoImpl extends AbstractEntityManager implements GridDao {
 
+	@Override
 	public List<GridEntity> getGridEntityList(UserEntity user) {
 		Session session = unwrap();
-		NativeQuery<GridEntity> sqlQuery = session.createNativeQuery("select * from beamforce_db.grids where author_id=:user_id", GridEntity.class);
+		NativeQuery<GridEntity> sqlQuery = session.createNativeQuery(
+				"select * from " + place("grids") + " where author_id=:user_id", GridEntity.class
+		);
 		sqlQuery.setParameter("user_id", user.getId());
-		List<GridEntity> resultList = sqlQuery.getResultList();
-		return resultList;
+		return sqlQuery.getResultList();
 	}
 }

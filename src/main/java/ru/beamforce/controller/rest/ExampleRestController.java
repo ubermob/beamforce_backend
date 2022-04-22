@@ -4,14 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ru.beamforce.modelutil.container.ForceContainer;
+import ru.beamforce.modelutil.container.ForceKeys;
 import ru.beamforce.modelutil.container.GridContainer;
 import ru.beamforce.modelutil.container.ModelContainer;
 import ru.beamforce.repository.GridRepository;
 import test.Example;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Andrey Korneychuk on 07-Apr-22
@@ -23,6 +24,18 @@ public class ExampleRestController {
 
 	@Autowired
 	private GridRepository gridRepository;
+
+	@RequestMapping()
+	public List<String> getMap() {
+		String host = "http://192.168.1.13:8080/free-api/example";
+		ArrayList<String> strings = new ArrayList<>();
+		strings.add(host + "/grid");
+		strings.add(host + "/grid-with-offsets");
+		strings.add(host + "/model");
+		strings.add(host + "/model/force-keys");
+		strings.add(host + "/model/force");
+		return strings;
+	}
 
 	@CrossOrigin
 	@RequestMapping("/grid")
@@ -57,8 +70,8 @@ public class ExampleRestController {
 
 	@CrossOrigin
 	@RequestMapping("/model/force")
-	public Force getForce() {
-		Force force = new Force();
+	public ForceContainer getForce() {
+		ForceContainer force = new ForceContainer();
 		for (int i = 1; i <= 24; i++) {
 			force.add(i, "abc", i * 0.23);
 		}
@@ -66,56 +79,5 @@ public class ExampleRestController {
 			force.add(i, "def", i * 1.37);
 		}
 		return force;
-	}
-
-	class ForceKeys {
-
-		private Set<String> forceKeys;
-
-		public ForceKeys() {
-			forceKeys = new HashSet<>();
-		}
-
-		public Set<String> getForceKeys() {
-			return forceKeys;
-		}
-
-		public void setForceKeys(Set<String> forceKeys) {
-			this.forceKeys = forceKeys;
-		}
-
-		public ForceKeys add(String forceKey) {
-			forceKeys.add(forceKey);
-			return this;
-		}
-	}
-
-	class Force {
-
-		private HashMap<Long, HashMap<String, Double>> forces;
-
-		public Force() {
-			forces = new HashMap<>();
-		}
-
-		public HashMap<Long, HashMap<String, Double>> getForces() {
-			return forces;
-		}
-
-		public void setForces(HashMap<Long, HashMap<String, Double>> forces) {
-			this.forces = forces;
-		}
-
-		public Force add(long id, String key, Double value) {
-			HashMap<String, Double> stringDoubleHashMap;
-			if (forces.containsKey(id)) {
-				stringDoubleHashMap = forces.get(id);
-			} else {
-				stringDoubleHashMap = new HashMap<>();
-				forces.put(id, stringDoubleHashMap);
-			}
-			stringDoubleHashMap.put(key, value);
-			return this;
-		}
 	}
 }

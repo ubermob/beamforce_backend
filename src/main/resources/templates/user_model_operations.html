@@ -6,13 +6,35 @@
 <div id="bg"></div>
 <div th:insert="~{fragments/header :: nav-bar}"></div>
 
-<div id="body-wrapper">
+<div id="!body-wrapper!">
     <h3 class="subtitle margin-bottom-content">Модели</h3>
-    <h3 class="subtitle margin-bottom-content">Строительные сетки</h3>
+
     <table class="content margin-bottom-content" cellspacing="0">
         <thead th:height="48px">
         <tr>
-            <td>id</td>
+            <td><span class="margin-table-id">id</span></td>
+            <td>Имя</td>
+            <td>Комментарий</td>
+            <td>Дата создания</td>
+            <td>Доступ</td>
+            <td>Просмотров</td>
+            <td>Элементов</td>
+            <td>Узлов</td>
+            <td>Дискуссия</td>
+            <td>RAW</td>
+            <td>Изменить</td>
+            <td>Клонировать</td>
+            <td>Удалить</td>
+        </tr>
+        </thead>
+    </table>
+
+    <h3 class="subtitle margin-bottom-content">Строительные сетки</h3>
+
+    <table class="content margin-bottom-content" cellspacing="0">
+        <thead th:height="48px">
+        <tr>
+            <td><span class="margin-table-id">id</span></td>
             <td>Имя</td>
             <td>Комментарий</td>
             <td>Дата создания</td>
@@ -24,7 +46,7 @@
         </thead>
         <th:block th:if="${gridList}" th:each="grid : ${gridList}">
             <tr>
-                <td th:text="${grid.id}"></td>
+                <td><span th:text="${grid.id}" class="margin-table-id"></span></td>
                 <td th:text="${grid.name}"></td>
                 <td th:text="${grid.commentary}"></td>
                 <td th:text="${grid.getFormattedLocalDateTime()}"></td>

@@ -8,22 +8,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import ru.beamforce.dto.EmailDTO;
-import ru.beamforce.dto.GridInputDTO;
-import ru.beamforce.dto.TokenDTO;
-import ru.beamforce.dto.UpdatePasswordDTO;
+import ru.beamforce.dto.*;
 import ru.beamforce.entity.GridEntity;
 import ru.beamforce.entity.OrganizationEntity;
 import ru.beamforce.entity.UserEntity;
-import ru.beamforce.service.GridService;
-import ru.beamforce.service.OrganizationService;
-import ru.beamforce.service.ServerMessageService;
-import ru.beamforce.service.UserService;
+import ru.beamforce.service.*;
 
 import javax.validation.Valid;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.security.Principal;
 import java.util.List;
 
@@ -43,6 +34,8 @@ public class UserController extends AbstractController {
 	private OrganizationService organizationService;
 	@Autowired
 	private GridService gridService;
+	@Autowired
+	private ModelService modelService;
 
 	@RequestMapping
 	public String showUserPage(Model model, Principal principal) {
@@ -162,16 +155,22 @@ public class UserController extends AbstractController {
 	}
 
 	@RequestMapping("/model/new-model")
-	public String uploadFileForm(Principal principal, Model model) {
+	public String newModel(Principal principal, Model model, ModelInputDTO modelInputDTO) {
 		List<GridEntity> gridList = gridService.getGridList(principal);
 		model.addAttribute("gridList", gridList);
 		navBarDynamicUtil(model, "Новая модель");
+		model.addAttribute("modelInputDTO", modelInputDTO);
 		return "upload_new_model";
 	}
 
 	@PostMapping("/model/new-model/post")
-	public String handleFileUpload(@RequestParam("file") MultipartFile file) {
-		try {
+	public String newModelPost(
+			@RequestParam("geometry-file") MultipartFile geometryFile
+			, @RequestParam("reinforcement-file") MultipartFile reinforcementFile
+			, Model model
+			, ModelInputDTO modelInputDTO
+			, Principal principal) {
+/*		try {
 			String fileName = file.getOriginalFilename();
 			System.out.println("fileName: " + fileName);
 			Path path = Path.of("J:\\Spring post file", fileName);
@@ -182,7 +181,9 @@ public class UserController extends AbstractController {
 			System.out.println(strings);
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		}*/
+		//System.out.println(modelInputDTO);
+		modelService.add(geometryFile, reinforcementFile, modelInputDTO, principal);
 		return "redirect:/user";
 	}
 

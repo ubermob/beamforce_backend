@@ -37,7 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/admin/**").hasAuthority("ADMIN")
 				// User
 				// hasRole() do not work. Replaced to hasAnyAuthority()
-				.antMatchers("/user/**").hasAnyAuthority("ADMIN", "USER")
+				.antMatchers("/user/**", "/api/**").hasAnyAuthority("ADMIN", "USER")
 				.anyRequest().authenticated()
 				.and()
 				// Login (custom)

@@ -3,17 +3,43 @@
 <head th:insert="~{fragments/head_tag :: head_tag}">
 </head>
 <body>
-<form method="POST" enctype="multipart/form-data" th:action="@{__${#httpServletRequest.requestURI}__/post}">
-    <span>File to upload: </span>
-    <br>
-    <input type="file" name="file"/>
-    <br>
-    <label for="grid-list">Сетка:</label>
-    <select id="grid-list" th:if="${gridList}">
-        <option th:each="grid : ${gridList}" th:value="${grid.id}" th:text="${grid.name}"></option>
-    </select>
-    <br>
-    <input type="submit" value="Upload"/>
-</form>
+<div id="bg"></div>
+<div th:insert="~{fragments/header :: nav-bar}"></div>
+
+<div id="body-wrapper">
+    <h3 class="subtitle margin-bottom-content">Новая модель</h3>
+
+    <form method="POST" enctype="multipart/form-data" th:action="@{__${#httpServletRequest.requestURI}__/post}"
+          th:object="${modelInputDTO}" class="content margin-bottom-content">
+        <label for="name">Имя:</label>
+        <input type="text" id="name" th:field="*{name}"/>
+        <br>
+        <label for="commentary">Комментарий:</label>
+        <textarea id="commentary" th:field="*{commentary}" rows="3" cols="25"></textarea>
+        <br>
+        <label for="grid-list">Сетка:</label>
+        <select id="grid-list" th:if="${gridList}" th:field="*{gridId}">
+            <option th:each="grid : ${gridList}" th:value="${grid.id}" th:text="${grid.name}"></option>
+        </select>
+        <br>
+        <label for="geometry-file">Файл с геометрией (.xls):</label>
+        <input type="file" name="geometry-file" id="geometry-file"/>
+        <br>
+        <label for="reinforcement-file">Файл с армированием (.xlsx):</label>
+        <input type="file" name="reinforcement-file" id="reinforcement-file"/>
+        <br>
+        <label for="access-list">Доступ:</label>
+        <select id="access-list" th:field="*{accessLevel}">
+            <option th:value="2">Члены организации</option>
+            <option th:value="1">Приватный</option>
+            <option th:value="3">Все</option>
+        </select>
+        <br>
+
+        <button type="submit">Загрузить</button>
+    </form>
+
+    <div th:insert="~{fragments/footer :: footer}"></div>
+</div>
 </body>
 </html>

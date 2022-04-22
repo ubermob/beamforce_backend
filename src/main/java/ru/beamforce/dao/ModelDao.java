@@ -5,4 +5,8 @@ package ru.beamforce.dao;
  * @version 1.0
  */
 public interface ModelDao {
+
+	void incrementApiCallCounter(long modelId);
+
+	void incrementViewCounter(long modelId);
 }
