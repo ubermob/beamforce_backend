@@ -5,6 +5,7 @@ import ru.beamforce.dto.ModelInputDTO;
 import ru.beamforce.entity.ModelEntity;
 
 import java.security.Principal;
+import java.util.List;
 
 /**
  * @author Andrey Korneychuk on 22-Apr-22
@@ -20,4 +21,6 @@ public interface ModelService {
 	void incrementApiCallCounter(long modelId);
 
 	void incrementViewCounter(long modelId);
+
+	List<ModelEntity> getPersonalModelEntityList(Principal principal);
 }

@@ -27,6 +27,23 @@
             <td>Удалить</td>
         </tr>
         </thead>
+        <th:block th:if="${modelList}" th:each="model : ${modelList}">
+            <tr>
+                <td><span th:text="${model.id}" class="margin-table-id"></span></td>
+                <td th:text="${model.name}"></td>
+                <td th:text="${model.commentary}"></td>
+                <td th:text="${model.getFormattedLocalDateTime()}"></td>
+                <td th:text="${model.getAccessLevelAsString()}"></td>
+                <td th:text="${model.viewCounter} + ' / ' + ${model.apiCallCounter}"></td>
+                <td th:text="${model.elementsNumber}"></td>
+                <td th:text="${model.nodesNumber}"></td>
+                <td>diskusia</td>
+                <td>raw</td>
+                <td>Изменить</td>
+                <td>Клонировать</td>
+                <td>Удалить</td>
+            </tr>
+        </th:block>
     </table>
 
     <h3 class="subtitle margin-bottom-content">Строительные сетки</h3>

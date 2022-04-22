@@ -1,10 +1,7 @@
 package ru.beamforce.controller.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.beamforce.entity.ModelEntity;
 import ru.beamforce.modelutil.container.ForceContainer;
 import ru.beamforce.modelutil.container.ForceKeys;
@@ -25,10 +22,27 @@ public class ModelRestController {
 	private ModelService modelService;
 
 	@GetMapping("/{id}")
-	public ModelRecord getRaw(@PathVariable long id, Principal principal) {
+	public ModelEntity getRaw(@PathVariable long id, Principal principal
+			, @RequestParam(name = "viewer", required = false) String viewer) {
 		ModelEntity modelEntity = modelService.get(principal, id);
-		if (modelEntity != null) {
+		if (modelEntity != null && !isViewer(viewer)) {
 			modelService.incrementApiCallCounter(id);
+		}
+		if (modelEntity != null && isViewer(viewer)) {
+			modelService.incrementViewCounter(id);
+		}
+		return modelEntity;
+	}
+
+	@GetMapping("/short/{id}")
+	public ModelRecord getShortRaw(@PathVariable long id, Principal principal
+			, @RequestParam(name = "viewer", required = false) String viewer) {
+		ModelEntity modelEntity = modelService.get(principal, id);
+		if (modelEntity != null && !isViewer(viewer)) {
+			modelService.incrementApiCallCounter(id);
+		}
+		if (modelEntity != null && isViewer(viewer)) {
+			modelService.incrementViewCounter(id);
 		}
 		return new ModelRecord(
 				modelEntity.getModelContainer()
@@ -38,5 +52,12 @@ public class ModelRestController {
 	}
 
 	record ModelRecord(ModelContainer modelContainer, ForceKeys forceKeys, ForceContainer forceContainer) {
+	}
+
+	private boolean isViewer(String viewer) {
+		if (viewer == null) {
+			return false;
+		}
+		return viewer.equals("true");
 	}
 }

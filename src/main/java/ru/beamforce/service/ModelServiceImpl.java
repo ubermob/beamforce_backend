@@ -16,6 +16,7 @@ import ru.beamforce.repository.ModelRepository;
 import utools.stopwatch.Stopwatch;
 
 import java.security.Principal;
+import java.util.List;
 
 /**
  * @author Andrey Korneychuk on 22-Apr-22
@@ -101,5 +102,11 @@ public class ModelServiceImpl implements ModelService {
 	@Transactional
 	public void incrementViewCounter(long modelId) {
 		modelDao.incrementViewCounter(modelId);
+	}
+
+	@Override
+	@Transactional
+	public List<ModelEntity> getPersonalModelEntityList(Principal principal) {
+		return modelDao.getPersonalModelEntityList(userService.getUserByPrincipal(principal).getId());
 	}
 }

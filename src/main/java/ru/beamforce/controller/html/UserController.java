@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import ru.beamforce.dto.*;
 import ru.beamforce.entity.GridEntity;
+import ru.beamforce.entity.ModelEntity;
 import ru.beamforce.entity.OrganizationEntity;
 import ru.beamforce.entity.UserEntity;
 import ru.beamforce.service.*;
@@ -170,19 +171,6 @@ public class UserController extends AbstractController {
 			, Model model
 			, ModelInputDTO modelInputDTO
 			, Principal principal) {
-/*		try {
-			String fileName = file.getOriginalFilename();
-			System.out.println("fileName: " + fileName);
-			Path path = Path.of("J:\\Spring post file", fileName);
-			file.transferTo(path);
-			System.out.println("Transferred");
-			List<String> strings = Files.readAllLines(path);
-			System.out.println("Read");
-			System.out.println(strings);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}*/
-		//System.out.println(modelInputDTO);
 		modelService.add(geometryFile, reinforcementFile, modelInputDTO, principal);
 		return "redirect:/user";
 	}
@@ -201,6 +189,8 @@ public class UserController extends AbstractController {
 
 	@RequestMapping("/model/operations")
 	public String modelOperations(Principal principal, Model model) {
+		List<ModelEntity> personalModelEntityList = modelService.getPersonalModelEntityList(principal);
+		model.addAttribute("modelList", personalModelEntityList);
 		List<GridEntity> gridList = gridService.getGridList(principal);
 		model.addAttribute("gridList", gridList);
 		navBarDynamicUtil(model, "Операции");

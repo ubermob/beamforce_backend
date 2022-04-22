@@ -42,13 +42,6 @@ public class ModelEntity extends AbstractModelAttributeEntity {
 	public ModelEntity() {
 	}
 
-//	public ModelEntity(String model, long authorId, String name, String commentary) {
-//		super(authorId, name, commentary);
-//		//this.model = model;
-//		super.setLocalDateTime(LocalDateTime.now());
-//	}
-
-
 	public byte getAccessLevel() {
 		return accessLevel;
 	}
@@ -135,5 +128,22 @@ public class ModelEntity extends AbstractModelAttributeEntity {
 
 	public void setGridId(long gridId) {
 		this.gridId = gridId;
+	}
+
+	public String getAccessLevelAsString() {
+		switch (accessLevel) {
+			case 1 -> {
+				return "Приватный";
+			}
+			case 2 -> {
+				return "Члены организации";
+			}
+			case 3 -> {
+				return "Все";
+			}
+			default -> {
+				return "default value";
+			}
+		}
 	}
 }

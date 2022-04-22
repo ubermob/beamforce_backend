@@ -3,10 +3,14 @@ package ru.beamforce;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import ru.beamforce.dao.ModelDao;
 import ru.beamforce.dao.OrganizationDao;
+import ru.beamforce.entity.ModelEntity;
 import ru.beamforce.entity.OrganizationEntity;
 import ru.beamforce.service.OrganizationService;
 import ru.beamforce.shortobject.Token;
+
+import java.util.List;
 
 /**
  * @author Andrey Korneychuk on 07-Apr-22
@@ -19,6 +23,8 @@ public class SqlTests {
 	private OrganizationDao organizationDao;
 	@Autowired
 	private OrganizationService organizationService;
+	@Autowired
+	private ModelDao modelDao;
 
 	@Test
 	void contextLoads() {
@@ -51,5 +57,11 @@ public class SqlTests {
 		organization.setName("123456");
 		result = organizationService.nameIsUnique(organization);
 		System.out.println(result);
+	}
+
+	@Test
+	void test5() {
+		List<ModelEntity> personalModelEntityList = modelDao.getPersonalModelEntityList(39);
+		System.out.println(personalModelEntityList);
 	}
 }
