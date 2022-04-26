@@ -86,7 +86,6 @@ public class GridServiceImpl implements GridService {
 			clone.setAuthorId(original.getAuthorId());
 			clone.setName(original.getName());
 			clone.setCommentary(original.getCommentary());
-			clone.setLocalDateTime(original.getLocalDateTime());
 			clone.setGridContainer(original.getGridContainer());
 			gridRepository.save(clone);
 		}

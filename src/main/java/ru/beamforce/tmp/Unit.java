@@ -13,6 +13,8 @@ public class Unit {
 	@ManyToOne
 	@JoinColumn(name = "item_id")
 	private Item item;
+	@Column(length = 512)
+	private String name;
 
 	public Item getItem() {
 		return item;

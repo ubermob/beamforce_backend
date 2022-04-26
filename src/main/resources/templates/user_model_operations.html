@@ -33,15 +33,43 @@
                 <td th:text="${model.name}"></td>
                 <td th:text="${model.commentary}"></td>
                 <td th:text="${model.getFormattedLocalDateTime()}"></td>
-                <td th:text="${model.getAccessLevelAsString()}"></td>
+                <td>
+                    <div th:text="${model.getAccessLevelAsString()}"></div>
+                    <form th:action="@{__${#httpServletRequest.requestURI}__/access-level(id=${model.id}, level=1)}"
+                          method="post">
+                        <button type="submit">1</button>
+                    </form>
+                    <form th:action="@{__${#httpServletRequest.requestURI}__/access-level(id=${model.id}, level=2)}"
+                          method="post">
+                        <button type="submit">2</button>
+                    </form>
+                    <form th:action="@{__${#httpServletRequest.requestURI}__/access-level(id=${model.id}, level=3)}"
+                          method="post">
+                        <button type="submit">3</button>
+                    </form>
+                </td>
                 <td th:text="${model.viewCounter} + ' / ' + ${model.apiCallCounter}"></td>
                 <td th:text="${model.elementsNumber}"></td>
                 <td th:text="${model.nodesNumber}"></td>
-                <td>diskusia</td>
-                <td>raw</td>
+                <td>Дискуссия</td>
+                <td>
+                    <form th:action="@{~/api/models/short/{id}(id=${model.id})}" method="get" target="_blank">
+                        <button type="submit">RAW</button>
+                    </form>
+                </td>
                 <td>Изменить</td>
-                <td>Клонировать</td>
-                <td>Удалить</td>
+                <td>
+                    <form th:action="@{__${#httpServletRequest.requestURI}__/clone-model(id=${model.id})}"
+                          method="post">
+                        <button type="submit">Клонировать</button>
+                    </form>
+                </td>
+                <td>
+                    <form th:action="@{__${#httpServletRequest.requestURI}__/delete-model(id=${model.id})}"
+                          method="post">
+                        <button type="submit">Удалить</button>
+                    </form>
+                </td>
             </tr>
         </th:block>
     </table>
@@ -73,7 +101,7 @@
                     </form>
                 </td>
                 <td>
-                    Изменить (work in progress)
+                    Изменить
                 </td>
                 <td>
                     <form th:action="@{__${#httpServletRequest.requestURI}__/clone-grid(id=${grid.id})}" method="post">

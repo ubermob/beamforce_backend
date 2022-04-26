@@ -23,4 +23,10 @@ public interface ModelService {
 	void incrementViewCounter(long modelId);
 
 	List<ModelEntity> getPersonalModelEntityList(Principal principal);
+
+	List<ModelEntity> getOrganizationWideModelEntityList(Principal principal);
+
+	void clone(Principal principal, long modelId);
+
+	void delete(Principal principal, long modelId);
 }

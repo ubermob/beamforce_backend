@@ -295,6 +295,10 @@ input:focus, textarea:focus {
     margin-bottom: 1.75rem;
 }
 
+.margin-bottom-card-title {
+    margin-bottom: 1rem;
+}
+
 .button-flex-array {
     display: flex;
     justify-content: center;
@@ -371,6 +375,14 @@ td {
 
 .margin-table-id {
     margin-left: 0.75rem;
+}
+
+.text-align-left {
+    text-align: left;
+}
+
+.text-align-right {
+    text-align: right;
 }
 
 /* Above 1400px */

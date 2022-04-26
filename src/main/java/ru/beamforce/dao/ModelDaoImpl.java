@@ -3,8 +3,10 @@ package ru.beamforce.dao;
 import org.hibernate.Session;
 import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.beamforce.entity.ModelEntity;
+import ru.beamforce.logger.LoggingDb;
 
 import java.util.List;
 
@@ -14,6 +16,9 @@ import java.util.List;
  */
 @Repository
 public class ModelDaoImpl extends AbstractEntityManager implements ModelDao {
+
+	@Autowired
+	private LoggingDb loggingDb;
 
 	@Override
 	public void incrementApiCallCounter(long modelId) {
@@ -30,12 +35,31 @@ public class ModelDaoImpl extends AbstractEntityManager implements ModelDao {
 		try {
 			Session session = unwrap();
 			Query<ModelEntity> query = session.createQuery(
-					"from ModelEntity where authorId=:author_id"
-					, ModelEntity.class);
+					"FROM ModelEntity WHERE authorId = :author_id"
+			);
 			query.setParameter("author_id", authorId);
 			return query.getResultList();
 		} catch (Exception e) {
-			e.printStackTrace();
+			loggingDb.error(e);
+		}
+		return null;
+	}
+
+	@Override
+	public List<ModelEntity> getOrganizationWideModelEntityList(long authorId) {
+		try {
+			Session session = unwrap();
+			var query = session.createQuery(
+					"FROM ModelEntity WHERE authorId IN (" +
+							"SELECT id FROM UserEntity WHERE organization IN (" +
+							"SELECT organization FROM UserEntity WHERE id = :author_id" +
+							")" +
+							")"
+			);
+			query.setParameter("author_id", authorId);
+			return (List<ModelEntity>) query.getResultList();
+		} catch (Exception e) {
+			loggingDb.error(e);
 		}
 		return null;
 	}
@@ -46,10 +70,9 @@ public class ModelDaoImpl extends AbstractEntityManager implements ModelDao {
 			NativeQuery sqlQuery = session.createSQLQuery("update " + place("models") +
 					" set %s = %s + 1 where id=:id".formatted(fieldName, fieldName));
 			sqlQuery.setParameter("id", modelId);
-			//sqlQuery.setParameter("fieldName", fieldName);
 			sqlQuery.executeUpdate();
 		} catch (Exception e) {
-			e.printStackTrace();
+			loggingDb.error(e);
 		}
 	}
 }

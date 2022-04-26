@@ -19,6 +19,9 @@ import java.util.List;
 @TypeDef(name = "json", typeClass = JsonType.class)
 public class ModelEntity extends AbstractModelAttributeEntity {
 
+	public static final byte PUBLIC_ACCESS_LEVEL = 3;
+	public static final byte PUBLIC_ACCESS_TOKEN_LENGTH = 6;
+
 	private byte accessLevel;
 	@Type(type = "json")
 	@Column(name = "force_keys")
@@ -38,6 +41,8 @@ public class ModelEntity extends AbstractModelAttributeEntity {
 	@ElementCollection(targetClass = String.class, fetch = FetchType.LAZY)
 	private List<String> commentaryList;
 	private long gridId;
+	@Column(length = 6)
+	private String publicAccessToken;
 
 	public ModelEntity() {
 	}
@@ -145,5 +150,17 @@ public class ModelEntity extends AbstractModelAttributeEntity {
 				return "default value";
 			}
 		}
+	}
+
+	public String getPublicAccessToken() {
+		return publicAccessToken;
+	}
+
+	public void setPublicAccessToken(String publicAccessToken) {
+		this.publicAccessToken = publicAccessToken;
+	}
+
+	public boolean isPublicModel() {
+		return accessLevel == PUBLIC_ACCESS_LEVEL;
 	}
 }

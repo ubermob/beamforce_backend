@@ -37,11 +37,16 @@ public class UserController extends AbstractController {
 	private GridService gridService;
 	@Autowired
 	private ModelService modelService;
+	@Autowired
+	private PublicModelService publicModelService;
 
 	@RequestMapping
 	public String showUserPage(Model model, Principal principal) {
 		UserEntity user = userService.getUserByPrincipal(principal);
 		model.addAttribute("user", user);
+		List<ModelEntity> organizationWideModelEntityList = modelService.getOrganizationWideModelEntityList(principal);
+		model.addAttribute("modelList", organizationWideModelEntityList);
+		model.addAttribute("userService", userService);
 		if (serverMessageService.getMessage() != null) {
 			model.addAttribute("server_message", serverMessageService.getMessage());
 		}
@@ -197,14 +202,36 @@ public class UserController extends AbstractController {
 		return "user_model_operations";
 	}
 
+	@PostMapping("/model/operations/access-level")
+	public String setAccessLevel(@RequestParam(name = "id") long id, @RequestParam(name = "level") byte level
+			, Principal principal) {
+		// todo
+		if (level == 3) {
+			publicModelService.makePublic(id, principal);
+		}
+		return "redirect:/user/model/operations";
+	}
+
+	@PostMapping("/model/operations/clone-model")
+	public String cloneModel(@RequestParam(name = "id") long id, Principal principal) {
+		modelService.clone(principal, id);
+		return "redirect:/user/model/operations";
+	}
+
+	@PostMapping("/model/operations/delete-model")
+	public String deleteModel(@RequestParam(name = "id") long id, Principal principal) {
+		modelService.delete(principal, id);
+		return "redirect:/user/model/operations";
+	}
+
 	@PostMapping("/model/operations/clone-grid")
-	public String cloneGrid(@RequestParam(name = "id") Long id, Principal principal) {
+	public String cloneGrid(@RequestParam(name = "id") long id, Principal principal) {
 		gridService.clone(principal, id);
 		return "redirect:/user/model/operations";
 	}
 
 	@PostMapping("/model/operations/delete-grid")
-	public String deleteGrid(@RequestParam(name = "id") Long id, Principal principal) {
+	public String deleteGrid(@RequestParam(name = "id") long id, Principal principal) {
 		gridService.delete(principal, id);
 		return "redirect:/user/model/operations";
 	}

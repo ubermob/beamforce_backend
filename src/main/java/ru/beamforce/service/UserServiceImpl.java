@@ -44,6 +44,11 @@ public class UserServiceImpl implements UserService, UserDetailsService, Registr
 	}
 
 	@Override
+	public UserEntity getUserById(long id) {
+		return userRepository.getById(id);
+	}
+
+	@Override
 	public void deleteEmail(UserEntity user) {
 		user.setEmail(null);
 		userRepository.save(user);

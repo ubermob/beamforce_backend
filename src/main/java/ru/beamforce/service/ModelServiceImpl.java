@@ -37,6 +37,13 @@ public class ModelServiceImpl implements ModelService {
 	public void add(MultipartFile geometryFile, MultipartFile reinforcementFile
 			, ModelInputDTO modelInputDTO, Principal principal) {
 		Stopwatch stopwatch = new Stopwatch();
+		byte stage = 1;
+		if (geometryFile != null) {
+			stage++;
+		}
+		if (reinforcementFile != null) {
+			stage++;
+		}
 		try {
 			ModelParser modelParser = new ModelParser();
 			modelParser.consumeWorkbook(WorkbookFactory.create(geometryFile.getInputStream()));
@@ -74,7 +81,9 @@ public class ModelServiceImpl implements ModelService {
 			modelEntity.setForceKeys(modelParser.getForceKeys());
 			modelEntity.setModelContainer(modelParser.getModelContainer());
 			modelEntity.setForceContainer(modelParser.getForceContainer());
-			//
+			modelEntity.setNodesNumber(modelParser.getNodeNumber());
+			modelEntity.setElementsNumber(modelParser.getBarNumber());
+
 			modelRepository.save(modelEntity);
 		} catch (Exception e) {
 			LOGGER.info(e);
@@ -108,5 +117,42 @@ public class ModelServiceImpl implements ModelService {
 	@Transactional
 	public List<ModelEntity> getPersonalModelEntityList(Principal principal) {
 		return modelDao.getPersonalModelEntityList(userService.getUserByPrincipal(principal).getId());
+	}
+
+	@Override
+	@Transactional
+	public List<ModelEntity> getOrganizationWideModelEntityList(Principal principal) {
+		return modelDao.getOrganizationWideModelEntityList(userService.getUserByPrincipal(principal).getId());
+	}
+
+	@Override
+	public void clone(Principal principal, long modelId) {
+		if (isPrincipalTheAuthorOfGrid(principal, modelId)) {
+			ModelEntity original = get(principal, modelId);
+			ModelEntity clone = new ModelEntity();
+			clone.setAuthorId(original.getAuthorId());
+			clone.setName(original.getName());
+			clone.setCommentary(original.getCommentary());
+			clone.setAccessLevel(original.getAccessLevel());
+			clone.setForceKeys(original.getForceKeys());
+			clone.setModelContainer(original.getModelContainer());
+			clone.setForceContainer(original.getForceContainer());
+			clone.setStage(original.getStage());
+			clone.setElementsNumber(original.getElementsNumber());
+			clone.setNodesNumber(original.getNodesNumber());
+			clone.setGridId(original.getGridId());
+			modelRepository.save(clone);
+		}
+	}
+
+	@Override
+	public void delete(Principal principal, long modelId) {
+		if (isPrincipalTheAuthorOfGrid(principal, modelId)) {
+			modelRepository.deleteById(modelId);
+		}
+	}
+
+	private boolean isPrincipalTheAuthorOfGrid(Principal principal, long gridId) {
+		return userService.getUserByPrincipal(principal).getId() == get(principal, gridId).getAuthorId();
 	}
 }

@@ -16,101 +16,43 @@
               th:action="@{__${#httpServletRequest.requestURI}__/settings/join-org}">
             <button type="submit">Присоединиться к организации</button>
         </form>
+
         <form th:action="@{__${#httpServletRequest.requestURI}__/model/new-model}">
             <button type="submit">Новая модель</button>
         </form>
+
         <form th:action="@{__${#httpServletRequest.requestURI}__/model/new-grid}">
             <button type="submit">Новая строительная сетка</button>
         </form>
+
         <form th:action="@{__${#httpServletRequest.requestURI}__/model/operations}">
             <button type="submit">Операции с моделью</button>
         </form>
     </div>
 
     <div class="card-flex-array margin-bottom-content">
-        <div class="card card-size-320">
-            <div class="card-title">
-                Fake Model 1
+        <div th:each="model : ${modelList}" class="card card-size-320">
+            <div class="margin-bottom-card-title">
+                <a th:text="${model.name}" th:href="@{~/model(id=${model.id})}" class="card-title">Model title</a>
             </div>
-            <div class="content">
-                date&time
-            </div>
-            <div class="content">
-                creator
-            </div>
-            <div class="content">
-                comment
-            </div>
-            <div><a class="content-link" href="/">RAW</a></div>
-        </div>
-        <div class="card card-size-320">
-            <div class="card-title">
-                Fake Model 1
-            </div>
-            <div class="content">
-                date&time
-            </div>
-            <div class="content">
-                creator
-            </div>
-            <div class="content">
-                comment
-            </div>
-            <div class="content-link"><a href="/">RAW</a></div>
-        </div>
-        <div class="card card-size-320">
-            <div class="card-title">
-                Fake Model 1
-            </div>
-            <div class="content">
-                date&time
-            </div>
-            <div class="content">
-                creator
-            </div>
-            <div class="content">
-                comment
-            </div>
-            <div class="content-link"><a href="/">RAW</a></div>
-        </div>
 
-    </div>
+            <div th:text="${model.getFormattedLocalDateTime()}" class="content text-align-right">
+                date&time
+            </div>
 
-    <div class="user_content_container">
-        <div class="user_content">
-            <div class="model_name"><a href="">Fake Model 1</a></div>
-            <div class="model_time">date&time</div>
-            <div class="model_creator">creator</div>
-            <div class="model_comment">comment</div>
-            <div class="model_raw"><a href="">raw</a></div>
-        </div>
-        <div class="user_content">
-            <div class="model_name"><a href="">Fake Model 2</a></div>
-            <div class="model_time">date&time</div>
-            <div class="model_creator">creator</div>
-            <div class="model_comment">comment</div>
-            <div class="model_raw"><a href="">raw</a></div>
-        </div>
-        <div class="user_content">
-            <div class="model_name"><a href="">Fake Model 3</a></div>
-            <div class="model_time">date&time</div>
-            <div class="model_creator">creator</div>
-            <div class="model_comment">comment</div>
-            <div class="model_raw"><a href="">raw</a></div>
-        </div>
-        <div class="user_content">
-            <div class="model_name"><a href="">Fake Model 4</a></div>
-            <div class="model_time">date&time</div>
-            <div class="model_creator">creator</div>
-            <div class="model_comment">comment</div>
-            <div class="model_raw"><a href="">raw</a></div>
-        </div>
-        <div class="user_content">
-            <div class="model_name"><a href="">Fake Model 5</a></div>
-            <div class="model_time">date&time</div>
-            <div class="model_creator">creator</div>
-            <div class="model_comment">comment</div>
-            <div class="model_raw"><a href="">raw</a></div>
+            <div th:text="${userService.getUserById(model.authorId).name}"
+                 class="content text-align-right margin-bottom-card-title">
+                creator
+            </div>
+
+            <div th:text="${model.commentary}" class="content text-align-left margin-bottom-card-title">
+                comment
+            </div>
+
+            <div th:text="'Узлов: ' + ${model.nodesNumber} + ', Элементов: ' + ${model.elementsNumber}"
+                 class="content text-align-right">
+                nodes&elements
+            </div>
         </div>
     </div>
 

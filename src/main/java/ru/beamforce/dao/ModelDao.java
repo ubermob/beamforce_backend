@@ -15,4 +15,6 @@ public interface ModelDao {
 	void incrementViewCounter(long modelId);
 
 	List<ModelEntity> getPersonalModelEntityList(long authorId);
+
+	List<ModelEntity> getOrganizationWideModelEntityList(long authorId);
 }

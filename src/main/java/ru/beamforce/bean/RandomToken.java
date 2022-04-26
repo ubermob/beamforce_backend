@@ -41,12 +41,12 @@ public class RandomToken {
 		return getToken(length, 75);
 	}
 
-	// token contain 0-9 and A-Z only
+	// token contain 0-9 and a-z only
 	public String getTinyToken() {
 		return getTinyToken(defaultLength);
 	}
 
-	// token contain 0-9 and A-Z only
+	// token contain 0-9 and a-z only
 	public String getTinyToken(int length) {
 		return getToken(length, 36);
 	}
@@ -66,10 +66,10 @@ public class RandomToken {
 	private char[] chars() {
 		// size == 10 + 13 * 5 == 75
 		return new char[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
-				, 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M'
-				, 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
 				, 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm'
 				, 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
+				, 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M'
+				, 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
 				, '-', '_', '+', '*', '=', '@', '%', '$', '?', '!', '^', ';', ':'};
 	}
 }

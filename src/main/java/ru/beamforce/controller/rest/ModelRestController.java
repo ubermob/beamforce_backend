@@ -7,6 +7,7 @@ import ru.beamforce.modelutil.container.ForceContainer;
 import ru.beamforce.modelutil.container.ForceKeys;
 import ru.beamforce.modelutil.container.ModelContainer;
 import ru.beamforce.service.ModelService;
+import ru.beamforce.service.PublicModelService;
 
 import java.security.Principal;
 
@@ -20,9 +21,11 @@ public class ModelRestController {
 
 	@Autowired
 	private ModelService modelService;
+	@Autowired
+	private PublicModelService publicModelService;
 
 	@GetMapping("/{id}")
-	public ModelEntity getRaw(@PathVariable long id, Principal principal
+	public ModelEntity getRawById(@PathVariable long id, Principal principal
 			, @RequestParam(name = "viewer", required = false) String viewer) {
 		ModelEntity modelEntity = modelService.get(principal, id);
 		if (modelEntity != null && !isViewer(viewer)) {
@@ -30,6 +33,19 @@ public class ModelRestController {
 		}
 		if (modelEntity != null && isViewer(viewer)) {
 			modelService.incrementViewCounter(id);
+		}
+		return modelEntity;
+	}
+
+	@GetMapping("/token/{token}")
+	public ModelEntity getRawByToken(@PathVariable String token, Principal principal
+			, @RequestParam(name = "viewer", required = false) String viewer) {
+		ModelEntity modelEntity = publicModelService.getModel(token);
+		if (modelEntity != null && !isViewer(viewer)) {
+			modelService.incrementApiCallCounter(modelEntity.getId());
+		}
+		if (modelEntity != null && isViewer(viewer)) {
+			modelService.incrementViewCounter(modelEntity.getId());
 		}
 		return modelEntity;
 	}

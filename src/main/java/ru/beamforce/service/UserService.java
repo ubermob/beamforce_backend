@@ -18,6 +18,8 @@ public interface UserService {
 
 	UserEntity getUserByPrincipal(Principal principal);
 
+	UserEntity getUserById(long id);
+
 	void deleteEmail(UserEntity user);
 
 	void deleteUser(UserEntity user);
