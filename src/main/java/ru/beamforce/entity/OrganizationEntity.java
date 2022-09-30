@@ -1,5 +1,6 @@
 package ru.beamforce.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
@@ -17,6 +18,7 @@ public class OrganizationEntity extends BaseEntity {
 	@Size(min = 3, max = 25, message = "Длина имени должна быть от 3 до 25")
 	private String name;
 	private long adminId;
+	@Column(length = 42)
 	private String joinToken;
 
 	public String getName() {
@@ -41,14 +43,5 @@ public class OrganizationEntity extends BaseEntity {
 
 	public void setJoinToken(String joinToken) {
 		this.joinToken = joinToken;
-	}
-
-	@Override
-	public String toString() {
-		return "Organization{" +
-				"id=" + id +
-				", name='" + name + '\'' +
-				", adminId=" + adminId +
-				'}';
 	}
 }

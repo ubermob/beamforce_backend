@@ -2,10 +2,8 @@ package ru.beamforce.dao;
 
 import org.hibernate.Session;
 import org.hibernate.query.Query;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.beamforce.entity.ModelEntity;
-import ru.beamforce.logger.LoggingDb;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -16,9 +14,6 @@ import java.util.List;
  */
 @Repository
 public class PublicModelDaoImpl extends AbstractEntityManager implements PublicModelDao {
-
-	@Autowired
-	private LoggingDb loggingDb;
 
 	@Override
 	public boolean isPublicModel(String token) {
@@ -34,7 +29,7 @@ public class PublicModelDaoImpl extends AbstractEntityManager implements PublicM
 		try {
 			Session session = unwrap();
 			Query<ModelEntity> query = session.createQuery(
-					"from ModelEntity where wwwAccessToken=:token"
+					"from ModelEntity where publicAccessToken = :token"
 					, ModelEntity.class
 			);
 			query.setParameter("token", token);
@@ -57,7 +52,8 @@ public class PublicModelDaoImpl extends AbstractEntityManager implements PublicM
 		Session session = unwrap();
 
 		var query = session.createSQLQuery(
-				"select count(public_access_token) from " + place("models") + " where public_access_token=:token"
+				"select count(public_access_token) from " + place("models")
+						+ " where public_access_token = :token"
 		);
 		var resultList = query.setParameter("token", token).getResultList();
 		boolean isAvailableToken = resultList.get(0).equals(new BigInteger("0"));

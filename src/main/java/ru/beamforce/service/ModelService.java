@@ -29,4 +29,6 @@ public interface ModelService {
 	void clone(Principal principal, long modelId);
 
 	void delete(Principal principal, long modelId);
+
+	void setAccessLevel(long modelId, byte accessLevel, Principal principal);
 }

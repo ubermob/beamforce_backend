@@ -309,6 +309,7 @@ input:focus, textarea:focus {
     align-items: flex-start;
     justify-content: space-evenly;
     flex-wrap: wrap;
+    flex-direction: column-reverse;
 }
 
 .card-size-320 {

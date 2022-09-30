@@ -14,11 +14,13 @@ public abstract class AbstractModelAttributeEntity extends BaseEntity {
 
 	private static final DateTimeFormatter dateTimeFormatter;
 
-	private long authorId;
-	private String name;
-	private String commentary;
+	protected long authorId;
+	@Column(length = 75)
+	protected String name;
+	@Column(length = 512)
+	protected String commentary;
 	@Column(name = "created_time")
-	private LocalDateTime localDateTime;
+	protected LocalDateTime localDateTime;
 
 	static {
 		dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss dd-MM-yyyy");

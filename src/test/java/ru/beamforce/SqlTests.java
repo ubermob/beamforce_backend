@@ -52,10 +52,10 @@ public class SqlTests {
 	void test4() {
 		OrganizationEntity organization = new OrganizationEntity();
 		organization.setName("qwertyiop");
-		boolean result = organizationService.nameIsUnique(organization);
+		boolean result = organizationService.nameIsAvailable(organization);
 		System.out.println(result);
 		organization.setName("123456");
-		result = organizationService.nameIsUnique(organization);
+		result = organizationService.nameIsAvailable(organization);
 		System.out.println(result);
 	}
 

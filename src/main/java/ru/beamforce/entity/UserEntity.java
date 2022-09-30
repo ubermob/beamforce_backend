@@ -121,6 +121,10 @@ public class UserEntity extends BaseEntity implements UserDetails {
 		return roles.contains(Role.ADMIN);
 	}
 
+	public boolean hasUserRole() {
+		return roles.contains(Role.USER);
+	}
+
 	public OrganizationEntity getOrganization() {
 		return organization;
 	}
@@ -135,18 +139,6 @@ public class UserEntity extends BaseEntity implements UserDetails {
 
 	public void setGridEntityList(List<GridEntity> gridEntityList) {
 		this.gridEntityList = gridEntityList;
-	}
-
-	@Override
-	public String toString() {
-		return "User{" +
-				"id=" + id +
-				", name='" + name + '\'' +
-				", email='" + email + '\'' +
-				", password='" + password + '\'' +
-				", isActive=" + isActive +
-				", roles=" + roles +
-				'}';
 	}
 
 	private enum Role implements GrantedAuthority {

@@ -10,9 +10,9 @@ import java.security.Principal;
  */
 public interface PublicModelService {
 
-	void makePublic(long modelId, Principal principal);
+	void makePublic(ModelEntity model);
 
-	void makeNotPublic(long modelId, Principal principal);
+	void makeNotPublic(ModelEntity model);
 
 	boolean isPublicModel(String token);
 

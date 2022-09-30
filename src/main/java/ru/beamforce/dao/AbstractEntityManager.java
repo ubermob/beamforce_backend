@@ -3,6 +3,7 @@ package ru.beamforce.dao;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import ru.beamforce.logger.LoggingDb;
 
 import javax.persistence.EntityManager;
 
@@ -16,6 +17,8 @@ public abstract class AbstractEntityManager {
 	protected EntityManager entityManager;
 	@Value("${db.name}")
 	private String dbName;
+	@Autowired
+	protected LoggingDb loggingDb;
 
 	protected String place(String tableName) {
 		return dbName + "." + tableName;

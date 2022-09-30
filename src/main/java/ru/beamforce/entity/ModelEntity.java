@@ -19,6 +19,7 @@ import java.util.List;
 @TypeDef(name = "json", typeClass = JsonType.class)
 public class ModelEntity extends AbstractModelAttributeEntity {
 
+	public static final byte PRIVATE_ACCESS_LEVEL = 1;
 	public static final byte PUBLIC_ACCESS_LEVEL = 3;
 	public static final byte PUBLIC_ACCESS_TOKEN_LENGTH = 6;
 
@@ -37,7 +38,7 @@ public class ModelEntity extends AbstractModelAttributeEntity {
 	private int apiCallCounter;
 	private int elementsNumber;
 	private int nodesNumber;
-	@CollectionTable(name = "model_comentaries", joinColumns = @JoinColumn(name = "model_id"))
+	@CollectionTable(name = "model_commentaries", joinColumns = @JoinColumn(name = "model_id"))
 	@ElementCollection(targetClass = String.class, fetch = FetchType.LAZY)
 	private List<String> commentaryList;
 	private long gridId;

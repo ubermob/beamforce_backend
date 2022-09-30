@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.beamforce.dao.GridDao;
 import ru.beamforce.dto.GridInputDTO;
 import ru.beamforce.entity.GridEntity;
+import ru.beamforce.entity.UserEntity;
 import ru.beamforce.modelutil.container.GridContainer;
 import ru.beamforce.modelutil.gridparser.GridParser;
 import ru.beamforce.repository.GridRepository;
@@ -32,26 +33,30 @@ public class GridServiceImpl implements GridService {
 
 	@Override
 	public void add(GridInputDTO gridInputDTO, Principal principal) {
-		GridParser gridParser = new GridParser(
-				gridInputDTO.getStartOffsetX()
-				, gridInputDTO.getStartOffsetY()
-				, gridInputDTO.getOffset()
-		);
-		gridParser.setInfoListener(s -> LOGGER.info(s));
-		gridParser.setExceptionListener((s, e) -> {
-			LOGGER.error(s);
-			LOGGER.error(e);
-		});
-		// From textarea input contains "\r"
-		// Remove this
-		gridParser.parse(gridInputDTO.getAlong().replace("\r", "")
-				+ "\n" + gridInputDTO.getAcross().replace("\r", ""));
-		gridRepository.save(new GridEntity(
-				gridParser.getGridContainer()
-				, userService.getUserByUsername(principal.getName()).getId()
-				, gridInputDTO.getName()
-				, gridInputDTO.getCommentary()
-		));
+		UserEntity user = userService.getUserByPrincipal(principal);
+		List<GridEntity> gridList = getGridList(principal);
+		if (isUserInStorageLimit(user, gridList.size())) {
+			GridParser gridParser = new GridParser(
+					gridInputDTO.getStartOffsetX()
+					, gridInputDTO.getStartOffsetY()
+					, gridInputDTO.getOffset()
+			);
+			gridParser.setInfoListener(s -> LOGGER.info(s));
+			gridParser.setExceptionListener((s, e) -> {
+				LOGGER.error(s);
+				LOGGER.error(e);
+			});
+			// From textarea input contains "\r"
+			// Remove this
+			gridParser.parse(gridInputDTO.getAlong().replace("\r", "")
+					+ "\n" + gridInputDTO.getAcross().replace("\r", ""));
+			gridRepository.save(new GridEntity(
+					gridParser.getGridContainer()
+					, user.getId()
+					, gridInputDTO.getName()
+					, gridInputDTO.getCommentary()
+			));
+		}
 	}
 
 	@Override
@@ -80,7 +85,8 @@ public class GridServiceImpl implements GridService {
 
 	@Override
 	public void clone(Principal principal, long gridId) {
-		if (isPrincipalTheAuthorOfGrid(principal, gridId)) {
+		if (isPrincipalTheAuthorOfGrid(principal, gridId)
+				&& isUserInStorageLimit(userService.getUserByPrincipal(principal), getGridList(principal).size())) {
 			GridEntity original = gridRepository.getById(gridId);
 			GridEntity clone = new GridEntity();
 			clone.setAuthorId(original.getAuthorId());
@@ -100,5 +106,12 @@ public class GridServiceImpl implements GridService {
 
 	private boolean isPrincipalTheAuthorOfGrid(Principal principal, long gridId) {
 		return userService.getUserByPrincipal(principal).getId() == get(gridId).getAuthorId();
+	}
+
+	private boolean isUserInStorageLimit(UserEntity user, int listSize) {
+		if (user.hasUserRole()) {
+			return listSize < Limit.USER_GRID_LIMIT;
+		}
+		return true;
 	}
 }

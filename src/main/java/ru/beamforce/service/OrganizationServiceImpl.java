@@ -45,7 +45,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 	}
 
 	@Override
-	public boolean nameIsUnique(OrganizationEntity organization) {
-		return organizationDao.nameIsUnique(organization);
+	public boolean nameIsAvailable(OrganizationEntity organization) {
+		return organizationDao.nameIsAvailable(organization);
 	}
 }

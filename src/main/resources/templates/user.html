@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:insert="~{fragments/head_tag :: head_tag}">
+<head th:replace="~{fragments/head_tag :: head_tag}">
 </head>
 <body>
 <div id="bg"></div>
-<div th:insert="~{fragments/header :: nav-bar}"></div>
+<div th:replace="~{fragments/header :: nav-bar}"></div>
 
 <div id="body-wrapper">
-    <div th:if="${server_message} != null" th:insert="~{fragments/server_message :: server_message}" class="red-alert">
+    <div th:if="${server_message} != null" th:replace="~{fragments/server_message :: server_message}" class="red-alert">
         server message
     </div>
 
@@ -56,7 +56,7 @@
         </div>
     </div>
 
-    <div th:insert="~{fragments/footer :: footer}"></div>
+    <div th:replace="~{fragments/footer :: footer}"></div>
 </div>
 </body>
 </html>

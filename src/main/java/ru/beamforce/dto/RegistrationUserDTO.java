@@ -57,13 +57,4 @@ public class RegistrationUserDTO {
 			email = null;
 		}
 	}
-
-	@Override
-	public String toString() {
-		return "RegistrationUser{" +
-				"name='" + name + '\'' +
-				", email='" + email + '\'' +
-				", password='" + password + '\'' +
-				'}';
-	}
 }

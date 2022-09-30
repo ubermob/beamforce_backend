@@ -32,65 +32,77 @@ public class ModelServiceImpl implements ModelService {
 	private ModelRepository modelRepository;
 	@Autowired
 	private ModelDao modelDao;
+	@Autowired
+	private PublicModelService publicModelService;
 
 	@Override
 	public void add(MultipartFile geometryFile, MultipartFile reinforcementFile
 			, ModelInputDTO modelInputDTO, Principal principal) {
-		Stopwatch stopwatch = new Stopwatch();
-		byte stage = 1;
-		if (geometryFile != null) {
-			stage++;
-		}
-		if (reinforcementFile != null) {
-			stage++;
-		}
-		try {
-			ModelParser modelParser = new ModelParser();
-			modelParser.consumeWorkbook(WorkbookFactory.create(geometryFile.getInputStream()));
-			modelParser.consumeWorkbook(WorkbookFactory.create(reinforcementFile.getInputStream()));
-			modelParser.setInfoListener(x -> LOGGER.info(x));
-			modelParser.addInfoListenerForNodeParser(x -> LOGGER.info(x));
-			modelParser.addInfoListenerForBarParser(x -> LOGGER.info(x));
-			modelParser.addInfoListenerForModelReinforcementParser(x -> LOGGER.info(x));
-			modelParser.setExceptionListener((s, e) -> {
-				LOGGER.error(s);
-				LOGGER.error(e);
-			});
-			modelParser.addExceptionListenerForNodeParser((s, e) -> {
-				LOGGER.error(s);
-				LOGGER.error(e);
-			});
-			modelParser.addExceptionListenerForBarParser((s, e) -> {
-				LOGGER.error(s);
-				LOGGER.error(e);
-			});
-			modelParser.addExceptionListenerForModelReinforcementParser((s, e) -> {
-				LOGGER.error(s);
-				LOGGER.error(e);
-			});
+		UserEntity user = userService.getUserByPrincipal(principal);
+		List<ModelEntity> personalModelEntityList = getPersonalModelEntityList(principal);
+		if (isUserInStorageLimit(user, personalModelEntityList.size())) {
+			Stopwatch stopwatch = new Stopwatch();
+			byte stage = 1;
+			if (geometryFile != null) {
+				stage++;
+			}
+			if (reinforcementFile != null) {
+				stage++;
+			}
+			try {
+				ModelParser modelParser = new ModelParser();
+				modelParser.consumeWorkbook(WorkbookFactory.create(geometryFile.getInputStream()));
+				modelParser.consumeWorkbook(WorkbookFactory.create(reinforcementFile.getInputStream()));
+				modelParser.setInfoListener(x -> LOGGER.info(x));
+				modelParser.addInfoListenerForNodeParser(x -> LOGGER.info(x));
+				modelParser.addInfoListenerForBarParser(x -> LOGGER.info(x));
+				modelParser.addInfoListenerForModelReinforcementParser(x -> LOGGER.info(x));
+				modelParser.setExceptionListener((s, e) -> {
+					LOGGER.error(s);
+					LOGGER.error(e);
+				});
+				modelParser.addExceptionListenerForNodeParser((s, e) -> {
+					LOGGER.error(s);
+					LOGGER.error(e);
+				});
+				modelParser.addExceptionListenerForBarParser((s, e) -> {
+					LOGGER.error(s);
+					LOGGER.error(e);
+				});
+				modelParser.addExceptionListenerForModelReinforcementParser((s, e) -> {
+					LOGGER.error(s);
+					LOGGER.error(e);
+				});
 
-			modelParser.du();
+				modelParser.du();
 
-			UserEntity user = userService.getUserByPrincipal(principal);
-			ModelEntity modelEntity = new ModelEntity();
-			modelEntity.setName(modelInputDTO.getName());
-			modelEntity.setCommentary(modelInputDTO.getCommentary());
-			modelEntity.setAuthorId(user.getId());
-			modelEntity.setGridId(modelInputDTO.getGridId());
-			modelEntity.setAccessLevel(modelInputDTO.getAccessLevel());
-			modelEntity.setForceKeys(modelParser.getForceKeys());
-			modelEntity.setModelContainer(modelParser.getModelContainer());
-			modelEntity.setForceContainer(modelParser.getForceContainer());
-			modelEntity.setNodesNumber(modelParser.getNodeNumber());
-			modelEntity.setElementsNumber(modelParser.getBarNumber());
+				ModelEntity modelEntity = new ModelEntity();
+				modelEntity.setName(modelInputDTO.getName());
+				modelEntity.setCommentary(modelInputDTO.getCommentary());
+				modelEntity.setAuthorId(user.getId());
+				modelEntity.setGridId(modelInputDTO.getGridId());
+				modelEntity.setAccessLevel(modelInputDTO.getAccessLevel());
+				modelEntity.setForceKeys(modelParser.getForceKeys());
+				modelEntity.setModelContainer(modelParser.getModelContainer());
+				modelEntity.setForceContainer(modelParser.getForceContainer());
+				modelEntity.setNodesNumber(modelParser.getNodeNumber());
+				modelEntity.setElementsNumber(modelParser.getBarNumber());
 
-			modelRepository.save(modelEntity);
-		} catch (Exception e) {
-			LOGGER.info(e);
+				modelRepository.save(modelEntity);
+			} catch (Exception e) {
+				LOGGER.info(e);
+			}
+			LOGGER.info("Add DONE in " + stopwatch.getPrettyString());
 		}
-		LOGGER.info("Add DONE in " + stopwatch.getPrettyString());
 	}
 
+	/**
+	 * Return {@link ModelEntity} instance if user is author.
+	 *
+	 * @param principal Spring security principal
+	 * @param modelId   model id
+	 * @return instance of Model Entity
+	 */
 	@Override
 	public ModelEntity get(Principal principal, long modelId) {
 		ModelEntity modelEntity = modelRepository.getById(modelId);
@@ -127,8 +139,12 @@ public class ModelServiceImpl implements ModelService {
 
 	@Override
 	public void clone(Principal principal, long modelId) {
-		if (isPrincipalTheAuthorOfGrid(principal, modelId)) {
-			ModelEntity original = get(principal, modelId);
+		ModelEntity original = get(principal, modelId);
+		if (original != null
+				&& isUserInStorageLimit(
+				userService.getUserByPrincipal(principal)
+				, getPersonalModelEntityList(principal).size()
+		)) {
 			ModelEntity clone = new ModelEntity();
 			clone.setAuthorId(original.getAuthorId());
 			clone.setName(original.getName());
@@ -147,12 +163,31 @@ public class ModelServiceImpl implements ModelService {
 
 	@Override
 	public void delete(Principal principal, long modelId) {
-		if (isPrincipalTheAuthorOfGrid(principal, modelId)) {
+		ModelEntity model = get(principal, modelId);
+		if (model != null) {
 			modelRepository.deleteById(modelId);
 		}
 	}
 
-	private boolean isPrincipalTheAuthorOfGrid(Principal principal, long gridId) {
-		return userService.getUserByPrincipal(principal).getId() == get(principal, gridId).getAuthorId();
+	@Override
+	public void setAccessLevel(long modelId, byte accessLevel, Principal principal) {
+		ModelEntity model = get(principal, modelId);
+		if (model != null) {
+			if (model.getAccessLevel() != ModelEntity.PUBLIC_ACCESS_LEVEL && accessLevel == ModelEntity.PUBLIC_ACCESS_LEVEL) {
+				publicModelService.makePublic(model);
+			}
+			if (model.getAccessLevel() == ModelEntity.PUBLIC_ACCESS_LEVEL && accessLevel != ModelEntity.PUBLIC_ACCESS_LEVEL) {
+				publicModelService.makeNotPublic(model);
+			}
+			model.setAccessLevel(accessLevel);
+			modelRepository.save(model);
+		}
+	}
+
+	private boolean isUserInStorageLimit(UserEntity user, int listSize) {
+		if (user.hasUserRole()) {
+			return listSize < Limit.USER_MODEL_LIMIT;
+		}
+		return true;
 	}
 }

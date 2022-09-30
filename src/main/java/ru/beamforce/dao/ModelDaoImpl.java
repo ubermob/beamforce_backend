@@ -3,11 +3,10 @@ package ru.beamforce.dao;
 import org.hibernate.Session;
 import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.beamforce.entity.ModelEntity;
-import ru.beamforce.logger.LoggingDb;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,9 +15,6 @@ import java.util.List;
  */
 @Repository
 public class ModelDaoImpl extends AbstractEntityManager implements ModelDao {
-
-	@Autowired
-	private LoggingDb loggingDb;
 
 	@Override
 	public void incrementApiCallCounter(long modelId) {
@@ -42,33 +38,39 @@ public class ModelDaoImpl extends AbstractEntityManager implements ModelDao {
 		} catch (Exception e) {
 			loggingDb.error(e);
 		}
-		return null;
+		return new ArrayList<>();
 	}
 
+	// TODO
 	@Override
-	public List<ModelEntity> getOrganizationWideModelEntityList(long authorId) {
+	public List<ModelEntity> getOrganizationWideModelEntityList(long userId) {
 		try {
 			Session session = unwrap();
 			var query = session.createQuery(
-					"FROM ModelEntity WHERE authorId IN (" +
-							"SELECT id FROM UserEntity WHERE organization IN (" +
-							"SELECT organization FROM UserEntity WHERE id = :author_id" +
+					"FROM ModelEntity WHERE id IN (" +
+							"SELECT id FROM ModelEntity WHERE authorId IN (" +
+							"SELECT id FROM UserEntity WHERE organization.id = (" +
+							"SELECT organization.id FROM UserEntity WHERE id = :user_id" +
 							")" +
-							")"
+							")" +
+							") AND accessLevel > :private_access_level OR id IN (" +
+							"SELECT id FROM ModelEntity WHERE authorId)" +
+							"FROM ModelEntity WHERE id = :user_id"
 			);
-			query.setParameter("author_id", authorId);
+			query.setParameter("user_id", userId);
+			query.setParameter("private_access_level", ModelEntity.PRIVATE_ACCESS_LEVEL);
 			return (List<ModelEntity>) query.getResultList();
 		} catch (Exception e) {
 			loggingDb.error(e);
 		}
-		return null;
+		return new ArrayList<>();
 	}
 
 	private void increment(String fieldName, long modelId) {
 		try {
 			Session session = unwrap();
-			NativeQuery sqlQuery = session.createSQLQuery("update " + place("models") +
-					" set %s = %s + 1 where id=:id".formatted(fieldName, fieldName));
+			NativeQuery sqlQuery = session.createSQLQuery("UPDATE " + place("models") +
+					" SET %s = %s + 1 WHERE id = :id".formatted(fieldName, fieldName));
 			sqlQuery.setParameter("id", modelId);
 			sqlQuery.executeUpdate();
 		} catch (Exception e) {

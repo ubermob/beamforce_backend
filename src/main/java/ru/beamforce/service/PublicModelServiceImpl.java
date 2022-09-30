@@ -24,38 +24,33 @@ public class PublicModelServiceImpl implements PublicModelService {
 	@Autowired
 	private PublicModelDao publicModelDao;
 	@Autowired
-	private ModelService modelService;
-	@Autowired
 	private RandomToken randomToken;
 	@Autowired
 	private ModelRepository modelRepository;
 
 	@Override
 	@Transactional
-	public void makePublic(long modelId, Principal principal) {
+	public void makePublic(ModelEntity modelEntity) {
 		Stopwatch stopwatch = new Stopwatch();
-		ModelEntity modelEntity = modelService.get(principal, modelId);
-		if (modelEntity != null) {
-			modelEntity.setAccessLevel(ModelEntity.PUBLIC_ACCESS_LEVEL);
-			if (modelEntity.getPublicAccessToken() == null) {
-				boolean loop = true;
-				byte publicAccessTokenLength = ModelEntity.PUBLIC_ACCESS_TOKEN_LENGTH;
-				String publicToken = null;
-				while (loop) {
-					publicToken = randomToken.getTinyToken(publicAccessTokenLength);
-					if (publicModelDao.isAvailableToken(publicToken)) {
-						loop = false;
-					}
+		modelEntity.setAccessLevel(ModelEntity.PUBLIC_ACCESS_LEVEL);
+		if (modelEntity.getPublicAccessToken() == null) {
+			boolean loop = true;
+			byte publicAccessTokenLength = ModelEntity.PUBLIC_ACCESS_TOKEN_LENGTH;
+			String publicToken = null;
+			while (loop) {
+				publicToken = randomToken.getTinyToken(publicAccessTokenLength);
+				if (publicModelDao.isAvailableToken(publicToken)) {
+					loop = false;
 				}
-				modelEntity.setPublicAccessToken(publicToken);
 			}
-			modelRepository.save(modelEntity);
+			modelEntity.setPublicAccessToken(publicToken);
+			LOGGER.info("Generated unique public token in: " + stopwatch.getPrettyString());
 		}
-		LOGGER.info("Make public model in " + stopwatch.getPrettyString());
+		modelRepository.save(modelEntity);
 	}
 
 	@Override
-	public void makeNotPublic(long modelId, Principal principal) {
+	public void makeNotPublic(ModelEntity model) {
 	}
 
 	@Override

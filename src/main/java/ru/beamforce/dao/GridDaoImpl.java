@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import ru.beamforce.entity.GridEntity;
 import ru.beamforce.entity.UserEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,11 +18,16 @@ public class GridDaoImpl extends AbstractEntityManager implements GridDao {
 
 	@Override
 	public List<GridEntity> getGridEntityList(UserEntity user) {
-		Session session = unwrap();
-		NativeQuery<GridEntity> sqlQuery = session.createNativeQuery(
-				"select * from " + place("grids") + " where author_id=:user_id", GridEntity.class
-		);
-		sqlQuery.setParameter("user_id", user.getId());
-		return sqlQuery.getResultList();
+		try {
+			Session session = unwrap();
+			NativeQuery<GridEntity> sqlQuery = session.createNativeQuery(
+					"select * from " + place("grids") + " where author_id = :user_id", GridEntity.class
+			);
+			sqlQuery.setParameter("user_id", user.getId());
+			return sqlQuery.getResultList();
+		} catch (Exception e) {
+			loggingDb.error(e);
+		}
+		return new ArrayList<>();
 	}
 }

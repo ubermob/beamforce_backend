@@ -14,5 +14,5 @@ public interface OrganizationDao {
 
 	OrganizationEntity getOrganizationWithToken(Token token);
 
-	boolean nameIsUnique(OrganizationEntity organization);
+	boolean nameIsAvailable(OrganizationEntity organization);
 }

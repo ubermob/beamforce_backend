@@ -2,23 +2,40 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
 <div th:fragment="nav-bar" id="nav-bar">
-    <div id="brand"><a href="/">Beamforce</a></div>
-    <div class="nav-element"><a href="/logout">Выйти</a></div>
+    <div id="brand">
+        <a th:href="@{~/}">Beamforce</a>
+    </div>
+
+    <div class="nav-element">
+        <a href="/logout">Выйти</a>
+    </div>
+
     <div class="nav-element"
          th:classappend="${isNavBarAbout == null && isNavBarSettings == null && isNavBarHelp == null && isNavBarDynamic == null} ? 'current' : ''">
-        <a href="/user">Контент</a>
+        <a th:href="@{~/user}">Контент</a>
     </div>
+
     <div class="nav-element" th:classappend="${isNavBarSettings} ? 'current' : ''">
-        <a href="/user/settings">Настройки</a>
+        <a th:href="@{~/user/settings}">Настройки</a>
     </div>
-    <div class="nav-element" th:classappend="${isNavBarHelp} ? 'current' : ''"><a href="/help">Помощь</a></div>
-    <div class="nav-element" th:classappend="${isNavBarAbout} ? 'current' : ''"><a href="/about">О проекте</a></div>
-    <div th:if="${isNavBarDynamic}" class="nav-element current nav-element-dynamic" th:text="${navBarDynamicText}"></div>
+
+    <div class="nav-element" th:classappend="${isNavBarHelp} ? 'current' : ''">
+        <a th:href="@{~/help}">Помощь</a>
+    </div>
+
+    <div class="nav-element" th:classappend="${isNavBarAbout} ? 'current' : ''">
+        <a th:href="@{~/about}">О проекте</a>
+    </div>
+
+    <div th:if="${isNavBarDynamic}" class="nav-element current nav-element-dynamic"
+         th:text="${navBarDynamicText}"></div>
     <div class="nav-push"></div>
+
     <div class="nav-element-right" th:if="${user != null}"
          th:text="'Пользователь: ' + ${user.name}">
         user
     </div>
+
     <div class="nav-element-right" th:if="${user != null && user.organization != null}"
          th:text="'Организация: ' + ${user.organization.name}">
         organization

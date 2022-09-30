@@ -37,8 +37,6 @@ public class UserController extends AbstractController {
 	private GridService gridService;
 	@Autowired
 	private ModelService modelService;
-	@Autowired
-	private PublicModelService publicModelService;
 
 	@RequestMapping
 	public String showUserPage(Model model, Principal principal) {
@@ -121,8 +119,8 @@ public class UserController extends AbstractController {
 	public String createOrganizationValidation(@Valid OrganizationEntity organization, Errors errors
 			, Principal principal, Model model) {
 		navBarDynamicUtil(model, "Создать организацию");
-		boolean nameIsUnique = organizationService.nameIsUnique(organization);
-		if (!nameIsUnique) {
+		boolean nameIsAvailable = organizationService.nameIsAvailable(organization);
+		if (!nameIsAvailable) {
 			errors.rejectValue("name", "error.organization"
 					, "Организация с таким именем недоступна");
 		}
@@ -205,10 +203,7 @@ public class UserController extends AbstractController {
 	@PostMapping("/model/operations/access-level")
 	public String setAccessLevel(@RequestParam(name = "id") long id, @RequestParam(name = "level") byte level
 			, Principal principal) {
-		// todo
-		if (level == 3) {
-			publicModelService.makePublic(id, principal);
-		}
+		modelService.setAccessLevel(id, level, principal);
 		return "redirect:/user/model/operations";
 	}
 

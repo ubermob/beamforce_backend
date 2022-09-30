@@ -42,14 +42,4 @@ public class ModelInputDTO {
 	public void setAccessLevel(Byte accessLevel) {
 		this.accessLevel = accessLevel;
 	}
-
-	@Override
-	public String toString() {
-		return "ModelInputDTO{" +
-				"name='" + name + '\'' +
-				", commentary='" + commentary + '\'' +
-				", gridId=" + gridId +
-				", accessLevel=" + accessLevel +
-				'}';
-	}
 }

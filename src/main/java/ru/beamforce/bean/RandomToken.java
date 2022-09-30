@@ -1,6 +1,5 @@
 package ru.beamforce.bean;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import java.util.Random;
@@ -26,11 +25,6 @@ public class RandomToken {
 		random = new Random();
 		elements = chars();
 		this.defaultLength = defaultLength;
-	}
-
-	@Bean
-	public RandomToken getRandomToken() {
-		return new RandomToken();
 	}
 
 	public String getToken() {

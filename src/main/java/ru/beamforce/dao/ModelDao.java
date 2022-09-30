@@ -16,5 +16,5 @@ public interface ModelDao {
 
 	List<ModelEntity> getPersonalModelEntityList(long authorId);
 
-	List<ModelEntity> getOrganizationWideModelEntityList(long authorId);
+	List<ModelEntity> getOrganizationWideModelEntityList(long userId);
 }

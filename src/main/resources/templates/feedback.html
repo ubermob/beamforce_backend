@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head_tag :: head_tag}">
+</head>
+<body>
+<div id="bg"></div>
+<div th:replace="~{fragments/header :: nav-bar}"></div>
+
+<div id="body-wrapper">
+    <form th:action="@{~/feedback/push}" th:object="${feedbackEntity}" method="post" class="content">
+        <label for="type">Тип:</label>
+        <select id="type" th:field="*{name}">
+            <option th:value="feedback">Отзыв</option>
+            <option th:value="error">Ошибка</option>
+        </select>
+        <br>
+        <label for="commentary">Сообщение:</label>
+        <textarea id="commentary" maxlength="512" th:field="*{commentary}" rows="3" cols="25"></textarea>
+        <div>
+            <button id="reg_button" type="submit">Feedback</button>
+        </div>
+    </form>
+
+    <div th:replace="~{fragments/footer :: footer}"></div>
+</div>
+</body>
+</html>

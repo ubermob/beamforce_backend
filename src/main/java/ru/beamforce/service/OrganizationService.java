@@ -16,5 +16,5 @@ public interface OrganizationService {
 
 	void newOrganizationToken(UserEntity user);
 
-	boolean nameIsUnique(OrganizationEntity organization);
+	boolean nameIsAvailable(OrganizationEntity organization);
 }
