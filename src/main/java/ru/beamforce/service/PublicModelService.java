@@ -2,8 +2,6 @@ package ru.beamforce.service;
 
 import ru.beamforce.entity.ModelEntity;
 
-import java.security.Principal;
-
 /**
  * @author Andrey Korneychuk on 22-Apr-22
  * @version 1.0

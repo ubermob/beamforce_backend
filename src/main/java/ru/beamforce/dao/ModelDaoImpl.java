@@ -45,7 +45,7 @@ public class ModelDaoImpl extends AbstractEntityManager implements ModelDao {
 	@Override
 	public List<ModelEntity> getOrganizationWideModelEntityList(long userId) {
 		try {
-			Session session = unwrap();
+/*			Session session = unwrap();
 			var query = session.createQuery(
 					"FROM ModelEntity WHERE id IN (" +
 							"SELECT id FROM ModelEntity WHERE authorId IN (" +
@@ -59,7 +59,7 @@ public class ModelDaoImpl extends AbstractEntityManager implements ModelDao {
 			);
 			query.setParameter("user_id", userId);
 			query.setParameter("private_access_level", ModelEntity.PRIVATE_ACCESS_LEVEL);
-			return (List<ModelEntity>) query.getResultList();
+			return (List<ModelEntity>) query.getResultList();*/
 		} catch (Exception e) {
 			loggingDb.error(e);
 		}

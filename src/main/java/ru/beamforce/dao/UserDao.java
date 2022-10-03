@@ -1,9 +1,9 @@
 package ru.beamforce.dao;
 
+import ru.beamforce.dto.RegistrationUserDTO;
 import ru.beamforce.dto.UpdatePasswordDTO;
 import ru.beamforce.entity.UserEntity;
 import ru.beamforce.shortobject.NewUserInformer;
-import ru.beamforce.dto.RegistrationUserDTO;
 
 /**
  * @author Andrey Korneychuk on 03-Feb-22
